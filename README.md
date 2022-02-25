@@ -1,1 +1,1 @@
-Cabal Barefoot Nomad Backend
+Cabal Barefoot Nomad Backend Development

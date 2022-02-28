@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"processes":{"107a4c68-b577-44f4-b399-e49b7d5a8678":{"parent":null,"children":[]}},"files":{"C:\\Users\\landr\\Desktop\\cabal-bn-be\\src\\app.js":["107a4c68-b577-44f4-b399-e49b7d5a8678"],"C:\\Users\\landr\\Desktop\\cabal-bn-be\\src\\routes\\index.js":["107a4c68-b577-44f4-b399-e49b7d5a8678"],"C:\\Users\\landr\\Desktop\\cabal-bn-be\\src\\routes\\api\\homeRoute.js":["107a4c68-b577-44f4-b399-e49b7d5a8678"]},"externalIds":{}}
+=======
+{"processes":{"e0761902-7651-4daf-8e15-23c2f36343e5":{"parent":null,"children":[]}},"files":{"C:\\Users\\landr\\Desktop\\cabal-bn-be\\src\\app.js":["e0761902-7651-4daf-8e15-23c2f36343e5"],"C:\\Users\\landr\\Desktop\\cabal-bn-be\\src\\routes\\index.js":["e0761902-7651-4daf-8e15-23c2f36343e5"],"C:\\Users\\landr\\Desktop\\cabal-bn-be\\src\\routes\\api\\homeRoute.js":["e0761902-7651-4daf-8e15-23c2f36343e5"]},"externalIds":{}}
+>>>>>>> e7cf0a8 (setting-up-unit-tests)

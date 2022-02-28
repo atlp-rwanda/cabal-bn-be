@@ -1,14 +1,9 @@
 import express from 'express';
 import Sequelize from 'sequelize';
 import 'dotenv/config';
-import routes from 'routes/index';
-import { serve, setup } from 'swagger-ui-express';
-import docs from 'documentation/index';
+import routes from './routes/index';
 
 const app = express();
-
-app.use('/api/v1', routes);
-app.use('/api-docs', serve, setup(docs));
 const port = process.env.PORT || 5000;
 const mode = process.env.NODE_ENV || 'development';
 
@@ -48,12 +43,10 @@ try {
             });
     }
     app.use('/api/v1', routes);
-    app.use('/api-docs', serve, setup(docs));
+
+    app.listen(port, () => {
+        console.log('server up running on port ', port);
+    });
 } catch (error) {
     console.log(error);
 }
-const server = app.listen(port, () => {
-    console.log('server up running on port ', port);
-});
-
-export default server;

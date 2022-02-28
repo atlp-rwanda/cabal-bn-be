@@ -2,7 +2,10 @@
   "name": "cabal-bn-be",
   "version": "1.0.0",
   "description": "Cabal Barefoot Nomad Backend",
-  "main": "index.js",
+  "main": "src/app.js",
+  "engines": {
+    "yarn": "1.x"
+  },
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js",
     "build": "babel src -d build",

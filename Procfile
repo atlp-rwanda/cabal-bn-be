@@ -1,1 +1,1 @@
-web: node --exec babel-node src/app.js
+web: yarn start

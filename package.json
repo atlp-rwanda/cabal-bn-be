@@ -9,9 +9,8 @@
   "scripts": {
     "dev": "nodemon --exec npx babel-node src/app.js",
     "build": "babel src -d build",
-    "start": "yarn run build && node ./build/app.js",
-    "test": "better-npm-run test",
-    "coverage": "better-npm-run-cov"
+    "start": "node build/app.js",
+    "test": "better-npm-run test"
   },
   "betterScripts": {
     "test": {

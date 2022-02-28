@@ -2,7 +2,7 @@
 . "$(dirname "$0")/_/husky.sh"
 
 yarn run format
-npm run lint || 
+yarn run lint || 
 (
   echo 'Check for linting errors';
   false;

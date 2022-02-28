@@ -2,9 +2,9 @@
 . "$(dirname "$0")/_/husky.sh"
 
 yarn run format
-yarn run lint || 
+npm run lint || 
 (
   echo 'Check for linting errors';
-  false;tes
+  false;
 )
 git add .

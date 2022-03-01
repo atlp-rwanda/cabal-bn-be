@@ -12,7 +12,7 @@ async function connectToDb() {
   const sequelize = new Sequelize(process.env.DEV_DATABASE_URL);
   try {
     await sequelize.authenticate();
-    console.info("DATABASE CONNECTION SUCCESSFULLY!");
+    console.info("DATABASE CONNECTION ESTABLISHED SUCCESSFULLY!");
   } catch (error) {
     console.error("Unable to connect to the database: ", error);
   }

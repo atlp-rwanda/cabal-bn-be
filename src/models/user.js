@@ -1,5 +1,5 @@
 "use strict";
-import { sequelize as Model } from "sequelize";
+const Model = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**

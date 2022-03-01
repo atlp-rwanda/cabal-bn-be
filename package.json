@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Cabal Barefoot Nomad Backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon --exec npx babel-node src/app.js",
     "build": "babel src -d build",

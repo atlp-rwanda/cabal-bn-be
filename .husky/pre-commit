@@ -5,6 +5,6 @@ yarn run format
 yarn run lint || 
 (
   echo 'Check for linting errors';
-  false;
+  false;tes
 )
 git add .

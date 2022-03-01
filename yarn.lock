@@ -1194,13 +1194,19 @@ array-flatten@1.1.1:
   integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 asap@^2.0.0:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
   integrity sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 asn1@~0.2.3:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/asn1/-/asn1-0.2.6.tgz#0d3a7bb6e64e02a90c0303b31f292868ea09a08d"
@@ -1630,10 +1636,14 @@ color-name@~1.1.4:
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
 =======
 combined-stream@^1.0.6, combined-stream@~1.0.6:
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
@@ -1660,10 +1670,14 @@ commondir@^1.0.1:
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 component-emitter@^1.2.0, component-emitter@^1.3.0:
 =======
 component-emitter@^1.2.0:
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+component-emitter@^1.2.0, component-emitter@^1.3.0:
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.3.0.tgz#16e4070fba8ae29b679f2215853ee181ab2eabc0"
   integrity sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==
@@ -1723,10 +1737,14 @@ cookie@0.4.2:
   integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 cookiejar@^2.1.0, cookiejar@^2.1.1, cookiejar@^2.1.3:
 =======
 cookiejar@^2.1.0, cookiejar@^2.1.1:
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+cookiejar@^2.1.0, cookiejar@^2.1.1, cookiejar@^2.1.3:
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.3.tgz#fc7a6216e408e74414b90230050842dacda75acc"
   integrity sha512-JxbCBUdrfr6AQjOXrxoTvAMJO4HBTUIlBzslcJPAz+/KT8yk53fXun51u+RenNYvad/+Vc2DIz5o9UxlCDymFQ==
@@ -1801,10 +1819,14 @@ debug@2.6.9:
     ms "2.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 debug@4.3.3, debug@4.x, debug@^4.1.0, debug@^4.1.1, debug@^4.3.3:
 =======
 debug@4.3.3, debug@^4.1.0, debug@^4.1.1:
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+debug@4.3.3, debug@^4.1.0, debug@^4.1.1, debug@^4.3.3:
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
   integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
@@ -1890,6 +1912,9 @@ destroy@~1.0.4:
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 dezalgo@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/dezalgo/-/dezalgo-1.0.3.tgz#7f742de066fc748bc8db820569dddce49bf0d456"
@@ -1898,8 +1923,11 @@ dezalgo@1.0.3:
     asap "^2.0.0"
     wrappy "1"
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 diff@5.0.0, diff@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-5.0.0.tgz#7ed6ad76d859d030787ec35855f5b1daf31d852b"
@@ -2172,6 +2200,7 @@ fast-json-stable-stringify@^2.0.0:
   resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz#874bf69c6f404c2b5d99c481341399fd55892633"
   integrity sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
 
+<<<<<<< HEAD
 extend@^3.0.0, extend@~3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
@@ -2197,6 +2226,8 @@ fast-json-stable-stringify@^2.0.0:
   resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz#874bf69c6f404c2b5d99c481341399fd55892633"
   integrity sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
 
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 fast-safe-stringify@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
@@ -2299,6 +2330,9 @@ form-data@^2.3.1:
     mime-types "^2.1.12"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 form-data@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
@@ -2308,8 +2342,11 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 form-data@~2.3.2:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.3.tgz#dcce52c05f644f298c6a7ab936bd724ceffbf3a6"
@@ -2325,6 +2362,9 @@ formidable@^1.2.0:
   integrity sha512-KcpbcpuLNOwrEjnbpMC0gS+X8ciDoZE1kkqzat4a8vrprf+s9pKNQ/QIwWfbfs4ltgmFl3MD177SNTkve3BwGQ==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 formidable@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/formidable/-/formidable-2.0.1.tgz#4310bc7965d185536f9565184dee74fbb75557ff"
@@ -2335,8 +2375,11 @@ formidable@^2.0.1:
     once "1.4.0"
     qs "6.9.3"
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 forwarded@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
@@ -2571,13 +2614,19 @@ he@1.2.0:
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 hexoid@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/hexoid/-/hexoid-1.0.0.tgz#ad10c6573fb907de23d9ec63a711267d9dc9bc18"
   integrity sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 homedir-polyfill@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/homedir-polyfill/-/homedir-polyfill-1.0.3.tgz#743298cef4e5af3e194161fbadcc2151d3a058e8"
@@ -2664,10 +2713,14 @@ inflight@^1.0.4:
     wrappy "1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 inherits@2, inherits@2.0.4, inherits@^2.0.3, inherits@~2.0.3:
 =======
 inherits@2, inherits@2.0.4, inherits@~2.0.3:
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+inherits@2, inherits@2.0.4, inherits@^2.0.3, inherits@~2.0.3:
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
@@ -3963,10 +4016,14 @@ qs@6.9.7:
   integrity sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 qs@^6.10.1, qs@^6.5.1:
 =======
 qs@^6.5.1:
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+qs@^6.10.1, qs@^6.5.1:
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
   version "6.10.3"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.3.tgz#d6cde1b2ffca87b5aa57889816c5f81535e22e8e"
   integrity sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==
@@ -4024,6 +4081,9 @@ readable-stream@^2.3.5:
     util-deprecate "~1.0.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
@@ -4033,8 +4093,11 @@ readable-stream@^3.6.0:
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 readdirp@~3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/readdirp/-/readdirp-3.6.0.tgz#74a370bd857116e245b29cc97340cd431a02a6c7"
@@ -4185,6 +4248,7 @@ rimraf@^3.0.0:
     glob "^7.1.3"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 rimraf@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
@@ -4196,6 +4260,9 @@ safe-buffer@5.2.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.2, s
 =======
 safe-buffer@5.2.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.2:
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+safe-buffer@5.2.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.2, safe-buffer@~5.2.0:
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
@@ -4490,6 +4557,9 @@ string.prototype.trimstart@^1.0.4:
     define-properties "^1.1.3"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 string_decoder@^1.1.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.3.0.tgz#42f114594a46cf1a8e30b0a84f56c78c3edac21e"
@@ -4497,8 +4567,11 @@ string_decoder@^1.1.1:
   dependencies:
     safe-buffer "~5.2.0"
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 string_decoder@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
@@ -4545,6 +4618,9 @@ superagent@^3.7.0:
     readable-stream "^2.3.5"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 superagent@^7.1.0:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-7.1.1.tgz#2ab187d38c3078c31c3771c0b751f10163a27136"
@@ -4570,8 +4646,11 @@ supertest@^6.2.2:
     methods "^1.1.2"
     superagent "^7.1.0"
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
 supports-color@8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-8.1.1.tgz#cd6fc17e28500cff56c1b86c0a7fd4a54a73005c"
@@ -4825,10 +4904,14 @@ url-parse-lax@^3.0.0:
     prepend-http "^2.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
 =======
 util-deprecate@~1.0.1:
 >>>>>>> 7234111 (setting-up-unit-tests)
+=======
+util-deprecate@^1.0.1, util-deprecate@~1.0.1:
+>>>>>>> f5d0925 (removing-.nyc_output-and-coverage)
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=

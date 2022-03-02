@@ -1,60 +1,31 @@
-import express from 'express';
-import Sequelize from 'sequelize';
-import 'dotenv/config';
-import { serve, setup } from 'swagger-ui-express';
-// eslint-disable-next-line import/no-named-as-default-member
-import docs from './documentation/index';
-import routes from './routes/index';
+import express from "express";
+import Sequelize from "sequelize";
+import "dotenv/config";
+import { serve, setup } from "swagger-ui-express";
+import routes from "routes/index";
+import docs from "documentation/index";
+import db from "database/models";
 
 const app = express();
-
-app.use('/api/v1', routes);
-app.use('/api-docs', serve, setup(docs));
 const port = process.env.PORT || 5000;
-const mode = process.env.NODE_ENV || 'development';
 
-try {
-    // TESTING DATABASE CONNECTION
-    if (mode === 'development') {
-        const sequelize = new Sequelize(process.env.DEV_DATABASE_URL);
-        sequelize
-            .authenticate()
-            .then(() => {
-                console.log('DEV DATABASE CONNECTION ESTABLISHED!');
-            })
-            .catch((err) => {
-                console.log('Unable to connect to the database: ', err);
-            });
-    }
-    if (mode === 'test') {
-        const sequelize = new Sequelize(process.env.TEST_DATABASE_URL);
-        sequelize
-            .authenticate()
-            .then(() => {
-                console.log('TEST DATABASE CONNECTION ESTABLISHED!');
-            })
-            .catch((err) => {
-                console.log('Unable to connect to the database: ', err);
-            });
-    }
-    if (mode === 'production') {
-        const sequelize = new Sequelize(process.env.PROD_DATABASE_URL);
-        sequelize
-            .authenticate()
-            .then(() => {
-                console.log('PRODUCTION DATABASE CONNECTION ESTABLISHED!');
-            })
-            .catch((err) => {
-                console.log('Unable to connect to the database: ', err);
-            });
-    }
-    app.use('/api/v1', routes);
-    app.use('/api-docs', serve, setup(docs));
-} catch (error) {
-    console.log(error);
+console.log("authenticating ....");
+async function connectdb() {
+  try {
+    const { sequelize } = db;
+    await sequelize.authenticate();
+    console.log("Database established successfully !!");
+  } catch (err) {
+    console.log("failed to connect to the database", err);
+  }
 }
+connectdb();
+
+app.use("/api/v1", routes);
+app.use("/api-docs", serve, setup(docs));
+
 const server = app.listen(port, () => {
-    console.log('server up running on port ', port);
+  console.log("server up running on port ", port);
 });
 
 export default server;

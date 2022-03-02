@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Cabal Barefoot Nomad Backend",
   "main": "index.js",
-  
   "scripts": {
     "dev": "nodemon --exec npx babel-node src/app.js",
     "build": "babel src -d build",
@@ -50,6 +49,10 @@
     "express": "^4.17.3",
     "mocha": "^9.2.1",
     "nyc": "^15.1.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.17.0",
+    "sequelize-cli": "^6.4.1",
     "sinon": "^13.0.1",
     "supertest": "^6.2.2"
   }

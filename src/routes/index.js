@@ -1,9 +1,8 @@
 import express from "express";
-import home from "routes/api/homeRoute"
+import home from "./api/home.route";
 
-const routes = express.Router()
+const routes = express.Router();
 
-routes.use("/home", home)
+routes.use("/home", home);
 
-
-export default routes
+export default routes;

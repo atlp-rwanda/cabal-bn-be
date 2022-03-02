@@ -1,5 +1,5 @@
 import express from 'express';
-import home from './api/home.route';
+import home from 'routes/api/homeRoute';
 
 const routes = express.Router();
 

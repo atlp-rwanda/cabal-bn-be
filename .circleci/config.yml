@@ -23,6 +23,9 @@ jobs:
       - run:
           name: run test
           command: yarn run test
+      - run:
+          name: coverage
+          command: yarn run coverage
 
       - coveralls/upload
 # Invoke jobs via workflows

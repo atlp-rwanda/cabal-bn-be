@@ -1,34 +1,41 @@
-import dotenv from "dotenv";
-import welcome from "./welcome";
+import dotenv from 'dotenv';
+import welcome from './welcome';
+import { user, userDefinitions } from './user.doc';
 
 dotenv.config();
 
 const host =
-  process.env.NODE_ENV === "production"
-    ? process.env.BASE_URL?.split("https://")[1]
-    : process.env.BASE_URL?.split("http://")[1];
+  process.env.NODE_ENV === 'production'
+    ? process.env.BASE_URL.split('https://')[1]
+    : process.env.BASE_URL.split('http://')[1];
 
 const paths = {
   ...welcome,
+  ...user
+};
+
+const definitions = {
+  ...userDefinitions
 };
 
 const config = {
-  swagger: "2.0",
+  swagger: '2.0',
   info: {
-    description: "Barefoot Nomad Project",
-    version: "1.0",
-    title: "Barefoot Nomad",
+    description: 'Barefoot Nomad Project',
+    version: '1.0',
+    title: 'Barefoot Nomad'
   },
   host,
-  basePath: "/api/v1",
-  schemes: ["http", "https"],
+  basePath: '/api/v1',
+  schemes: ['http', 'https'],
   securityDefinitions: {
     JWT: {
-      type: "apiKey",
-      name: "Authorization",
-      in: "header",
-    },
+      type: 'apiKey',
+      name: 'Authorization',
+      in: 'header'
+    }
   },
   paths,
+  definitions
 };
 export default config;

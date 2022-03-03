@@ -31,8 +31,7 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  test-deploy:
+  commit:
     jobs:
       - build
-  commit:
-    jobs: -build
+  

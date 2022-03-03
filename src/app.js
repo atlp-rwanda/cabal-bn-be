@@ -1,9 +1,14 @@
-import express from 'express';
-import routes from 'routes/index';
-import 'dotenv/config';
-import Sequelize from 'sequelize';
+import express from "express";
+import Sequelize from "sequelize";
+import "dotenv/config";
+import routes from "routes/index";
+import { serve, setup } from "swagger-ui-express";
+import docs from "documentation/index";
 
 const app = express();
+
+app.use("/api/v1", routes);
+app.use("/api-docs", serve, setup(docs));
 const port = process.env.PORT || 5000;
 const mode = process.env.NODE_ENV || 'development';
 
@@ -31,18 +36,21 @@ try {
         console.log('Unable to connect to the database: ', err);
       });
   }
-  if (mode === 'production') {
+  if (mode === "production") {
     const sequelize = new Sequelize(process.env.PROD_DATABASE_URL);
     sequelize
       .authenticate()
       .then(() => {
-        console.log('PRODUCTION DATABASE CONNECTION ESTABLISHED!');
+        console.log("PRODUCTION DATABASE CONNECTION ESTABLISHED!");
       })
       .catch((err) => {
-        console.log('Unable to connect to the database: ', err);
+        console.log("Unable to connect to the database: ", err);
       });
   }
-  app.use('/api/v1', routes);
+  app.use("/api/v1", routes);
+  app.use("/api-docs", serve, setup(docs));
+
+
 } catch (error) {
   console.log(error);
 }

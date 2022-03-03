@@ -1,9 +1,9 @@
-import express from "express"
+import express from 'express';
 
-const home = express.Router()
+const home = express.Router();
 
 home.get("/", (req, res, next) => {
-    res.send("Welcome to our homepage")
+    res.status(200).send({ message: "Welcome to our homepage" });
 })
 
 export default home;

@@ -2,15 +2,14 @@
   "name": "cabal-bn-be",
   "version": "1.0.0",
   "description": "Cabal Barefoot Nomad Backend",
-  "main": "index.js",
+  "main": "src/app.js",
+  "engines": {
+    "yarn": "1.x"
+  },
   "scripts": {
     "dev": "nodemon --exec npx babel-node src/app.js",
     "build": "babel src -d build",
-    "start": "node build/app.js",
-    "dbmigrate": "npx sequelize-cli db:migrate",
-    "seeding": "npx sequelize db:seed:all",
-    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run dbmigrate",
-    "dbmigrate:all": "npx sequelize-cli db:migrate:undo:all && npm run dbmigrate && npm run seeding"
+    "start": "yarn run build && node ./build/app.js"
   },
   "repository": {
     "type": "git",
@@ -24,14 +23,17 @@
   },
   "homepage": "https://github.com/atlp-rwanda/cabal-bn-be#readme",
   "devDependencies": {
-    "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.5",
     "@babel/node": "^7.16.8",
-    "@babel/preset-env": "^7.16.11",
-    "babel-plugin-module-resolver": "^4.1.0",
+    
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/runtime": "^7.17.2",
+    "babel-plugin-module-resolver": "^4.1.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "pg": "^8.7.3",

@@ -3,7 +3,7 @@ import { User } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import RoleService from '../services/role.service';
 
-export const checkLoggedInUser = async (req, res, next) => {
+export const checkLoggedInUser = async (req, res, next, role) => {
   const token =
     req.headers.authorization && req.headers.authorization.split(' ')[1];
   let payload;
@@ -18,10 +18,13 @@ export const checkLoggedInUser = async (req, res, next) => {
     include: 'Role'
   });
 
-  if (user.Role.name !== 'SUPER_ADMIN') {
+  if (user.Role.name !== (role || 'SUPER_ADMIN')) {
     return res.status(401).json({ message: 'access denied' });
   }
-
+  req.user = {
+    email: user.email,
+    id: user.id
+  };
   next();
 };
 

@@ -1,7 +1,11 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable require-jsdoc */
 import UserService from 'services/user.service';
-import { generateToken, hashPassword, comparePassword } from 'helpers/user.helpers';
+import {
+  generateToken,
+  hashPassword,
+  comparePassword
+} from 'helpers/user.helpers';
 
 export default class UserController {
   constructor() {
@@ -36,7 +40,10 @@ export default class UserController {
         user.password
       );
       if (validation) {
-        const token = await generateToken({ email: user.email }, '1d');
+        const token = await generateToken(
+          { email: user.email, id: user.id, managerId: user.managerId },
+          '1d'
+        );
         return res
           .status(201)
           .header('authenticate', token)

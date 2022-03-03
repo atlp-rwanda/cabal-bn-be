@@ -8,20 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      status:{
-        type:Sequelize.STRING,
-        defaultValue:'pending'
-        },
-        userId:{
-          type:Sequelize.INTEGER,
-          },
-          managerId:{
-            type:Sequelize.INTEGER,
-            },
-            destination: {
-              type: Sequelize.STRING
-            },
-            originCity: {
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: 'pending'
+      },
+      userId: {
+        type: Sequelize.INTEGER
+      },
+      managerId: {
+        type: Sequelize.INTEGER
+      },
+      destination: {
+        type: Sequelize.STRING
+      },
+      originCity: {
         type: Sequelize.STRING
       },
       reason: {
@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       accomodationId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

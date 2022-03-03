@@ -2,9 +2,7 @@
 /* eslint-disable require-jsdoc */
 'use strict';
 
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Trip extends Model {
@@ -15,28 +13,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.User, { foreignKey: 'userId' });
     }
   }
-  Trip.init({
-    userId:DataTypes.INTEGER,
-    managerId:DataTypes.INTEGER,
-    originCity: DataTypes.STRING,
-    destination: DataTypes.STRING,
-    reason: DataTypes.STRING,
-    status:{
-    type:DataTypes.STRING,
-    defaultValue:'pending'
+  Trip.init(
+    {
+      managerId: DataTypes.INTEGER,
+      originCity: DataTypes.STRING,
+      destination: DataTypes.STRING,
+      reason: DataTypes.STRING,
+      status: {
+        type: DataTypes.STRING,
+        defaultValue: 'pending'
+      }
     },
-    tripDate: DataTypes.DATE,
-    returnDate:{
-      type: DataTypes.DATE,
-  },
-    accomodationId: DataTypes.STRING,
-}, 
-  {
-    sequelize,
-    modelName: 'Trip',
-  });
+    {
+      sequelize,
+      modelName: 'Trip'
+    }
+  );
 
   return Trip;
 };

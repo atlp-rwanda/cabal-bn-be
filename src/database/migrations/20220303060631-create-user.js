@@ -1,4 +1,3 @@
-'use strict';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -11,34 +10,18 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
+module.exports = {
+  async up(queryInterface, DataTypes) {
 =======
->>>>>>> 97759dc (chore: addedd other user model fields)
-import roles from '../../utils/roles.utils';
+module.exports = {
+  async up(queryInterface, DataTypes) {
+<<<<<<< HEAD
+    const roles = require('../../utils/roles.utils');
 
-const { Model } = require('sequelize');
+>>>>>>> 886728a (finished rebasing and updating user model)
 =======
-const {
-  Model
-} = require('sequelize');
->>>>>>> 7644ca4 (#181339524-docker-setup-for-cabal-project (#14))
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-    toJSON() {
-      return { ...this.get(), id: undefined, password: undefined };
-    }
-  }
-<<<<<<< HEAD
-  User.init(
-    {
+>>>>>>> 3d6b4ac (chore: minor changes)
+    await queryInterface.createTable('Users', {
       user_id: {
         allowNull: false,
         primaryKey: true,
@@ -47,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       first_name: DataTypes.STRING,
       last_name: DataTypes.STRING,
+      username: DataTypes.STRING,
       password: {
         type: DataTypes.STRING,
         allowNull: false
@@ -63,81 +47,89 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue:
           'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg'
       },
-      nationality: DataTypes.STRING
-    },
-    {
-      sequelize,
-      modelName: 'User'
-    }
-  );
-  return User;
+      nationality: DataTypes.STRING,
+<<<<<<< HEAD
+<<<<<<< HEAD
 =======
-=======
-import roles from '../../utils/roles.utils';
->>>>>>> 4e05ae2 (minor changes)
-=======
-import roles from '../../utils/roles.utils';
->>>>>>> 97759dc (chore: addedd other user model fields)
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-=======
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
->>>>>>> e08edc4 (chore: rebased dev)
-=======
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
->>>>>>> 2dfab96 (feature: add user registration)
-=======
-import roles from '../../utils/roles.utils';
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-
+      user_role_id: {
+        allowNull: true,
+        type: DataTypes.UUID,
+        defaultValue: roles.REQUESTER
+      },
 >>>>>>> 886728a (finished rebasing and updating user model)
 =======
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
->>>>>>> d0a89b9 (rebase commit)
+>>>>>>> 3d6b4ac (chore: minor changes)
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE
+      }
+    });
+  },
+<<<<<<< HEAD
+<<<<<<< HEAD
+  async down(queryInterface) {
+    await queryInterface.dropTable('Users');
+  }
 =======
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
->>>>>>> 53839d8 (chore: rebase commit)
 =======
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
->>>>>>> 17a720a (chore: rebased dev)
-=======
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
 >>>>>>> e08edc4 (chore: rebased dev)
 =======
-
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
 >>>>>>> 2dfab96 (feature: add user registration)
-	class User extends Model {
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
-		static associate(models) {
-			// define association here
-		}
-		toJSON() {
-			return { ...this.get(), id: undefined, password: undefined };
-		}
-	}
-	User.init(
-		{
+'use strict';
+=======
+>>>>>>> 97759dc (chore: addedd other user model fields)
+module.exports = {
+	async up(queryInterface, DataTypes) {
+		const roles = require('../../utils/roles.utils');
+
+=======
+'use strict';
+module.exports = {
+	async up(queryInterface, DataTypes) {
+>>>>>>> d0a89b9 (rebase commit)
+=======
+module.exports = {
+	async up(queryInterface, DataTypes) {
+		const roles = require('../../utils/roles.utils');
+
+>>>>>>> 4e05ae2 (minor changes)
+=======
+'use strict';
+module.exports = {
+	async up(queryInterface, DataTypes) {
+>>>>>>> 53839d8 (chore: rebase commit)
+=======
+'use strict';
+module.exports = {
+	async up(queryInterface, DataTypes) {
+>>>>>>> 17a720a (chore: rebased dev)
+=======
+'use strict';
+module.exports = {
+	async up(queryInterface, DataTypes) {
+>>>>>>> e08edc4 (chore: rebased dev)
+=======
+'use strict';
+module.exports = {
+	async up(queryInterface, DataTypes) {
+>>>>>>> 2dfab96 (feature: add user registration)
+=======
+module.exports = {
+	async up(queryInterface, DataTypes) {
+		const roles = require('../../utils/roles.utils');
+
+>>>>>>> 97759dc (chore: addedd other user model fields)
+		await queryInterface.createTable('Users', {
+			id: {
+				allowNull: false,
+				autoIncrement: true,
+				primaryKey: true,
+				type: DataTypes.INTEGER,
+			},
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -157,18 +149,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			first_name: DataTypes.STRING,
 			last_name: DataTypes.STRING,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 			username: DataTypes.STRING,
-=======
->>>>>>> 886728a (finished rebasing and updating user model)
-=======
-			username: DataTypes.STRING,
->>>>>>> 4e05ae2 (minor changes)
-=======
-			username: DataTypes.STRING,
->>>>>>> 97759dc (chore: addedd other user model fields)
 			password: {
 				type: DataTypes.STRING,
 				allowNull: false,
@@ -201,25 +182,18 @@ module.exports = (sequelize, DataTypes) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 			language: {
 				type: DataTypes.STRING,
 				defaultValue: 'English',
 			},
-=======
-			language: DataTypes.STRING,
->>>>>>> 886728a (finished rebasing and updating user model)
 			address: DataTypes.STRING,
 			profile_picture: {
 				type: DataTypes.STRING,
 				defaultValue:
 					'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
 			},
-<<<<<<< HEAD
 			occupation: DataTypes.STRING,
 			bio: DataTypes.STRING,
-=======
->>>>>>> 886728a (finished rebasing and updating user model)
 			nationality: DataTypes.STRING,
 			user_role_id: {
 				allowNull: true,
@@ -277,14 +251,19 @@ module.exports = (sequelize, DataTypes) => {
 =======
 >>>>>>> 97759dc (chore: addedd other user model fields)
 			},
-		},
-		{
-			sequelize,
-			modelName: 'User',
-		}
-	);
-	return User;
-<<<<<<< HEAD
+			createdAt: {
+				allowNull: false,
+				type: DataTypes.DATE,
+			},
+			updatedAt: {
+				allowNull: false,
+				type: DataTypes.DATE,
+			},
+		});
+	},
+	async down(queryInterface, DataTypes) {
+		await queryInterface.dropTable('Users');
+	},
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -298,6 +277,12 @@ module.exports = (sequelize, DataTypes) => {
 =======
 >>>>>>> 2dfab96 (feature: add user registration)
 =======
+  async down(queryInterface, DataTypes) {
+=======
+  async down(queryInterface) {
+>>>>>>> 3d6b4ac (chore: minor changes)
+    await queryInterface.dropTable('Users');
+  }
 >>>>>>> 886728a (finished rebasing and updating user model)
 =======
 >>>>>>> d0a89b9 (rebase commit)
@@ -310,15 +295,3 @@ module.exports = (sequelize, DataTypes) => {
 =======
 >>>>>>> 2dfab96 (feature: add user registration)
 };
-=======
-  User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
-  return User;
-};
->>>>>>> 7644ca4 (#181339524-docker-setup-for-cabal-project (#14))

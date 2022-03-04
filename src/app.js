@@ -24,10 +24,10 @@ app.use("/api/v1", routes);
 app.use("/api-docs", serve, setup(docs));
 
 app.get("/", function (req, res) {
-  res.send({ status: 200, message: "Welcome to Barefoot Nomad." });
+  res.status(200).json({message: "Welcome to Barefoot Nomad." });
 });
 app.get("*", function (req, res) {
-  res.send({ status: 404, message: "Route not found." });
+  res.status(404).json({message: "Route not found." });
 });
 const server = app.listen(port, () => {
   console.log("server up running on port ", port);

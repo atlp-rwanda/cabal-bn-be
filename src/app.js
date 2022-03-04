@@ -1,5 +1,4 @@
 import express from "express";
-import Sequelize from "sequelize";
 import "dotenv/config";
 import { serve, setup } from "swagger-ui-express";
 import routes from "routes/index";
@@ -24,6 +23,12 @@ connectdb();
 app.use("/api/v1", routes);
 app.use("/api-docs", serve, setup(docs));
 
+app.get("/", function (req, res) {
+  res.send({ status: 200, message: "Welcome to Barefoot Nomad." });
+});
+app.get("*", function (req, res) {
+  res.send({ status: 404, message: "Route not found." });
+});
 const server = app.listen(port, () => {
   console.log("server up running on port ", port);
 });

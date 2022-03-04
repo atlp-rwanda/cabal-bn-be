@@ -1379,6 +1379,7 @@ balanced-match@^1.0.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 base64-js@^1.3.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
@@ -1388,6 +1389,8 @@ base64-js@^1.3.1:
 >>>>>>> 7234111 (setting-up-unit-tests)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz#a4301d389b6a43f9b67ff3ca11a3f6637e360e9e"
@@ -1491,6 +1494,7 @@ buffer-writer@2.0.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 buffer@^5.6.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.7.1.tgz#ba62e7c13133053582197160851a8f648e99eed0"
@@ -1505,6 +1509,8 @@ buffer@^5.6.0:
 >>>>>>> 5e26c10 (doing rebase)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 bytes@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.2.tgz#8b0beeb98605adf1b128fa4386403c009e0221a5"
@@ -1965,6 +1971,7 @@ debug@2.6.9:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 debug@4.3.3, debug@4.x, debug@^4.1.0, debug@^4.1.1, debug@^4.3.3:
 =======
 debug@4.3.3, debug@^4.1.0, debug@^4.1.1:
@@ -1975,6 +1982,9 @@ debug@4.3.3, debug@^4.1.0, debug@^4.1.1, debug@^4.3.3:
 =======
 debug@4.3.3, debug@^4.1.0, debug@^4.1.1, debug@^4.3.3:
 >>>>>>> b70778e (coveralls)
+=======
+debug@4.3.3, debug@^4.1.0, debug@^4.1.1, debug@^4.3.3:
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
   integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
@@ -2043,6 +2053,7 @@ delayed-stream@~1.0.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 denque@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/denque/-/denque-2.0.1.tgz#bcef4c1b80dc32efe97515744f21a4229ab8934a"
@@ -2052,6 +2063,8 @@ denque@^2.0.1:
 >>>>>>> 7234111 (setting-up-unit-tests)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
@@ -2996,6 +3009,7 @@ ip-regex@^2.0.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -3005,6 +3019,8 @@ ip@^1.1.5:
 >>>>>>> 7234111 (setting-up-unit-tests)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 ipaddr.js@1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
@@ -3449,6 +3465,7 @@ just-extend@^4.0.2:
   integrity sha512-g3UB796vUFIY90VIv/WX3L2c8CS2MdWUww3CNrYmqza1Fg0DURc2K/O4YrnklBdQarSJ/y8JnJYDGc+1iumQjg==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 jsprim@^1.2.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.2.tgz#712c65533a15c878ba59e9ed5f0e26d5b77c5feb"
@@ -3471,6 +3488,8 @@ kareem@2.3.4:
 
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 keyv@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/keyv/-/keyv-3.1.0.tgz#ecc228486f69991e49e9476485a5be1e8fc5c4d9"
@@ -3680,6 +3699,7 @@ memoizee@^0.4.15:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 memory-pager@^1.0.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/memory-pager/-/memory-pager-1.5.0.tgz#d8751655d22d384682741c972f2c3d6dfa3e66b5"
@@ -3691,6 +3711,8 @@ memory-pager@^1.0.2:
 >>>>>>> 5e26c10 (doing rebase)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
@@ -3793,6 +3815,7 @@ moment-timezone@^0.5.34:
 >>>>>>> 7234111 (setting-up-unit-tests)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 mongodb-connection-string-url@^2.4.1:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/mongodb-connection-string-url/-/mongodb-connection-string-url-2.5.2.tgz#f075c8d529e8d3916386018b8a396aed4f16e5ed"
@@ -3852,6 +3875,8 @@ moment-timezone@^0.5.34:
 
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -4847,6 +4872,7 @@ side-channel@^1.0.4:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 sift@16.0.0:
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/sift/-/sift-16.0.0.tgz#447991577db61f1a8fab727a8a98a6db57a23eb8"
@@ -4856,6 +4882,8 @@ sift@16.0.0:
 >>>>>>> 5e26c10 (doing rebase)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 sigmund@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/sigmund/-/sigmund-1.0.1.tgz#3ff21f198cad2175f9f3b781853fd94d0d19b590"
@@ -4908,6 +4936,7 @@ source-map@^0.6.0, source-map@^0.6.1:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 sparse-bitfield@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/sparse-bitfield/-/sparse-bitfield-3.0.3.tgz#ff4ae6e68656056ba4b3e792ab3334d38273ca11"
@@ -4919,6 +4948,8 @@ sparse-bitfield@^3.0.3:
 >>>>>>> 7234111 (setting-up-unit-tests)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 spawn-wrap@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/spawn-wrap/-/spawn-wrap-2.0.0.tgz#103685b8b8f9b79771318827aa78650a610d457e"
@@ -5242,6 +5273,7 @@ tough-cookie@~2.5.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 tr46@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-3.0.0.tgz#555c4e297a950617e8eeddef633c87d4d9d6cbf9"
@@ -5253,6 +5285,8 @@ tr46@^3.0.0:
 >>>>>>> 7234111 (setting-up-unit-tests)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 tunnel-agent@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/tunnel-agent/-/tunnel-agent-0.6.0.tgz#27a5dea06b36b04a0a9966774b290868f0fc40fd"
@@ -5490,6 +5524,7 @@ verror@1.10.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 webidl-conversions@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-7.0.0.tgz#256b4e1882be7debbf01d05f0aa2039778ea080a"
@@ -5507,6 +5542,8 @@ whatwg-url@^11.0.0:
 >>>>>>> 7234111 (setting-up-unit-tests)
 =======
 >>>>>>> b70778e (coveralls)
+=======
+>>>>>>> 3fcc0172561aaa20488a1a073155226efe6e5190
 which-boxed-primitive@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/which-boxed-primitive/-/which-boxed-primitive-1.0.2.tgz#13757bc89b209b049fe5d86430e21cf40a89a8e6"

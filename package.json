@@ -17,7 +17,7 @@
     "test": {
       "command": "nyc --reporter=html --reporter=text mocha --require @babel/register ./tests/* --timeout 1000000 --exit || true",
       "env": {
-        "NODE_ENV": "",
+        "NODE_ENV": "test",
         "PORT": 3000
       }
     },

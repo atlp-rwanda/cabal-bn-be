@@ -23,8 +23,12 @@
         "NODE_ENV": "test",
         "PORT": 3000
       }
+<<<<<<< HEAD
     },
     "cov": "nyc --reporter=lcov npm test"
+=======
+    }
+>>>>>>> acc68d1 (circleci)
   },
   "repository": "git+https://github.com/atlp-rwanda/cabal-bn-be.git",
   "keywords": [],

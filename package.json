@@ -11,6 +11,7 @@
     "build": "babel src -d build",
     "start": "yarn run build && node ./build/app.js",
     "test": "better-npm-run test",
+    "coverage": "better-npm-run cov",
     "prepare": "husky install",
     "format": "pretty-quick",
     "lint": "eslint src/*.js --fix"
@@ -22,7 +23,8 @@
         "NODE_ENV": "test",
         "PORT": 3000
       }
-    }
+    },
+    "cov": "nyc --reporter=lcov npm test"
   },
   "repository": "git+https://github.com/atlp-rwanda/cabal-bn-be.git",
   "keywords": [],

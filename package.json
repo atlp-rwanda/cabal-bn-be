@@ -13,7 +13,7 @@
     "dbmigrate": "npx sequelize-cli db:migrate",
     "seeding": "npx sequelize db:seed:all",
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run dbmigrate",
-    "test": "npm run migrate:reset && npm run seeding better-npm-run test",
+    "test": " better-npm-run test",
     "coverage": "better-npm-run cov"
   },
   "betterScripts": {
@@ -25,7 +25,7 @@
       }
     },
     "cov": {
-      "command": "nyc report --reporter=text-lcov | coveralls"
+      "command": "nyc report --reporter=text-lcov yarn test"
     }
   },
   "repository": {

@@ -1,12 +1,9 @@
-const { uuid } = require('uuidv4');
-
 module.exports = {
   up: (queryInterface) =>
     queryInterface.bulkInsert(
       'Users',
       [
         {
-          user_id: uuid(),
           first_name: 'ADMIN',
           last_name: 'ADMIN',
           password: 'ADMIN@gmail',
@@ -20,7 +17,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          user_id: uuid(),
           first_name: 'REQUESTER',
           last_name: 'REQUESTER',
           password: 'REQUESTER@gmail',
@@ -34,7 +30,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          user_id: uuid(),
           first_name: 'SUPER_ADMIN',
           last_name: 'SUPER_ADMIN',
           password: 'SUPER_ADMIN@gmail',

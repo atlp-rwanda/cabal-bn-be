@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-coveralls: coveralls/coveralls@1.0.6
+ coveralls: coveralls/coveralls@1.0.6
 
 jobs:
   build:
@@ -13,27 +13,21 @@ jobs:
       - run:
           name: install dependencies
           command: yarn install
-      - restore_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
-
-      - save_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
-        paths:
-          - ./node_modules
+     
       - run:
           name: run test
           command: yarn run test
       - run:
-        name: coverage
-        command: yarn run coverage
+          name: coverage
+          command: yarn run coverage
 
       - coveralls/upload
       - store_artifacts:
           path: test-results
-          prefix: tests
+          
       - store_artifacts:
-          path: coverage
-          prefix: coverage
+           path: coverage
+           
       - store_test_results:
           path: test-results
 

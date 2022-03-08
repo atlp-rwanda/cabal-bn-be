@@ -32,7 +32,7 @@ const userValidation = (req, res, next) => {
     password: Joi.string()
       .required()
       .empty()
-      .pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#*&]+)[\w@#*&]{8,}$/)
+      .pattern(/^(?=.*[A-Z])(?=.*[0-9])\w{8,}$/)
       .messages({
         'any.required': '{{#label}} field is required',
         'string.base': '{{#label}} must be of type string',

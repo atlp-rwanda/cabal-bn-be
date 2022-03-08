@@ -12,7 +12,7 @@ describe('USER END-POINT TEST', () => {
         .post('/api/v1/users/register')
         .send({
           email: `T${new Date().getMilliseconds()}tsa2341@gmail.com`,
-          password: 'Tsa2341@gmail'
+          password: 'Tsa2341gmail'
         });
 
       expect(res.body).to.haveOwnProperty('token');
@@ -22,7 +22,7 @@ describe('USER END-POINT TEST', () => {
     it('should not register a user if exist', async () => {
       const res = await request(app).post('/api/v1/users/register').send({
         email: 'REQUESTER@gmail.com',
-        password: 'Tsa2341@gmail'
+        password: 'Tsa2341gmail'
       });
 
       expect(res).to.have.status([409]);

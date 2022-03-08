@@ -1,12 +1,18 @@
 const responses = {
   200: {
-    description: "success",
+    description: 'success'
+  },
+  201: {
+    description: 'created'
   },
   400: {
-    description: "Bad Request",
+    description: 'Bad Request'
+  },
+  409: {
+    description: 'conflict'
   },
   500: {
-    description: "server Error",
-  },
+    description: 'server Error'
+  }
 };
 export default responses;

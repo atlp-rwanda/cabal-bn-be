@@ -16,6 +16,7 @@
     "lint": "eslint src/*.js --fix",
     "dbmigrate": "npx sequelize-cli db:migrate",
     "seeding": "npx sequelize-cli db:seed:all",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo:all",
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run dbmigrate",
     "dbmigrate:all": "npx sequelize-cli db:migrate:undo:all && npm run dbmigrate && npm run seeding"
   },
@@ -28,7 +29,7 @@
       }
     },
     "test": {
-      "command": "npm run dbmigrate:all && nyc mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000 --exit",
+      "command": "npm run dbmigrate:all && nyc mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000 --exit && npm run migrate:undo",
       "env": {
         "NODE_ENV": "test",
         "PORT": 3000

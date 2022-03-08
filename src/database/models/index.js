@@ -23,7 +23,20 @@ if (mode === 'development') {
     });
 }
 if (mode === 'test') {
-  sequelize = new Sequelize(process.env.TEST_DATABASE_URL);
+  sequelize = new Sequelize({
+    database: process.env.POSTGRES_DB,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    host: process.env.DB_HOST,
+    port: 5432,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  });
   sequelize
     .authenticate()
     .then(() => {
@@ -35,10 +48,10 @@ if (mode === 'test') {
 }
 if (mode === 'production') {
   sequelize = new Sequelize({
-    database: process.env.DATABASE,
-    username: process.env.USER,
-    password: process.env.PASSWORD,
-    host: process.env.HOST,
+    database: process.env.POSTGRES_DB,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    host: process.env.DB_HOST,
     port: 5432,
     dialect: 'postgres',
     dialectOptions: {

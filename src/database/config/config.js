@@ -11,19 +11,25 @@ module.exports = {
     logging: false
   },
   test: {
-    use_env_variable: 'TEST_DATABASE_URL',
-    database: process.env.CI_DB_NAME,
-    password: process.env.CI_DB_PASSWORD,
-    username: process.env.CI_DB_USERNAME,
+    database: process.env.POSTGRES_DB,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    host: process.env.DB_HOST,
+    port: 5432,
     dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    },
     logging: false
   },
   production: {
-    use_env_variable: 'PROD_DATABASE_URL',
-    database: process.env.DATABASE,
-    username: process.env.USER,
-    password: process.env.PASSWORD,
-    host: process.env.HOST,
+    database: process.env.POSTGRES_DB,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    host: process.env.DB_HOST,
     port: 5432,
     dialect: 'postgres',
     dialectOptions: {

@@ -27,4 +27,15 @@ describe('HOME END-POINT TEST', () => {
         done();
       });
   });
+
+  it('Should display a welcome  message', (done) => {
+    chai
+      .request(app)
+      .get(`/`)
+      .end((err, res) => {
+        expect(res).to.have.status([200]);
+        expect(res.body.message).to.equal('Welcome to Barefoot Nomad.');
+        done();
+      });
+  });
 });

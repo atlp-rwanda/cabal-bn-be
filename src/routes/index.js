@@ -4,7 +4,7 @@ import userRoutes from './api/user.route';
 
 const routes = express.Router();
 
-routes.use('/user', userRoutes);
+routes.use('/users', userRoutes);
 routes.use("/home", home);
 
 export default routes;

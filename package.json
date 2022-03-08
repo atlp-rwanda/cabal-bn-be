@@ -11,6 +11,7 @@
     "build": "babel src -d build",
     "start": "better-npm-run prod",
     "test": "better-npm-run test",
+    "coverage": "better-npm-run cov",
     "prepare": "husky install",
     "format": "pretty-quick",
     "lint": "eslint src/*.js --fix",
@@ -35,6 +36,7 @@
         "PORT": 3000
       }
     },
+    "cov": "nyc --reporter=lcov npm test",
     "prod": {
       "command": "yarn run build && node ./build/app.js",
       "env": {

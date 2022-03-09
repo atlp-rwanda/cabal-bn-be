@@ -1,9 +1,38 @@
+/* eslint-disable no-shadow */
+/* eslint-disable arrow-body-style */
 /* eslint-disable import/prefer-default-export */
 import { User } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import RoleService from '../services/role.service';
 
 export const checkLoggedInUser = async (req, res, next) => {
+  const token =
+    req.headers.authorization && req.headers.authorization.split(' ')[1];
+  if (!token) return res.status(403).json({ message: 'user not logged in' });
+  try {
+    const decoded = decodeToken(token);
+    const freshUser = await User.findByPk(decoded.userId, {
+      include: 'Role'
+    });
+    req.user = freshUser;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'access denied' });
+  }
+};
+export const roles = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.dataValues.Role.dataValues.name)) {
+      return next(
+        res
+          .status(403)
+          .json({ message: 'you are not allowed to perform this action' })
+      );
+    }
+    next();
+  };
+};
+export const TravelAdmin = async (req, res, next) => {
   const token =
     req.headers.authorization && req.headers.authorization.split(' ')[1];
   let payload;
@@ -18,8 +47,8 @@ export const checkLoggedInUser = async (req, res, next) => {
     include: 'Role'
   });
 
-  if (user.Role.name !== 'SUPER_ADMIN') {
-    return res.status(401).json({ message: 'access denied' });
+  if (user.Role.name !== 'TRAVEL_ADMIN') {
+    return res.status(401).json({ message: 'only Travel Admin is allowed' });
   }
 
   next();

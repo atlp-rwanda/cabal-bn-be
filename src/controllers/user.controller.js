@@ -33,14 +33,15 @@ export default class UserController {
       const validation = await comparePassword(req.body.password, user.password)
       if(validation) {
         const token = await generateToken({email: user.email}, "1d")
-        res.status(201).header("authenticate", token).json({message: "Logged in successfully", token: token})
+        return res.status(201).header("authenticate", token).json({message: "Logged in successfully", token: token})
       }
       else {
-        res.status(401).send("Invalid password")
+        return res.status(400).json({message: "Invalid password"})
       }
     } catch (error) {
-      console.log(error)
-      res.status(404).send({error: error})
+      return res.status(404).json({
+        message: "Error occured while logging in",
+        error: error})
     }
     
   }

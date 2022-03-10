@@ -20,8 +20,5 @@ routes.post('/login', userValidation, async (req, res) => {
   await new UserController().userLogin(req, res);
 })
 
-routes.get("/testAuth", authenticateRoute, (req, res) => {
-  res.status(200).send("Welcome on the test authentication route")
-})
 
 export default routes;

@@ -20,18 +20,16 @@ export const checkEmailExist = async (req, res, next) => {
   }
 };
 
-export const authenticateRoute = async (req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(" ")[1];
-    if (token) {
-      const verify = Jwt.verify(token, process.env.SECRETE);
-      req.user = verify
-      next()
-  }
-  } catch (error) {
-    res.status(401).send("Access denied")
+// export const authenticateRoute = async (req, res, next) => {
+//   try {
+//     const token = req.headers.authorization.split(" ")[1];
+//     if (token) {
+//       const verify = Jwt.verify(token, process.env.SECRETE);
+//       req.user = verify
+//       next()
+//   }
+//   } catch (error) {
+//     return res.status(401).json({message: "Access denied"})
     
-  }
-  
-  
-}
+//   }
+// }

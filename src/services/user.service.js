@@ -19,7 +19,7 @@ export default class UserService {
     }
 
     else {
-      res.status(404).send("User not found")
+      return res.status(404).json({message: "User not found in database"})
     }
   }
 }

@@ -1,7 +1,3 @@
-// import { } from 'bcrypt';
-// import jwt from 'jsonwebtoken';
-// import "dotenv"
-
 const { genSaltSync, hashSync, compareSync } = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv');

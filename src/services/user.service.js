@@ -5,7 +5,6 @@ export default class UserService {
         const newUser = await User.create(data);
         return newUser;
     }
-
     async userExist(email) {
         const user = await User.findOne({ where: { email } });
         if (user) {
@@ -19,11 +18,12 @@ export default class UserService {
             where: { email: data }
         })
 
-        if (userExist) {
-            return userExist
+        if (!userExist) {
+            throw 'User not found in database';
         }
+        return userExist
 
-        return res.status(404).json({ message: "User not found in database" })
+
     }
 
     async getUser(email) {

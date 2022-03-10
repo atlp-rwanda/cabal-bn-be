@@ -1,11 +1,10 @@
 import responses from './response';
 
-
 const forgot = {
-    '/users/forgot': {
+    '/users/forgot-password': {
         post: {
             summary: 'Forgotten password',
-            tags: ['Forgot '],
+            tags: ['User'],
             parameters: [{ in: 'body',
                 name: 'forgot',
                 schema: {
@@ -19,22 +18,28 @@ const forgot = {
             responses,
         },
     },
-    '/users/reset': {
-        post: {
-            summary: 'reset password',
-            tags: ['Reset'],
-            security: [{
-                JWT: [],
-            }, ],
-            parameters: [{ in: 'body',
-                name: 'forgot',
-                schema: {
-                    example: {
-                        password: "password"
-                    }
+    '/users/reset-password/{token}': {
+        patch: {
+            summary: 'Reset password',
+            tags: ['User'],
+            parameters: [{ in: 'path',
+                    name: 'token',
+                    required: true,
+                    schema: {
+                        example: "dsagbfghdfhgdfgfdgdjhdfsjfh",
+                    },
                 },
-                required: true,
-            }, ],
+                { in: 'body',
+                    name: 'name',
+                    required: true,
+                    schema: {
+                        example: {
+                            password: 'password',
+                        },
+                    },
+                },
+
+            ],
             consumes: ['application/json'],
             responses,
         }

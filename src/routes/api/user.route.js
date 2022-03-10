@@ -10,6 +10,7 @@ import {
 } from '../../middlewares/role.middleware';
 import roleValidation from '../../validations/role.validation';
 import RoleController from '../../controllers/role.controller';
+import { EmailValidation, PasswordValidation } from '../../validations/resetPassword.validation';
 
 const routes = express.Router();
 
@@ -64,6 +65,6 @@ routes.patch(
 routes.get('/getRoles', checkLoggedInUser, async(req, res) => {
     await new RoleController().getRoles(req, res);
 });
-routes.post('/reset', PasswordValidation, UserController.reset);
-routes.post('/forgot', EmailValidation, UserController.forgot);
+routes.patch('/reset-password/:token', PasswordValidation, UserController.reset);
+routes.post('/forgot-password', EmailValidation, UserController.forgot);
 export default routes;

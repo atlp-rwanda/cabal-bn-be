@@ -4,9 +4,10 @@
 import UserService from '../services/user.service';
 const bcrypt = require('bcrypt');
 import { User } from '../database/models';
-import { generateToken, generateTokenid, hashPassword, comparePassword } from '../helpers/user.helpers';
+import { generateToken, hashPassword, comparePassword } from '../helpers/user.helpers';
 import sgMail from '@sendgrid/mail';
 import { config } from 'dotenv';
+import { confirmEmail } from '../utils/email.utils';
 import jwt from 'jsonwebtoken';
 config();
 
@@ -49,7 +50,10 @@ export default class UserController {
                     .header('authenticate', token)
                     .json({ message: 'Logged in successfully', token });
             }
+            console.log(user.password)
+            console.log(req.body.password)
             return res.status(401).json({ message: 'Invalid password' });
+
         } catch (error) {
             return res.status(404).json({
                 message: 'Error occured while logging in',
@@ -60,61 +64,41 @@ export default class UserController {
     static async forgot(req, res) {
 
         const exist = await new UserService().userExist(req.body.email);
-        const tokenid = generateTokenid(exist.id, '2h')
+
         if (exist.email) {
+            const tokenid = generateToken({ id: exist.id }, '10m')
             const message = {
                 to: exist.email,
                 from: {
-                    name: "cabal",
-                    email: 'cabalbarefoot@gmail.com',
+                    name: process.env.EMAIL_NAME,
+                    email: process.env.FROM_EMAIL,
                 },
                 subject: 'reset password',
                 text: 'request for reset password',
-                html: `  
-                Hi ${exist.first_name},<br>
-                Forgot your password?<br>
-                We received a request to reset the password for your account.
-                <br>
-                To reset your password, click on the button bellow 
-                <br>
-                <a href=${process.env.BASE_URL}/api-docs/${tokenid}>
-                <button>Reset Password</button>
-                </a>
-                <br>
-                or copy and paste the URL into your browser.<br>
-                <a href=${process.env.BASE_URL}/api-docs/${tokenid}>resertpassword</a>
-                <br>
-                This password reset link is only valid for the next 2 hours.
-                <br>
-                If you did not make this request then please ignore this email.
-
-                `
+                html: confirmEmail(tokenid),
             }
             sgMail.send(message)
                 .then(response => {
-                    res.status(200).json({ status: 200, message: "check your email" });
+                    res.status(200).json({ status: 200, message: "Password reset link has been sent to your email" });
                 })
                 .catch(error => console.log(error.message))
 
         } else {
-            res.status(403).json({ status: 403, message: 'Email not exist' });
+            res.status(404).json({ status: 404, message: 'Email has not found' });
         }
     }
     static async reset(req, res) {
-        const fpassword = req.body.password;
-        const token = req.headers.authorization.split(" ")[1];
-        const userInfo = jwt.verify(token, process.env.SECRETE);
-        const userId = userInfo.id;
-        bcrypt.hash(fpassword, 10, (err, newpassword) => {
-
-            try {
-                const n = User.update({ password: newpassword }, { where: { id: userId } })
-                return res.status(200).send("reset well");
-            } catch (error) {
-                return res.status(403).send("reset not well");
-            }
-
-        });
+        try {
+            const { password } = req.body;
+            const { token } = req.params;
+            const userInfo = jwt.verify(token, process.env.SECRETE);
+            const userId = userInfo.id;
+            const newPassword = await bcrypt.hash(password, 10);
+            User.update({ password: newPassword }, { where: { id: userId } })
+            return res.status(200).send({ message: "Your new password has been set Return to Login" });
+        } catch (error) {
+            return res.status(500).send({ message: error.message });
+        }
 
     }
     async googleLogin(req, res) {

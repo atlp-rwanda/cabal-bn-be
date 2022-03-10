@@ -1,5 +1,4 @@
-const { uuid } = require('uuidv4');
-const { hashPassword } = require("../../helpers/user.helpers")
+const { hashPassword } = require('../../helpers/user.helpers');
 
 module.exports = {
     up: (queryInterface) =>
@@ -7,7 +6,7 @@ module.exports = {
             'Users', [{
                     first_name: 'SUPER_ADMIN',
                     last_name: 'SUPER_ADMIN',
-                    password: hashPassword('SUPER_ADMIN2gmail'),
+                    password: hashPassword('Password12'),
                     email: 'SUPER_ADMIN@gmail.com',
                     address: 'kigali',
                     profile_picture: 'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',

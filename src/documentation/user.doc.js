@@ -23,24 +23,23 @@ export const user = {
     }
   },
 
-  "/users/login": {
+  '/users/login': {
     post: {
-      tag: ["User"],
-      summary: "login",
-      description: "user login route",
+      tags: ['User'],
+      summary: 'login',
+      description: 'user login route',
       parameters: [
         {
-          name: "body",
-          in: "body",
-          description: "user login",
+          name: 'body',
+          in: 'body',
+          description: 'user login',
           required: true,
           schema: {
-            $ref: "#/definitions/login"
+            $ref: '#/definitions/login'
           }
-
         }
       ],
-      responses,
+      responses
     }
   }
 };
@@ -73,14 +72,14 @@ export const userDefinitions = {
   },
 
   login: {
-    type: "object",
+    type: 'object',
     properties: {
       email: {
-        type: "string",
+        type: 'string',
         required: true
       },
       password: {
-        type: "string",
+        type: 'string',
         required: true
       }
     }

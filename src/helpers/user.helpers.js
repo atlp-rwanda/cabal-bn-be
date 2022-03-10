@@ -1,14 +1,30 @@
-import { genSaltSync, hashSync } from 'bcrypt';
-import jwt from 'jsonwebtoken';
+// import { } from 'bcrypt';
+// import jwt from 'jsonwebtoken';
+// import "dotenv"
 
-export function hashPassword(pass) {
+const {genSaltSync, hashSync, compareSync } = require("bcrypt")
+const jwt = require("jsonwebtoken")
+require("dotenv")
+
+function hashPassword(pass) {
 	const salt = genSaltSync(10, 'b');
 
 	return hashSync(pass, salt);
 }
 
-export function generateToken(email, expiresIn) {
-	var token = jwt.sign({ email }, process.env.SECRETE, { expiresIn });
+function comparePassword(plainPassword, hashedPassword) {
+	const compare = compareSync(plainPassword, hashedPassword);
+	return compare
+}
 
+function generateToken(payload, expiresIn) {
+	var token = jwt.sign(payload, process.env.SECRETE, { expiresIn });
 	return token;
 }
+
+function decodeToken(token) {
+	const verify = jwt.verify(token, process.env.SECRETE)
+	return verify
+}
+
+module.exports = {hashPassword, comparePassword, generateToken, decodeToken}

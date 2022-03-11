@@ -8,4 +8,18 @@ export default class UserService {
     const newUser = await User.create(data);
     return newUser;
   }
+
+  async userLogin(data, res) {
+    const userExist = await User.findOne({
+      where: {email: data}
+    })
+
+    if (userExist) {
+      return userExist
+    }
+
+    else {
+      return res.status(404).json({message: "User not found in database"})
+    }
+  }
 }

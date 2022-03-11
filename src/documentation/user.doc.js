@@ -1,3 +1,4 @@
+import { string } from 'joi';
 import responses from './response';
 
 export const user = {
@@ -15,6 +16,26 @@ export const user = {
           required: true,
           schema: {
             $ref: '#/definitions/register'
+          }
+        }
+      ],
+      responses
+    }
+  },
+
+  '/users/login': {
+    post: {
+      tags: ['User'],
+      summary: 'login',
+      description: 'user login route',
+      parameters: [
+        {
+          name: 'body',
+          in: 'body',
+          description: 'user login',
+          required: true,
+          schema: {
+            $ref: '#/definitions/login'
           }
         }
       ],
@@ -44,6 +65,20 @@ export const userDefinitions = {
         required: true
       },
       address: {
+        type: 'string',
+        required: true
+      }
+    }
+  },
+
+  login: {
+    type: 'object',
+    properties: {
+      email: {
+        type: 'string',
+        required: true
+      },
+      password: {
         type: 'string',
         required: true
       }

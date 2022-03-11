@@ -42,7 +42,7 @@ export default class UserController {
           .header('authenticate', token)
           .json({ message: 'Logged in successfully', token });
       }
-      return res.status(400).json({ message: 'Invalid password' });
+      return res.status(401).json({ message: 'Invalid password' });
     } catch (error) {
       return res.status(404).json({
         message: 'Error occured while logging in',

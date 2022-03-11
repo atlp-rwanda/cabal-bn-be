@@ -12,17 +12,6 @@ export default class RoleController {
       const user = await new UserService().getUser(email);
       const { id: roleId } = await new RoleService().getRole(role);
 
-      if (!user) {
-        return res.status(404).json({
-          message: `User with email ${email} doesn't exist`
-        });
-      }
-      if (user.role_id === roleId) {
-        return res.status(409).json({
-          message: `User already have ${role} role`
-        });
-      }
-
       user.role_id = roleId;
       await user.save();
 

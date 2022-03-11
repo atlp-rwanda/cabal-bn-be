@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import welcome from './welcome';
 import { user, userDefinitions } from './user.doc';
 import { role, assignRoleDefinitions } from './role.doc';
+import { trip, tripDefinitions } from './trip.doc';
 
 dotenv.config();
 
@@ -13,12 +14,14 @@ const host =
 const paths = {
   ...welcome,
   ...user,
-  ...role
+  ...role,
+  ...trip
 };
 
 const definitions = {
   ...userDefinitions,
-  ...assignRoleDefinitions
+  ...assignRoleDefinitions,
+  ...tripDefinitions
 };
 
 const config = {

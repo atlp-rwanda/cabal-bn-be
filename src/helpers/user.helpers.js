@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const { genSaltSync, hashSync, compareSync } = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv');
@@ -14,13 +15,13 @@ function comparePassword(plainPassword, hashedPassword) {
 }
 
 function generateToken(payload, expiresIn) {
-  var token = jwt.sign(payload, process.env.SECRETE, { expiresIn });
+  const token = jwt.sign(payload, process.env.SECRETE, { expiresIn });
   return token;
 }
 
-// function decodeToken(token) {
-// 	const verify = jwt.verify(token, process.env.SECRETE)
-// 	return verify
-// }
+function decodeToken(token) {
+  const verify = jwt.verify(token, process.env.SECRETE);
+  return verify;
+}
 
-module.exports = { hashPassword, comparePassword, generateToken };
+module.exports = { hashPassword, comparePassword, generateToken, decodeToken };

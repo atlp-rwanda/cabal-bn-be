@@ -8,6 +8,9 @@ const responses = {
   400: {
     description: 'Bad Request'
   },
+  401: {
+    description: 'Not authorized'
+  },
   409: {
     description: 'conflict'
   },

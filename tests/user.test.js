@@ -2,7 +2,6 @@ import chai, { request, expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app';
 import 'dotenv/config';
-import { generateToken } from '../src/helpers/user.helpers';
 
 chai.use(chaiHttp);
 

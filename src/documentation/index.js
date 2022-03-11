@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import welcome from './welcome';
 import { user, userDefinitions } from './user.doc';
+import { role, assignRoleDefinitions } from './role.doc';
 
 dotenv.config();
 
@@ -11,11 +12,13 @@ const host =
 
 const paths = {
   ...welcome,
-  ...user
+  ...user,
+  ...role
 };
 
 const definitions = {
-  ...userDefinitions
+  ...userDefinitions,
+  ...assignRoleDefinitions
 };
 
 const config = {

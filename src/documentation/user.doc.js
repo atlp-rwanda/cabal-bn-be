@@ -1,11 +1,10 @@
-import { string } from 'joi';
 import responses from './response';
 
 export const user = {
   '/users/register': {
     post: {
       tags: ['User'],
-      summary: 'Regidter',
+      summary: 'Register',
       description: 'Register a user',
       operationId: 'postUsersRegister',
       parameters: [

@@ -2,7 +2,6 @@ import chai, { request, expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app';
 import 'dotenv/config';
-import { generateToken } from '../src/helpers/user.helpers';
 
 chai.use(chaiHttp);
 
@@ -97,7 +96,7 @@ describe('USER END-POINT TEST', () => {
         email: 'SUPER_ADMIN@gmail.com',
         password: 'SUPER_ADMIN2'
       });
-      expect(res.status).to.be.equal(400);
+      expect(res.status).to.be.equal(401);
       expect(res.body).to.haveOwnProperty('message');
     });
 

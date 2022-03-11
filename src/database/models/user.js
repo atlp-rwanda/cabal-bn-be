@@ -12,8 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({Role}) {
       // define association here
+      this.belongsTo(Role, { foreignKey: 'role_id' });
     }
   }
   User.init(
@@ -29,14 +30,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true
       },
-      language: DataTypes.STRING,
       address: DataTypes.STRING,
       profile_picture: {
         type: DataTypes.STRING,
         defaultValue:
           'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg'
       },
-      nationality: DataTypes.STRING
     },
     {
       sequelize,

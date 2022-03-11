@@ -38,7 +38,7 @@
     },
     "cov": "nyc --reporter=lcov npm test",
     "prod": {
-      "command": "yarn run migrate:reset && yarn run build && node ./build/app.js",
+      "command": "yarn run dbmigrate:all && yarn run build && node ./build/app.js",
       "env": {
         "NODE_ENV": "production"
       }

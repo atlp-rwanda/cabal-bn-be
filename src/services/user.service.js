@@ -18,8 +18,10 @@ export default class UserService {
       return userExist
     }
 
-    else {
-      return res.status(404).json({message: "User not found in database"})
-    }
+    return res.status(404).json({message: "User not found in database"})
+  }
+
+  async getUser(email) {
+    return User.findOne({ where: { email } });
   }
 }

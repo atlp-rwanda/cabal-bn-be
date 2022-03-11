@@ -18,14 +18,16 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      language: DataTypes.STRING,
       address: DataTypes.STRING,
       profile_picture: {
         type: DataTypes.STRING,
         defaultValue:
           'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg'
       },
-      nationality: DataTypes.STRING,
+      role_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

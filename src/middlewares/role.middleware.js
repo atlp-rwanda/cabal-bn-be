@@ -40,7 +40,7 @@ export const checkRoleSame = async (req, res, next) => {
   next();
 };
 
-export const checkEmailExist = async (req, res, next) => {
+export const checkEmailNotExist = async (req, res, next) => {
   const { email } = req.body;
   const emailExist = await User.findOne({
     where: {
@@ -51,7 +51,7 @@ export const checkEmailExist = async (req, res, next) => {
     next();
   } else {
     return res
-      .status(409)
+      .status(404)
       .json({ message: `User with email ${email} doesn't exist` });
   }
 };

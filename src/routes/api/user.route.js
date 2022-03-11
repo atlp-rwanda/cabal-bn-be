@@ -2,10 +2,11 @@ import express from 'express';
 import passport from '../../middlewares/passport.middleware';
 import UserController from '../../controllers/user.controller';
 import userValidation from '../../validations/user.validation';
+import { checkEmailExist } from '../../middlewares/user.middleware';
 import {
   checkLoggedInUser,
   checkRoleSame,
-  checkEmailExist
+  checkEmailNotExist
 } from '../../middlewares/role.middleware';
 import roleValidation from '../../validations/role.validation';
 import RoleController from '../../controllers/role.controller';
@@ -30,7 +31,7 @@ routes.patch(
   '/assignRole',
   roleValidation,
   checkLoggedInUser,
-  checkEmailExist,
+  checkEmailNotExist,
   checkRoleSame,
   async (req, res) => {
     await new RoleController().updateRole(req, res);

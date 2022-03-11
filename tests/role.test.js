@@ -98,5 +98,13 @@ describe('ROLE END-POINT TEST', () => {
       expect(res.status).to.equal(403);
       expect(res.body.message).to.equal('user not logged in');
     });
+
+    it('should retrieve all roles', async () => {
+      const res = await request(app)
+        .get('/api/v1/users/getRoles')
+        .set('Authorization', `Bearer ${superToken}`);
+
+      expect(res.status).to.equal(200);
+    });
   });
 });

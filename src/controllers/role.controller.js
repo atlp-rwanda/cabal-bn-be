@@ -39,4 +39,21 @@ export default class RoleController {
       });
     }
   }
+
+  async getRoles(...args) {
+    const res = args[1];
+    try {
+      const roles = await new RoleService().getRoles();
+      res
+        .status(200)
+        .json({ message: 'retrieved all roles successfully', data: roles });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error occured while creating a user',
+        error:
+          (error.message && error.message.replace(/['"`]+/gi, '')) ||
+          'user not created'
+      });
+    }
+  }
 }

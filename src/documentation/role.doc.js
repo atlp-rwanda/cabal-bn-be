@@ -26,6 +26,21 @@ export const role = {
         }
       ]
     }
+  },
+
+  '/users/getRoles': {
+    get: {
+      tags: ['User'],
+      summary: 'get all roles',
+      description: 'get all user roles',
+      operationId: 'getUsersRoles',
+      responses,
+      security: [
+        {
+          JWT: []
+        }
+      ]
+    }
   }
 };
 

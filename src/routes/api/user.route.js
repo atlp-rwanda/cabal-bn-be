@@ -32,5 +32,9 @@ routes.patch(
   }
 );
 
+routes.get('/getRoles', checkLoggedInUser, async (req, res) => {
+  await new RoleController().getRoles(req, res);
+});
+
 
 export default routes;

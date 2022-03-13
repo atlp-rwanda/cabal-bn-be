@@ -3,6 +3,7 @@
 /* eslint-disable require-jsdoc */
 
 const { Model } = require('sequelize');
+const Sequelize = require('sequelize');
 const roles = require('../../utils/roles.utils');
 
 module.exports = (sequelize, DataTypes) => {
@@ -36,6 +37,15 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue:
           'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg'
       },
+<<<<<<< HEAD
+=======
+      nationality: DataTypes.STRING,
+      Logged_in: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue:true
+      }
+>>>>>>> 1797fa5 (log out functionalities)
     },
     {
       sequelize,

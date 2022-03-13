@@ -19,9 +19,9 @@ function generateToken(payload, expiresIn) {
   return token;
 }
 
-function decodeToken(token) {
-  const verify = jwt.verify(token, process.env.SECRETE);
-  return verify;
+function decodeToken(accessToken) {
+  const decoded = jwt.decode(accessToken, process.env.SECRETE);
+  return decoded;
 }
 
 module.exports = { hashPassword, comparePassword, generateToken, decodeToken };

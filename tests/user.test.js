@@ -109,4 +109,62 @@ describe('USER END-POINT TEST', () => {
       expect(res).to.haveOwnProperty('text');
     });
   });
+
+  describe.only('USER-LOGOUT TEST', () => {
+    /*it('should log out a user', async (done) => {
+      const token = await generateToken({ email: 'REQUESTER@gmail.com' }, '1d');
+      chai
+        .request(app)
+        .post(`/api/v1/users/logout`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send()
+        .end((res, err) => {
+          expect(res).to.have.status([200]);
+          done();
+        });
+
+    });*/
+
+    it('should log out a user', async () => {
+      const token = await generateToken(
+        { email: 'SUPER_ADMIN@gmail.com' },
+        '1d'
+      );
+
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logout`)
+        .set({ Authorization: `Bearer ${token}` });
+
+      expect(res.status).to.be.equal(200);
+    });
+
+    it('should not log out a user on wrong route', async () => {
+      const token = await generateToken({ email: 'REQUESTER@gmail.com' }, '1d');
+
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logouttt`)
+        .set({ Authorization: `Bearer ${token}` });
+
+      expect(res.status).to.be.equal(404);
+    });
+
+    it('should not log out a user without access token', async () => {
+      const res = await chai.request(app).post(`/api/v1/users/logout`);
+
+      expect(res.status).to.be.equal(401);
+    });
+
+    it('should not log out a user with invalid access token', async () => {
+      const token = await generateToken({ email: 'UNKNOWN@gmail.com' }, '1d');
+
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logout`)
+        .set({ Authorization: `Bearer ${token}` });
+
+      expect(res.status).to.be.equal(401);
+    });
+  });
 });

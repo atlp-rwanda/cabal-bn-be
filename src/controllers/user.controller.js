@@ -1,7 +1,11 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable require-jsdoc */
 import UserService from 'services/user.service';
-import { generateToken, hashPassword, comparePassword } from 'helpers/user.helpers';
+import {
+  generateToken,
+  hashPassword,
+  comparePassword
+} from 'helpers/user.helpers';
 
 export default class UserController {
   constructor() {
@@ -40,14 +44,27 @@ export default class UserController {
         return res
           .status(201)
           .header('authenticate', token)
-          .json({ message: 'Logged in successfully', token });
+          .json({ message: 'Logged in successfully', token: token });
       }
       return res.status(401).json({ message: 'Invalid password' });
     } catch (error) {
       return res.status(404).json({
         message: 'Error occured while logging in',
-        error
+        error: error
       });
+    }
+  }
+
+  async Logout(req, res) {
+    try {
+      const user = await this.userService.userLogout(
+        req.headers.authorization.split(' ')[1]
+      );
+      return res
+        .status(200)
+        .json({ message: 'You are logged out', email: user.email });
+    } catch (error) {
+      return res.status(404).json({ error: error, message: 'not found' });
     }
   }
 }

@@ -3,10 +3,10 @@ require('dotenv').config();
 module.exports = {
   development: {
     use_env_variable: 'DEV_DATABASE_URL',
-    database: process.env.POSTGRES_DB,
+    database: process.env.DEV_NAME,
     host: process.env.DB_HOST,
-    username: process.env.POSTGRESS_USER,
-    port: process.env.POSTGRES_PORT,
+    username: process.env.DEV_USERNAME,
+    port: process.env.CI_HOST,
     dialect: 'postgres',
     logging: false
   },

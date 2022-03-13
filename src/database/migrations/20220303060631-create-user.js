@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 module.exports = {
   async up(queryInterface, DataTypes) {
     await queryInterface.createTable('Users', {
@@ -35,6 +37,11 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE
+      },
+      Logged_in: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
       }
     });
   },

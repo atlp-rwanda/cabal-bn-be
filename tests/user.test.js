@@ -112,20 +112,6 @@ describe('USER END-POINT TEST', () => {
   });
 
   describe('USER-LOGOUT TEST', () => {
-    it('should log out a user', async () => {
-      const token = await generateToken(
-        { email: 'SUPER_ADMIN@gmail.com' },
-        '1d'
-      );
-
-      const res = await chai
-        .request(app)
-        .post(`/api/v1/users/logout`)
-        .set({ Authorization: `Bearer ${token}` });
-
-      expect(res.status).to.be.equal(200);
-    });
-
     it('should not log out a user on wrong route', async () => {
       const token = await generateToken({ email: 'REQUESTER@gmail.com' }, '1d');
 

@@ -19,9 +19,8 @@ export default class UserService {
       userExist.Logged_in = true;
       userExist.save();
       return userExist;
-    } else {
-      return res.status(404).json({ message: 'User not found in database' });
     }
+    return res.status(404).json({ message: 'User not found in database' });
   }
 
   async userLogout(accessToken) {
@@ -32,20 +31,10 @@ export default class UserService {
         email: email
       }
     });
-
-<<<<<<< HEAD
-    return res.status(404).json({message: "User not found in database"})
+    return user;
   }
 
   async getUser(email) {
     return User.findOne({ where: { email } });
-=======
-    if (user.Logged_in === true) {
-      user.Logged_in = false;
-      user.save();
-    }
-
-    return user;
->>>>>>> 1797fa5 (log out functionalities)
   }
 }

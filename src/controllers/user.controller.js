@@ -45,6 +45,11 @@ export default class UserController {
           .status(201)
           .header('authenticate', token)
           .json({ message: 'Logged in successfully', token: token });
+<<<<<<< HEAD
+=======
+      } else {
+        return res.status(400).json({ message: 'Invalid password' });
+>>>>>>> 1797fa5 (log out functionalities)
       }
       return res.status(401).json({ message: 'Invalid password' });
     } catch (error) {

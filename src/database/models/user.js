@@ -38,13 +38,19 @@ module.exports = (sequelize, DataTypes) => {
           'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg'
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 1797fa5 (log out functionalities)
       nationality: DataTypes.STRING,
       Logged_in: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue:true
       }
+<<<<<<< HEAD
+>>>>>>> 1797fa5 (log out functionalities)
+=======
 >>>>>>> 1797fa5 (log out functionalities)
     },
     {

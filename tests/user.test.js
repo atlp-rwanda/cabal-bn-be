@@ -121,7 +121,7 @@ describe('USER END-POINT TEST', () => {
       const res = await chai
         .request(app)
         .post(`/api/v1/users/logout`)
-        .set({ authorization: `Bearer ${token}` });
+        .set({ Authorization: `Bearer ${token}` });
 
       expect(res.status).to.be.equal(200);
     });

@@ -31,10 +31,12 @@ export default class UserService {
         email: email
       }
     });
-    return user;
-  }
 
-  async getUser(email) {
-    return User.findOne({ where: { email } });
+    if (user.Logged_in === true) {
+      user.Logged_in = false;
+      user.save();
+    }
+
+    return user;
   }
 }

@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue:
           'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg'
       },
-
+      nationality: DataTypes.STRING,
       Logged_in: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

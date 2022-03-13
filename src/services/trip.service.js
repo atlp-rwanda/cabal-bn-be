@@ -30,7 +30,6 @@ class tripService {
       exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
       exist.tripDate = data.tripDate ? data.tripDate : exist.tripDate;
       exist.accomodationId = data.accomodationId ? data.accomodationId : exist.accomodationId;
-      exist.status = data.status ? data.status : exist.status;
       const updatedArticle = await exist.save();
       return updatedArticle;
       }
@@ -40,7 +39,6 @@ class tripService {
   static async findSpecificTrip(userId) {
     const foundOneTrip = await Trip.findAll({ 
       where:{
-        status:"pending",
 // eslint-disable-next-line object-shorthand
         userId:userId
       }

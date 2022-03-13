@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.User,{foreignKey:"userId"})
     }
   }
   Trip.init({
-    userId:DataTypes.INTEGER,
     managerId:DataTypes.INTEGER,
     originCity: DataTypes.STRING,
     destination: DataTypes.STRING,

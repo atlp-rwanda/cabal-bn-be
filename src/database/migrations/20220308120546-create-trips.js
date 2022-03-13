@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       accomodationId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

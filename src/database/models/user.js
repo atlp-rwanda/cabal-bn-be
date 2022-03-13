@@ -4,6 +4,7 @@
 
 const { Model } = require('sequelize');
 const roles = require('../../utils/roles.utils');
+const trip = require('./trip');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -12,9 +13,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Role}) {
+    static associate({Role,Trip}) {
       // define association here
       this.belongsTo(Role, { foreignKey: 'role_id' });
+      this.hasMany(Trip,{foreignKey:"userId"})
     }
   }
   User.init(

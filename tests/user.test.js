@@ -1,5 +1,6 @@
 import chai, { request, expect } from 'chai';
 import chaiHttp from 'chai-http';
+import { generateToken } from '../src/helpers/user.helpers';
 import app from '../src/app';
 import 'dotenv/config';
 
@@ -110,21 +111,7 @@ describe('USER END-POINT TEST', () => {
     });
   });
 
-  describe.only('USER-LOGOUT TEST', () => {
-    /*it('should log out a user', async (done) => {
-      const token = await generateToken({ email: 'REQUESTER@gmail.com' }, '1d');
-      chai
-        .request(app)
-        .post(`/api/v1/users/logout`)
-        .set({ Authorization: `Bearer ${token}` })
-        .send()
-        .end((res, err) => {
-          expect(res).to.have.status([200]);
-          done();
-        });
-
-    });*/
-
+  describe('USER-LOGOUT TEST', () => {
     it('should log out a user', async () => {
       const token = await generateToken(
         { email: 'SUPER_ADMIN@gmail.com' },
@@ -134,7 +121,7 @@ describe('USER END-POINT TEST', () => {
       const res = await chai
         .request(app)
         .post(`/api/v1/users/logout`)
-        .set({ Authorization: `Bearer ${token}` });
+        .set({ authorization: `Bearer ${token}` });
 
       expect(res.status).to.be.equal(200);
     });

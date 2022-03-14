@@ -3,6 +3,7 @@
 /* eslint-disable require-jsdoc */
 import { User } from 'database/models';
 import { decodeToken } from '../helpers/user.helpers';
+import client from '../redis';
 
 export default class UserService {
   async createUser(data) {
@@ -16,8 +17,6 @@ export default class UserService {
     });
 
     if (userExist) {
-      userExist.Logged_in = true;
-      userExist.save();
       return userExist;
     }
     return res.status(404).json({ message: 'User not found in database' });
@@ -32,10 +31,7 @@ export default class UserService {
       }
     });
 
-    if (user.Logged_in === true) {
-      user.Logged_in = false;
-      user.save();
-    }
+    client.set(`${user.email}`, JSON.stringify(accessToken));
 
     return user;
   }

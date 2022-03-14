@@ -48,9 +48,8 @@ export default class UserController {
       }
       return res.status(401).json({ message: 'Invalid password' });
     } catch (error) {
-      return res.status(404).json({
-        message: 'Error occured while logging in',
-        error: error
+      res.status(404).send({
+        message: 'Error occured while logging in'
       });
     }
   }
@@ -60,11 +59,12 @@ export default class UserController {
       const user = await this.userService.userLogout(
         req.headers.authorization.split(' ')[1]
       );
-      return res
-        .status(200)
-        .json({ message: 'You are logged out', email: user.email });
+      return res.status(200).json({
+        message: 'You are logged out',
+        email: user.email
+      });
     } catch (error) {
-      return res.status(404).json({ error: error, message: 'not found' });
+      return res.status(404).json({ message: 'not found' });
     }
   }
 }

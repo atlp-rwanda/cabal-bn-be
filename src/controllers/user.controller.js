@@ -1,12 +1,18 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable require-jsdoc */
 import UserService from 'services/user.service';
-import { generateToken, hashPassword, comparePassword } from 'helpers/user.helpers';
+import {
+  generateToken,
+  hashPassword,
+  comparePassword
+} from 'helpers/user.helpers';
 import sgMail from '@sendgrid/mail';
 import { jwt } from 'jsonwebtoken';
+import { config } from 'dotenv';
 import { verifyEmail } from '../helpers/user.verify';
 
-import 'dotenv';
+config();
 
 export default class UserController {
   constructor() {
@@ -17,32 +23,47 @@ export default class UserController {
     try {
       data.password = hashPassword(data.password);
       data.role_id = 4;
-  
+
       const newUser = await this.userService.createUser(data, res);
-      
+
       const token = generateToken({ id: newUser.id }, '15m');
 
       const msg = {
         from: {
           name: 'Cabal Barefoot Nomad',
-          email: process.env.FROM_MAIL,
+          email: 'cabalbarefoot@gmail.com'
         },
         to: newUser.email,
         subject: 'Email Verification',
         text: `
         Hello, thanks for registering on Barefoot Nomad site.
         Please copy and paste the address below into address bar to verify your account.
-        ${process.env.BASE_URL}/verify-email?token=${token}
+        ${process.env.BASE_URL}/users/verify-email?token=${token}
         `,
-        html: verifyEmail(token),
-      }
-
-        sgMail.send(msg)
-          .then(res, () => {
-            res.status(200).json({ status: 200, message: 'Account created! Please check your email for verification.', data: newUser });
-          }).catch(err => {
-            console.log(err);
-          });
+        html: verifyEmail(token)
+      };
+      sgMail
+        .send(msg)
+        .then(res, () => {
+          return res
+            .status(200)
+            .json({
+              status: 200,
+              message:
+                'Account created! Please check your email for verification.',
+              data: newUser
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return res
+        .status(200)
+        .json({
+          status: 200,
+          message: 'Account created! Please check your email for verification.',
+          data: newUser
+        });
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while creating a user',
@@ -61,15 +82,18 @@ export default class UserController {
         const { token } = req.params;
         const userInfo = jwt.verify(token, process.env.SECRETE);
         const userId = userInfo.id;
-        user.update({ isVerified: true }, { where: { id: userId } })
-        return res.status(200).send({ status: 200, message: "Account verified!" });
+        user.update({ isVerified: true }, { where: { id: userId } });
+        return res
+          .status(200)
+          .send({ status: 200, message: 'Account verified!' });
       } catch (error) {
         return res.status(500).send({ message: error.message });
       }
     } else {
-      return res.status(404).json({ status: 404, message: `User with such email does not exist!` })
+      return res
+        .status(404)
+        .json({ status: 404, message: `User with such email does not exist!` });
     }
-
   }
 
   async userLogin(req, res) {

@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 // eslint-disable-next-line import/prefer-default-export
 export const verifyEmail = (emailData) => {
-    const SendEmail = `<!doctype html>
+  const SendEmail = `<!doctype html>
     <html lang="en-US">
     <head>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
@@ -46,7 +46,7 @@ export const verifyEmail = (emailData) => {
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                 Thank you for registering into Barefoot Nomad. Click the link below to verify your email.
                                             </p>
-                                            <a href="${process.env.BASE_URL}/verify-email?token=${emailData}" style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
+                                            <a href="${process.env.BASE_URL}/users/verify-email?token=${emailData}" style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
                                                 Password</a>
                                         </td>
                                     </tr>
@@ -67,5 +67,5 @@ export const verifyEmail = (emailData) => {
         </table>
     </body>
     </html>`;
-    return SendEmail;
+  return SendEmail;
 };

@@ -1,7 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable require-jsdoc */
 import { User } from '../database/models';
-import Jwt from 'jsonwebtoken';
 import "dotenv"
 
 export const checkEmailExist = async (req, res, next) => {

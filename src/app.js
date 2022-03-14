@@ -5,12 +5,14 @@ import express from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import cors from 'cors';
 import morgan from 'morgan';
+import sgMail from '@sendgrid/mail';
 import routes from './routes/index';
 import 'dotenv';
 
 const app = express();
 const port = process.env.PORT || 5000;
-
+const KEY = process.env.API_KEY;
+sgMail.setApiKey(KEY);
 app.use(cors());
 app.use(morgan('dev'));
 

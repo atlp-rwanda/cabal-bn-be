@@ -31,7 +31,7 @@ export default class UserService {
       }
     });
 
-    client.set(`${user.email}`, JSON.stringify(accessToken));
+    client.setEx(`${user.email}`, 3600, JSON.stringify(accessToken));
 
     return user;
   }

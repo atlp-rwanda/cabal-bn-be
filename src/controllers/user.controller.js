@@ -52,7 +52,7 @@ export default class UserController {
               status: 200,
               message:
                 'Account created! Please check your email for verification.',
-              data: newUser
+              data: newUser,
             });
         })
         .catch((err) => {
@@ -63,7 +63,8 @@ export default class UserController {
         .json({
           status: 200,
           message: 'Account created! Please check your email for verification.',
-          data: newUser
+          data: newUser,
+          tempToken:token
         });
     } catch (error) {
       return res.status(500).json({

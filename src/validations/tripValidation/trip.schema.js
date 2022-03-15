@@ -2,11 +2,6 @@
 import joi from 'joi'
 
 export const tripSchema = joi.object({
-    managerId: joi.number().integer().required().empty().messages({
-        "integer.base": "managerId must be valid",
-        "integer.empty": "managerId is not allowed to be empty",
-        "any.required": "managerId is required",
-    }),
     accomodationId: joi.number().required().empty().messages({
         "integer.base": "accomodationId must be valid",
         "integer.empty": "accomodationId is not allowed to be empty",

@@ -4,9 +4,13 @@ export const tripRequest={
     destination: "Nyarugenge", 
     tripDate: "2022-10-12", 
     returnDate: "2023-12-10", 
-    accomodationId:"0ce36391-2c08-3074-bddb-a4ea8cccbbc5", 
+    accomodationId:2, 
     reason: "Tourism",
     status:"pending",
-    managerId:1
 
 };
+export const userLogin={
+   email:"REQUESTER@gmail.com",
+   password:"REQUESTER2gmail"
+
+}

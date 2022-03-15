@@ -3,6 +3,7 @@
 import { Trip } from '../database/models';
 
 class tripService {
+
   static async createTrip(userId,data) {
     // eslint-disable-next-line object-shorthand
     const tripCreate = await Trip.create({...data,userId: userId});
@@ -49,26 +50,15 @@ class tripService {
   static async managerFindAllTrip(managerId) {
     const foundAllTrip = await Trip.findAll({ 
       where:{
-        status:"pending",
 // eslint-disable-next-line object-shorthand
         managerId:managerId
       }
     });
     return foundAllTrip;
   }
-
-
-
   
 
-
-  
-  
-
-
-
-
-  static async deleteTrip(userId,id) {
+static async deleteTrip(userId,id) {
     const deleteTrip = await Trip.destroy({ 
       where:{
         status:"pending",

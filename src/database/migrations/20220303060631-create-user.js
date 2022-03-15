@@ -28,6 +28,16 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      managerId: {
+        type: DataTypes.INTEGER,
+        default: null,
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'managerId',
+        }
+      },
+      
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

@@ -6,6 +6,7 @@ module.exports = {
       'Users',
       [
         {
+          
           first_name: 'SUPER_ADMIN',
           last_name: 'SUPER_ADMIN',
           password: hashPassword('SUPER_ADMIN2gmail'),
@@ -42,10 +43,23 @@ module.exports = {
           updatedAt: new Date()
         },
         {
+          managerId:2,
           first_name: 'REQUESTER',
           last_name: 'REQUESTER',
           password: hashPassword('REQUESTER2gmail'),
           email: 'REQUESTER@gmail.com',
+          address: 'kigali',
+          profile_picture:
+            'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
+          role_id: 4,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          first_name: 'REQUESTER',
+          last_name: 'REQUESTER',
+          password: hashPassword('REQUESTER2gmail'),
+          email: 'REQUESTER1@gmail.com',
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',

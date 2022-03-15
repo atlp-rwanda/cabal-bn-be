@@ -9,11 +9,12 @@ const checkLoginRequester=(req,res,next)=>{
 }
 const checkLoginManager=(req,res,next)=>{
     checkLoggedInUser(req,res,next,'MANAGER')
+   
 }
 tripRoutes.post('/request',checkLoginRequester,requestValidation,tripContoller.createTrip);
 tripRoutes.delete('/:id',checkLoginRequester,tripContoller.deleteTrip);
 tripRoutes.get('/',checkLoginRequester,tripContoller.findTrip);
-tripRoutes.get('/manager/:managerId',checkLoginManager,tripContoller.managerFindTrip);
+tripRoutes.get('/manager',checkLoginManager,tripContoller.managerFindTrip);
 tripRoutes.put('/changeRequest/:id',checkLoginRequester,tripContoller.userUpdateTrip);
 
 export default tripRoutes;

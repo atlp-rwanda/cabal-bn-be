@@ -8,6 +8,13 @@ class tripController {
     try {
       const compareDates = validateDate(req.body.returnDate, req.body.tripDate)
       if (compareDates) {
+        if(!req.user.managerId){
+          return res.status(400).json({
+            message: ' You are not assigned a manager',
+          });
+        }
+        req.body.managerId=req.user.managerId;
+
       const tripCreated =
         await tripService.createTrip(req.user.id,req.body);
       return res.status(201).json({
@@ -47,8 +54,7 @@ class tripController {
 
   static async managerFindTrip(req, res) {
     try {
-      const { managerId } = req.params;
-      const managerFind = await tripService.managerFindAllTrip(managerId);
+      const managerFind = await tripService.managerFindAllTrip(req.user.id);
       if (!managerFind) {
         return res.status(404).json({ message: 'Manager with this Id not found' });
       }

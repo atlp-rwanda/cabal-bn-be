@@ -26,11 +26,14 @@ routes.post(
 routes.post('/login', userValidation, async (req, res) => {
   await new UserController().userLogin(req, res);
 });
+const checkUserSupperAdmin=(req,res,next)=>{
+  checkLoggedInUser(req,res,next,'SUPER_ADMIN')
 
+}
 routes.patch(
   '/assignRole',
   roleValidation,
-  checkLoggedInUser,
+  checkUserSupperAdmin,
   checkEmailNotExist,
   checkRoleSame,
   async (req, res) => {

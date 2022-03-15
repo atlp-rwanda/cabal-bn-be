@@ -4,7 +4,7 @@ module.exports = {
       "Trips",
       [
         {
-          userId:1,
+          userId:4,
           managerId:2, 
           originCity: "Kigali",
           destination: 'Cairo', 

@@ -1,15 +1,21 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable require-jsdoc */
 import UserService from 'services/user.service';
-import { generateToken, hashPassword, comparePassword } from 'helpers/user.helpers';
+import {
+  generateToken,
+  hashPassword,
+  comparePassword
+} from 'helpers/user.helpers';
 
 export default class UserController {
   constructor() {
     this.userService = new UserService();
   }
 
-  async createUser(data, res) {
+  async createUser(req, res) {
     try {
+      const data = req.body;
       data.password = hashPassword(data.password);
       data.role_id = 4;
       const newUser = await this.userService.createUser(data, res);
@@ -49,5 +55,27 @@ export default class UserController {
         error
       });
     }
+  }
+
+  async googleLogin(req, res) {
+    const { email, id } = req.user;
+    const token = generateToken({ email, id }, '7d');
+
+    return res.status(200).json({
+      message: 'Logged in successfully',
+      data: req.user,
+      token
+    });
+  }
+
+  async facebookLogin(req, res) {
+    const { email, id } = req.user;
+    const token = generateToken({ email, id }, '7d');
+
+    return res.status(200).json({
+      message: 'Logged in successfully',
+      data: req.user,
+      token
+    });
   }
 }

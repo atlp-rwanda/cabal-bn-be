@@ -5,20 +5,21 @@ import { User } from 'database/models';
 
 export default class UserService {
   async createUser(data) {
+    console.log(data);
     const newUser = await User.create(data);
     return newUser;
   }
 
   async userLogin(data, res) {
     const userExist = await User.findOne({
-      where: {email: data}
-    })
+      where: { email: data }
+    });
 
     if (userExist) {
-      return userExist
+      return userExist;
     }
 
-    return res.status(404).json({message: "User not found in database"})
+    return res.status(404).json({ message: 'User not found in database' });
   }
 
   async getUser(email) {

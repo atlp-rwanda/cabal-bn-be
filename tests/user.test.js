@@ -2,6 +2,7 @@ import chai, { request, expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app';
 import 'dotenv/config';
+import UserController from '../src/controllers/user.controller';
 
 chai.use(chaiHttp);
 
@@ -107,6 +108,72 @@ describe('USER END-POINT TEST', () => {
       });
       expect(res.status).to.be.equal(404);
       expect(res).to.haveOwnProperty('text');
+    });
+  });
+
+  describe('LOGIN WITH SOCIAL ACCOUNTS USER TEST', () => {
+    it('Should hit the endpoint if sign in by google used', async () => {
+      const res = request(app).get('/api/v1/users/google/login');
+
+      expect(res).to.not.equal(null);
+    });
+
+    it('Should hit the endpoint if sign in by facebook used', async () => {
+      const res = request(app).get('/api/v1/users/facebook/login');
+
+      expect(res).to.not.equal(null);
+    });
+
+    it('Should return a token if sign in by google used', async () => {
+      const res = {
+        json: (data) => {
+          res.body = data;
+          return res;
+        },
+        status: (data) => {
+          res.status = data;
+          return res;
+        }
+      };
+
+      const data = await new UserController().googleLogin(
+        {
+          user: {
+            email: 'REQUESTER@gmail.com',
+            id: 'ancovna98e0r92j3finavvkalv-avs'
+          }
+        },
+        res
+      );
+
+      expect(data.status).to.equal(200);
+      expect(data.body).to.haveOwnProperty('token');
+    });
+
+    it('Should return a token if sign in by facebook used', async () => {
+      const res = {
+        json: (data) => {
+          res.body = data;
+          return res;
+        },
+        status: (data) => {
+          res.status = data;
+          return res;
+        }
+      };
+
+      const data = await new UserController().facebookLogin(
+        {
+          user: {
+            email: 'REQUESTER@gmail.com',
+            id: 'ancovna98e0r92j3finavvkalv-avs'
+          }
+        },
+        res
+      );
+
+      expect(data.status).to.equal(200);
+      expect(data.body).to.haveOwnProperty('token');
     });
   });
 });

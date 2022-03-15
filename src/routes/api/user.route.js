@@ -19,13 +19,40 @@ routes.post(
   checkEmailExist,
   passport.authenticate('local', { session: false }),
   async (req, res) => {
-    await new UserController().createUser(req.user, res);
+    await new UserController().createUser(req, res);
   }
 );
 
 routes.post('/login', userValidation, async (req, res) => {
   await new UserController().userLogin(req, res);
 });
+
+routes.get(
+  '/google/login',
+  passport.authenticate('google', {
+    session: false,
+    scope: [
+      'profile',
+      'email',
+      'https://www.googleapis.com/auth/user.addresses.read'
+    ],
+    prompt: 'select_account'
+  }),
+  async (req, res) => {
+    await new UserController().googleLogin(req, res);
+  }
+);
+
+routes.get(
+  '/facebook/login',
+  passport.authenticate('facebook', {
+    session: false,
+    scope: ['email', 'public_profile', 'user_photos']
+  }),
+  async (req, res) => {
+    await new UserController().facebookLogin(req, res);
+  }
+);
 
 routes.patch(
   '/assignRole',
@@ -41,6 +68,5 @@ routes.patch(
 routes.get('/getRoles', checkLoggedInUser, async (req, res) => {
   await new RoleController().getRoles(req, res);
 });
-
 
 export default routes;

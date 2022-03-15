@@ -22,8 +22,8 @@ routes.post(
     await new UserController().createUser(req.user, res);
   }
 );
-routes.get('/verify-email',userValidation, async(req,res)=>{
-  await new UserController().verifyNewUser(req.user,res);
+routes.get('/verify-email/:token', async (req, res) => {
+  await new UserController().verifyNewUser(req, res);
 });
 
 routes.post('/login', userValidation, async (req, res) => {

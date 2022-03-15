@@ -11,14 +11,17 @@ export default class UserService {
 
   async userLogin(data, res) {
     const userExist = await User.findOne({
-      where: {email: data}
+      where: { email: data }
     })
 
     if (userExist) {
       return userExist
     }
+    return res.status(404).json({ message: "User not found in database" })
+  }
 
-    return res.status(404).json({message: "User not found in database"})
+  async getUserId(id) {
+    return User.findOne({ where: { id } });
   }
 
   async getUser(email) {

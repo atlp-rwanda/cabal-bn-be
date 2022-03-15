@@ -49,14 +49,14 @@ module.exports = {
           last_name: 'REQUESTER',
           password: hashPassword('REQUESTER2gmail'),
           email: 'REQUESTER@gmail.com',
-          isVerified: false,
+          isVerified: true,
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
           role_id: 4,
           createdAt: new Date(),
           updatedAt: new Date()
-        }
+        },
       ],
       {}
     ),

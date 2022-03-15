@@ -5,14 +5,14 @@ import UserService from 'services/user.service';
 import {
   generateToken,
   hashPassword,
-  comparePassword
+  comparePassword,
+  decodeToken
 } from 'helpers/user.helpers';
 import sgMail from '@sendgrid/mail';
-import { jwt } from 'jsonwebtoken';
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
 import { verifyEmail } from '../helpers/user.verify';
 
-config();
+dotenv.config();
 
 export default class UserController {
   constructor() {
@@ -20,25 +20,26 @@ export default class UserController {
   }
 
   async createUser(data, res) {
+
     try {
       data.password = hashPassword(data.password);
       data.role_id = 4;
 
       const newUser = await this.userService.createUser(data, res);
 
-      const token = generateToken({ id: newUser.id }, '15m');
+      const token = generateToken({ id: newUser.id }, '30m');
 
       const msg = {
         from: {
           name: 'Cabal Barefoot Nomad',
-          email: 'cabalbarefoot@gmail.com'
+          email: process.env.FROM_EMAIL
         },
         to: newUser.email,
         subject: 'Email Verification',
         text: `
         Hello, thanks for registering on Barefoot Nomad site.
         Please copy and paste the address below into address bar to verify your account.
-        ${process.env.BASE_URL}/users/verify-email?token=${token}
+        ${process.env.BASE_URL}/api/v1/users/verify-email/${token}
         `,
         html: verifyEmail(token)
       };
@@ -75,25 +76,24 @@ export default class UserController {
   }
 
   async verifyNewUser(req, res) {
-    const user = await this.userService.userLogin(req.body.email, res);
-
-    if (user) {
+    
       try {
-        const { token } = req.params;
-        const userInfo = jwt.verify(token, process.env.SECRETE);
+        const {token} = req.params;
+
+        const userInfo = decodeToken(token);
+
         const userId = userInfo.id;
+
+        const user = await this.userService.getUserId(userId);
+
         user.update({ isVerified: true }, { where: { id: userId } });
         return res
           .status(200)
-          .send({ status: 200, message: 'Account verified!' });
+          .send({  message: 'Account verified!' });
       } catch (error) {
+        console.log(error);
         return res.status(500).send({ message: error.message });
       }
-    } else {
-      return res
-        .status(404)
-        .json({ status: 404, message: `User with such email does not exist!` });
-    }
   }
 
   async userLogin(req, res) {
@@ -104,6 +104,9 @@ export default class UserController {
         user.password
       );
       if (validation) {
+        if(!user.isVerified){
+          return res.status(400).json({message: "Please verify your email to login!"});
+        }
         const token = await generateToken({ email: user.email }, '1d');
         return res
           .status(201)

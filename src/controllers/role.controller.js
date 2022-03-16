@@ -22,9 +22,7 @@ export default class RoleController {
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while creating a user',
-        error:
-          (error.message && error.message.replace(/['"`]+/gi, '')) ||
-          'user not created'
+        error: error.message
       });
     }
   }
@@ -39,9 +37,7 @@ export default class RoleController {
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while creating a user',
-        error:
-          (error.message && error.message.replace(/['"`]+/gi, '')) ||
-          'user not created'
+        error: error.message
       });
     }
   }

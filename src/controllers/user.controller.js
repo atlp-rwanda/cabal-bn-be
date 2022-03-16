@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable require-jsdoc */
+
 import UserService from 'services/user.service';
 import {
   generateToken,
@@ -27,9 +28,7 @@ export default class UserController {
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while creating a user',
-        error:
-          (error.message && error.message.replace(/['"`]+/gi, '')) ||
-          'user not created'
+        error: error.message
       });
     }
   }
@@ -58,24 +57,72 @@ export default class UserController {
   }
 
   async googleLogin(req, res) {
-    const { email, id } = req.user;
-    const token = generateToken({ email, id }, '7d');
+    try {
+      const profile = req.user;
 
-    return res.status(200).json({
-      message: 'Logged in successfully',
-      data: req.user,
-      token
-    });
+      let user = await new UserService().getUser(profile.emails[0].value);
+
+      if (!user) {
+        user = await new UserService().createUser({
+          email: profile.emails && profile.emails[0].value,
+          password: null,
+          role_id: 4,
+          first_name: profile.name && profile.name.familyName,
+          last_name:
+            profile.name &&
+            [profile.name.middleName, profile.name.givenName].join(' '),
+          profile_picture: profile.photos && profile.photos[0].value,
+          provider: 'GOOGLE'
+        });
+      }
+
+      const token = generateToken({ email: user.email, id: user.id }, '7d');
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Logged in successfully',
+        token
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error occured while logging in',
+        data: error.message
+      });
+    }
   }
 
   async facebookLogin(req, res) {
-    const { email, id } = req.user;
-    const token = generateToken({ email, id }, '7d');
+    try {
+      const profile = req.user;
 
-    return res.status(200).json({
-      message: 'Logged in successfully',
-      data: req.user,
-      token
-    });
+      let user = await new UserService().getUser(profile.emails[0].value);
+
+      if (!user) {
+        user = await new UserService().createUser({
+          email: profile.emails && profile.emails[0].value,
+          password: null,
+          role_id: 4,
+          first_name: profile.name && profile.name.familyName,
+          last_name:
+            profile.name &&
+            [profile.name.middleName, profile.name.givenName].join(' '),
+          profile_picture: profile.photos && profile.photos[0].value,
+          provider: 'FACEBOOK'
+        });
+      }
+
+      const token = generateToken({ email: user.email, id: user.id }, '7d');
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Logged in successfully',
+        token
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error occured while logging in',
+        data: error.message
+      });
+    }
   }
 }

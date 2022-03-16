@@ -5,7 +5,6 @@ import { User } from 'database/models';
 
 export default class UserService {
   async createUser(data) {
-    console.log(data);
     const newUser = await User.create(data);
     return newUser;
   }

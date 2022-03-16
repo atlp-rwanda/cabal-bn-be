@@ -20,7 +20,7 @@ module.exports = {
       },
       address: DataTypes.STRING,
       profile_picture: {
-        type: DataTypes.TEXT('large'),
+        type: DataTypes.TEXT,
         defaultValue:
           'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg'
       },

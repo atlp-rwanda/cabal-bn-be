@@ -44,11 +44,11 @@ export default class UserController {
         return res
           .status(201)
           .header('authenticate', token)
-          .json({ message: 'Logged in successfully', token: token });
+          .json({ message: 'Logged in successfully', token });
       }
       return res.status(401).json({ message: 'Invalid password' });
     } catch (error) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Error occured while logging in'
       });
     }

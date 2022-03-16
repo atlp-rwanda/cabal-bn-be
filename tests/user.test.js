@@ -57,7 +57,7 @@ describe('USER END-POINT TEST', () => {
         email: 'SUPER_ADMIN@gmail.com',
         password: 'SUPER_ADMIN2gmail'
       });
-      // console.log(res)
+
       expect(res).to.have.status(201);
       expect(res.body).haveOwnProperty('token');
       expect(res.header).to.haveOwnProperty('authenticate');
@@ -68,7 +68,7 @@ describe('USER END-POINT TEST', () => {
         email: 'SUPER@gmail.com',
         password: 'SUPER_ADMIN2gmail'
       });
-      // console.log(res)
+
       expect(res).to.have.status(404);
       expect(res.body).to.haveOwnProperty('message');
     });
@@ -87,7 +87,7 @@ describe('USER END-POINT TEST', () => {
         email: 'SUPER_ADMIN@gmail.com',
         password: 'SUPER_ADMINgmail'
       });
-      // console.log(res)
+
       expect(res.status).to.be.equal(400);
       expect(res.body).to.haveOwnProperty('message');
     });
@@ -112,13 +112,29 @@ describe('USER END-POINT TEST', () => {
   });
 
   describe('USER-LOGOUT TEST', () => {
-    it('should not log out a user on wrong route', async () => {
-      const token = await generateToken({ email: 'REQUESTER@gmail.com' }, '1d');
+    let tok;
+    before(async () => {
+      const res = await chai.request(app).post('/api/v1/users/login').send({
+        email: 'SUPER_ADMIN@gmail.com',
+        password: 'SUPER_ADMIN2gmail'
+      });
 
+      tok = res.body.token;
+    });
+    it('should log out a user', async () => {
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logout`)
+        .set('Authorization', `Bearer ${tok}`);
+
+      expect(res.status).to.be.equal(200);
+    });
+
+    it('should not log out a user on wrong route', async () => {
       const res = await chai
         .request(app)
         .post(`/api/v1/users/logouttt`)
-        .set({ Authorization: `Bearer ${token}` });
+        .set('Authorization', `Bearer ${tok}`);
 
       expect(res.status).to.be.equal(404);
     });
@@ -130,12 +146,10 @@ describe('USER END-POINT TEST', () => {
     });
 
     it('should not log out a user with invalid access token', async () => {
-      const token = await generateToken({ email: 'UNKNOWN@gmail.com' }, '1d');
-
       const res = await chai
         .request(app)
         .post(`/api/v1/users/logout`)
-        .set({ Authorization: `Bearer ${token}` });
+        .set({ Authorization: `Bearer kkkkkkkkkkkkkkkkkk` });
 
       expect(res.status).to.be.equal(401);
     });

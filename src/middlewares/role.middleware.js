@@ -17,7 +17,6 @@ export const checkLoggedInUser = async (req, res, next) => {
     where: { email: payload.email },
     include: 'Role'
   });
-
   if (user.Role.name !== 'SUPER_ADMIN') {
     return res.status(401).json({ message: 'access denied' });
   }

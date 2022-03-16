@@ -20,7 +20,7 @@ function generateToken(payload, expiresIn) {
 }
 
 function decodeToken(accessToken) {
-  const decoded = jwt.decode(accessToken, process.env.SECRETE);
+  const decoded = jwt.verify(accessToken, process.env.SECRETE);
   return decoded;
 }
 

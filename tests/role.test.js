@@ -89,7 +89,7 @@ describe('ROLE END-POINT TEST', () => {
       expect(res.body.message).to.equal(`User already have MANAGER role`);
     });
 
-    /*it('should not assign a role a user if not logged in', async () => {
+    it('should not assign a role a user if not logged in', async () => {
       const res = await request(app).patch('/api/v1/users/assignRole').send({
         email: 'REQUESTER@gmail.com',
         role: 'REQUESTER'
@@ -97,7 +97,7 @@ describe('ROLE END-POINT TEST', () => {
 
       expect(res.status).to.equal(403);
       expect(res.body.message).to.equal('user not logged in');
-    });*/
+    });
 
     it('should retrieve all roles', async () => {
       const res = await request(app)

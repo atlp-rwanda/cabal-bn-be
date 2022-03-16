@@ -63,7 +63,7 @@ class tripController {
         const updated = await  tripService.updateTrip(req.user.id, req.params.id, req.body);
         if(!updated)
         {
-       return res.status(400).json({ status: 400, message: "No trip wit this Id"}); 
+       return res.status(404).json({ status: 400, message: "No trip wit this Id"}); 
         }
       return res.status(200).json({ status: 200, message: "Updated successfully", data: updated });
     } catch (error) {

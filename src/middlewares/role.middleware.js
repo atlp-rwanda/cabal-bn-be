@@ -24,7 +24,7 @@ export const checkLoggedInUser = async (req, res, next,role) => {
 req.user={
   email:user.email,
   id:user.id,
-  managerId:user.managerId
+  managerId:user.managerId,
 }
   next();
 };

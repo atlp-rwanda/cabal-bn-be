@@ -36,7 +36,7 @@ export default class UserController {
         user.password
       );
       if (validation) {
-        const token = await generateToken({ email: user.email,id:user.id,managerId:user.managerId }, '1d');
+        const token = await generateToken({ email: user.email,id:user.id,managerId:user.managerId}, '1d');
         return res
           .status(201)
           .header('authenticate', token)

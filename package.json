@@ -11,7 +11,6 @@
     "build": "babel src -d build",
     "start": "better-npm-run prod",
     "test": "better-npm-run test",
-    "coverage": "better-npm-run cov",
     "prepare": "husky install",
     "format": "pretty-quick",
     "lint": "eslint src/*.js --fix",
@@ -30,13 +29,12 @@
       }
     },
     "test": {
-      "command": "yarn run dbmigrate:all && nyc mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000 --exit && yarn run migrate:undo",
+      "command": "yarn run dbmigrate:all && nyc  --reporter=text --reporter=html --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000 --exit && yarn run migrate:undo",
       "env": {
         "NODE_ENV": "test",
         "PORT": 3000
       }
     },
-    "cov": "nyc --reporter=lcov npm test",
     "prod": {
       "command": "yarn run dbmigrate:all && yarn run build && node ./build/app.js",
       "env": {

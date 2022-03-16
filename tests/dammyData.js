@@ -14,3 +14,13 @@ export const userLogin={
    password:"REQUESTER2gmail"
 
 }
+export const checkValidation={
+    originCity: "Kigali", 
+    destination: "Nyarugenge", 
+    tripDate: "2022-13-12", 
+    returnDate: "2023-12-10", 
+    accomodationId:2, 
+    reason: "Tourism",
+    status:"pending",
+
+};

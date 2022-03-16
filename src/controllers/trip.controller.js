@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /* eslint-disable curly */
 /* eslint-disable require-jsdoc */
 import tripService from '../services/trip.service';
@@ -35,17 +36,8 @@ class tripController {
   static async findTrip(req, res) {
     try {
       const show = await tripService.findSpecificTrip(req.user.id);
-      if (!show) 
-      {
-        return res.status(404).json({ message: 'User with this Id not found' });
-      }
-       // eslint-disable-next-line no-else-return
-       else{
-        return res
-        .status(200)
-        .json({ message: 'Trip retrieved Successfully', data: show });
-       } 
-      
+      return res .status(200).json({ message: 'Trip retrieved Successfully', data: show });
+        
     } catch (err) {
       console.log(err)
       return res.status(500).json({ message: 'internal server error', err });
@@ -71,7 +63,7 @@ class tripController {
         const updated = await  tripService.updateTrip(req.user.id, req.params.id, req.body);
         if(!updated)
         {
-       return res.status(400).json({ status: 400, message: "Failed to Update"}); 
+       return res.status(400).json({ status: 400, message: "No trip wit this Id"}); 
         }
       return res.status(200).json({ status: 200, message: "Updated successfully", data: updated });
     } catch (error) {
@@ -86,11 +78,11 @@ class tripController {
     try {
       const deletedTrip = await tripService.deleteTrip(req.user.id,req.params.id);
       if(deletedTrip){
-        return res.status(204).json({ message: 'Trip deleted successfully', deletedTrip });
+        return res.status(200).json({ message: 'Trip deleted successfully', deletedTrip });
       }
      // eslint-disable-next-line no-else-return
      else{
-      return res.status(400).json({ message: 'Failed to delete trip'});
+      return res.status(404).json({ message: 'No trip with Id found'});
      }
     } catch (err) {
       return res.status(500).json({ message: 'internal server error' });

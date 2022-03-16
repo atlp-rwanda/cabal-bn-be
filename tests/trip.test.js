@@ -1,7 +1,7 @@
 import chai, { request, expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app';
-import { tripRequest } from './dammyData';
+import { tripRequest,checkValidation } from './dammyData';
 import 'dotenv/config';
 
 chai.use(chaiHttp);
@@ -18,6 +18,17 @@ describe("TRIP END-POINT TESTING", () => {
       expect(res).to.have.status([201]);
   });
 
+  it("Should not create the Trip  Request while logged as Requester and not follow the validatation",async () => {
+    const login = await chai.request(app).post("/api/v1/users/login")
+    .send( {email:"REQUESTER@gmail.com" , password:"REQUESTER2gmail"});
+  const res = await chai
+      .request(app)
+      .post("/api/v1/trip/request")
+      .set("Authorization",`Bearer ${login.body.token}`)
+      .send(checkValidation);
+      expect(res).to.have.status([200]);
+  });
+  
   it("While not logged in Should not create the Trip", (done) => {
     chai
       .request(app)
@@ -96,7 +107,7 @@ it(" Should delete the trip requests that are in pending status",async () => {
   .delete(`/api/v1/trip/1`)
   .set("Authorization",`Bearer ${login.body.token}`)
   .send()
-  expect(res).to.have.status([204])
+  expect(res).to.have.status([200])
 })
 it("While not logged in  Should  not delete the trip requests that are in pending status", (done) => {
   chai.request(app).delete(`/api/v1/trip/3`)

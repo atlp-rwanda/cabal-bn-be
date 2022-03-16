@@ -43,7 +43,7 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          managerId:2,
+          managerId:3,
           first_name: 'REQUESTER',
           last_name: 'REQUESTER',
           password: hashPassword('REQUESTER2gmail'),

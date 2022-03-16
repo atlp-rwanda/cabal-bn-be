@@ -13,12 +13,11 @@ export const authentication = async (req, res, next) => {
     const tok = decodeToken(token);
     const user = await client.get(`${token}`);
 
-    if (user) {
-      return res.status(401).json({ message: 'please log in first' });
+    if (!user) {
+      await jwt.verify(token, process.env.SECRETE);
+      next();
     }
-    await jwt.verify(token, process.env.SECRETE);
-    next();
   } catch (error) {
-    res.status(400).send({ message: 'You are not logged in' });
+    res.status(401).send({ message: 'You are not logged in' });
   }
 };

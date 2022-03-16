@@ -121,6 +121,14 @@ describe('USER END-POINT TEST', () => {
 
       tok = res.body.token;
     });
+    it('should log out a user', async () => {
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logout`)
+        .set('Authorization', `Bearer ${tok}`);
+
+      expect(res.status).to.be.equal(200);
+    });
 
     it('should not log out a user on wrong route', async () => {
       const res = await chai

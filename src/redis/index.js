@@ -1,5 +1,6 @@
 import redis from 'redis';
 import { createClient } from '@node-redis/client';
+import 'dotenv/config';
 
 const client = createClient({
   host: process.env.REDIS_HOST || '127.0.0.1',

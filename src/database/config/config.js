@@ -2,11 +2,11 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    use_env_variable: 'CI_DB_URL',
-    database: process.env.CI_NAME,
-    host: process.env.CI_HOST,
-    username: process.env.CI_USERNAME,
-    password: process.env.CI_PASSWORD,
+    use_env_variable: 'DEV_DATABASE_URL',
+    database: process.env.DEV_DB_NAME,
+    host: process.env.DEV_HOST,
+    username: process.env.DEV_USERNAME,
+    password: process.env.DEV_PASSWORD,
     port: 5432,
     dialect: 'postgres',
     logging: false

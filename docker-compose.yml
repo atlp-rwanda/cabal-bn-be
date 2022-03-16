@@ -25,6 +25,10 @@ services:
 
     ports: 
       - "5000:5000"
+    
+    links:
+      - redis: redis
+    
     restart: always
     
   db:
@@ -47,5 +51,6 @@ services:
     ports:
       - "6379:6379"
     environment:
-      - REDIS_HOST= redis
+      - REDIS_HOST=${REDIS_HOST}
+      
     container_name: cabal_redis

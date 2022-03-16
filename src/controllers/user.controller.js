@@ -21,7 +21,7 @@ export default class UserController {
       data.role_id = 4;
       const newUser = await this.userService.createUser(data, res);
 
-      const token = generateToken({ email: newUser.email }, '7d');
+      const token = generateToken({ email: newUser.email }, '1d');
       return res
         .status(201)
         .json({ message: 'user registered successfully', token });
@@ -76,7 +76,7 @@ export default class UserController {
         });
       }
 
-      const token = generateToken({ email: user.email, id: user.id }, '7d');
+      const token = generateToken({ email: user.email, id: user.id }, '1d');
 
       return res.status(200).json({
         status: 200,
@@ -111,7 +111,7 @@ export default class UserController {
         });
       }
 
-      const token = generateToken({ email: user.email, id: user.id }, '7d');
+      const token = generateToken({ email: user.email, id: user.id }, '1d');
 
       return res.status(200).json({
         status: 200,

@@ -31,11 +31,7 @@ routes.get(
   '/google/login',
   passport.authenticate('google', {
     session: false,
-    scope: [
-      'profile',
-      'email',
-      'https://www.googleapis.com/auth/user.addresses.read'
-    ],
+    scope: ['profile', 'email'],
     prompt: 'select_account'
   }),
   async (req, res) => {

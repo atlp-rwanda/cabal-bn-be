@@ -19,6 +19,6 @@ export const authentication = async (req, res, next) => {
     await jwt.verify(token, process.env.SECRETE);
     next();
   } catch (error) {
-    res.status(401).send({ message: 'You are not logged in' });
+    res.status(400).send({ message: 'You are not logged in' });
   }
 };

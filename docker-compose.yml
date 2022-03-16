@@ -41,8 +41,11 @@ services:
 
     image: redis
     restart: always
+    command: redis-server
     volumes:
       - ./data:/data
     ports:
       - "6379:6379"
+    environment:
+      - REDIS_HOST= redis
     container_name: cabal_redis

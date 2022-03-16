@@ -2,7 +2,7 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    use_env_variable: 'DEV_DATABASE_URL',
+    use_env_variable: 'CI_DB_URL',
     database: process.env.CI_NAME,
     host: process.env.CI_HOST,
     username: process.env.CI_USERNAME,

@@ -13,6 +13,7 @@ module.exports = {
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
+          provider: 'EMAIL',
           role_id: 1,
           createdAt: new Date(),
           updatedAt: new Date()
@@ -25,6 +26,7 @@ module.exports = {
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
+          provider: 'EMAIL',
           role_id: 2,
           createdAt: new Date(),
           updatedAt: new Date()
@@ -37,6 +39,7 @@ module.exports = {
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
+          provider: 'EMAIL',
           role_id: 3,
           createdAt: new Date(),
           updatedAt: new Date()
@@ -49,6 +52,7 @@ module.exports = {
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
+          provider: 'EMAIL',
           role_id: 4,
           createdAt: new Date(),
           updatedAt: new Date()

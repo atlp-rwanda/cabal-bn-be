@@ -11,7 +11,7 @@ module.exports = {
       last_name: DataTypes.STRING,
       password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       email: {
         type: DataTypes.STRING,
@@ -20,13 +20,18 @@ module.exports = {
       },
       address: DataTypes.STRING,
       profile_picture: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         defaultValue:
           'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg'
       },
+      provider: {
+        type: DataTypes.ENUM,
+        values: ['GOOGLE', 'FACEBOOK', 'EMAIL'],
+        defaultValue: 'EMAIL'
+      },
       role_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
-import { User } from '../database/models';
+import { User, Blacklist } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import RoleService from '../services/role.service';
 
@@ -11,6 +11,9 @@ export const checkLoggedInUser = async (req, res, next) => {
     req.headers.authorization && req.headers.authorization.split(' ')[1];
   if (!token) return res.status(403).json({ message: 'user not logged in' });
   try {
+    const blackListed = await Blacklist.findOne({ where: { token } });
+    if (blackListed) return res.status(401).json({ message: 'please login first' });
+      
     const decoded = decodeToken(token);
     const freshUser = await User.findByPk(decoded.userId, {
       include: 'Role'

@@ -164,4 +164,47 @@ describe('USER END-POINT TEST', () => {
       expect(data.body).to.haveOwnProperty('token');
     });
   });
+  describe('USER-LOGOUT TEST', () => {
+    let tok;
+    before(async () => {
+      const res = await chai.request(app).post('/api/v1/users/login').send({
+        email: 'SUPER_ADMIN@gmail.com',
+        password: 'SUPER_ADMIN2gmail'
+      });
+
+      tok = res.body.token;
+    });
+    it('should log out a user', async () => {
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logout`)
+        .set('Authorization', `Bearer ${tok}`);
+
+      expect(res.status).to.be.equal(200);
+    });
+
+    it('should not log out a user on wrong route', async () => {
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logouttt`)
+        .set({ Authorization: `Bearer ${tok}` });
+
+      expect(res.status).to.be.equal(404);
+    });
+
+    it('should not log out a user without access token', async () => {
+      const res = await chai.request(app).post(`/api/v1/users/logout`);
+
+      expect(res.status).to.be.equal(403);
+    });
+
+    it('should not log out a user with invalid access token', async () => {
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logout`)
+        .set({ Authorization: `Bearer kkkkkkkkkkkkkkkkkk` });
+
+      expect(res.status).to.be.equal(403);
+    });
+  });
 });

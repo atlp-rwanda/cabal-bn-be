@@ -54,6 +54,18 @@ describe('TRIP END-POINT TESTING', () => {
       });
   });
 
+  it('Should not create the Trip while logged in with invalid token ', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/trips')
+      .set('Authorization', `Bearer kkkkkkkkkkkkk`)
+      .send(tripRequest)
+      .end((err, res) => {
+        expect(res).to.have.status([401]);
+        done();
+      });
+  });
+
   it('Should retrieve all user Trips with pending status', async () => {
     const res = await chai
       .request(app)

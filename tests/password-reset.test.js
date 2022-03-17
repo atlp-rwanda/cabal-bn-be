@@ -29,7 +29,6 @@ describe('TESTING PASSWORD RESET', () => {
         done();
       });
   });
-
   it('should Send password reset link', (done) => {
     chai
       .request(app)

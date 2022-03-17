@@ -43,6 +43,15 @@ module.exports = (sequelize, DataTypes) => {
         unique: true
       },
       address: DataTypes.STRING,
+      manager_id: {
+        type: DataTypes.INTEGER,
+        default: null,
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'manager_id'
+        }
+      },
       isVerified: {
         type: DataTypes.BOOLEAN,
         defaultValue: false

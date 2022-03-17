@@ -10,6 +10,7 @@ import {
 } from '../../middlewares/role.middleware';
 import roleValidation from '../../validations/role.validation';
 import RoleController from '../../controllers/role.controller';
+import { authentication } from '../../middlewares/authentication';
 
 const routes = express.Router();
 
@@ -63,6 +64,10 @@ routes.patch(
 
 routes.get('/getRoles', checkLoggedInUser, async (req, res) => {
   await new RoleController().getRoles(req, res);
+});
+
+routes.post('/logout', authentication, async (req, res) => {
+  await new UserController().Logout(req, res);
 });
 
 export default routes;

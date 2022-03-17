@@ -2,6 +2,8 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable require-jsdoc */
 import { User } from 'database/models';
+import { decodeToken } from '../helpers/user.helpers';
+import client from '../redis/config';
 
 export default class UserService {
   async createUser(data) {
@@ -23,5 +25,19 @@ export default class UserService {
 
   async getUser(email) {
     return User.findOne({ where: { email } });
+  }
+
+  async userLogout(accessToken) {
+    const token = await decodeToken(accessToken);
+    const { email } = token;
+    const user = await User.findOne({
+      where: {
+        email
+      }
+    });
+
+    client.setEx(`${accessToken}`, 3600, JSON.stringify(user.email));
+
+    return user;
   }
 }

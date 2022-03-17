@@ -125,4 +125,18 @@ export default class UserController {
       });
     }
   }
+
+  async Logout(req, res) {
+    try {
+      const user = await this.userService.userLogout(
+        req.headers.authorization.split(' ')[1]
+      );
+      return res.status(200).json({
+        message: 'You are logged out',
+        email: user.email
+      });
+    } catch (error) {
+      return res.status(404).json({ message: 'not found' });
+    }
+  }
 }

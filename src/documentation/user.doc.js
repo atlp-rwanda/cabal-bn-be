@@ -40,6 +40,23 @@ export const user = {
       ],
       responses
     }
+  },
+  '/users/logout': {
+    post: {
+      tags: ['User'],
+      summary: 'logout',
+      description: 'Logout a user',
+      operationId: 'postUsersLogout',
+      parameters: [
+        {
+          name: 'authorization',
+          in: 'header',
+          description: 'user logout',
+          required: true
+        }
+      ],
+      responses
+    }
   }
 };
 

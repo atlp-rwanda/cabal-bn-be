@@ -21,10 +21,19 @@ export const checkLoggedInUser = async (req, res, next, role) => {
   if (user.Role.name !== (role || 'SUPER_ADMIN')) {
     return res.status(401).json({ message: 'access denied' });
   }
+<<<<<<< HEAD
   req.user = {
     email: user.email,
-    id: user.id
+    id: user.id,
+    managerId: user.managerId
   };
+=======
+req.user={
+  email:user.email,
+  id:user.id,
+  managerId:user.managerId,
+}
+>>>>>>> 0bb1fe4 ([#181339534]-Working on the error)
   next();
 };
 

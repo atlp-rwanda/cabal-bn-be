@@ -12,6 +12,10 @@ export const userLogin = {
   email: 'REQUESTER@gmail.com',
   password: 'REQUESTER2gmail'
 };
+export const userLogin = {
+  email: 'REQUESTER@gmail.com',
+  password: 'REQUESTER2gmail'
+};
 export const checkValidation = {
   originCity: 'Kigali',
   destination: 'Nyarugenge',

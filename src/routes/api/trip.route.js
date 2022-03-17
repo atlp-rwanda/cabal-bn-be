@@ -18,11 +18,7 @@ tripRoutes.post(
 );
 tripRoutes.delete('/:id', checkLoginRequester, tripContoller.deleteTrip);
 tripRoutes.get('/', checkLoginRequester, tripContoller.findTrip);
-tripRoutes.get(
-  '/manager/:managerId',
-  checkLoginManager,
-  tripContoller.managerFindTrip
-);
+tripRoutes.get('/manager', checkLoginManager, tripContoller.managerFindTrip);
 tripRoutes.put(
   '/changeRequest/:id',
   checkLoginRequester,

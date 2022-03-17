@@ -40,23 +40,13 @@ export const trip = {
       ]
     }
   },
-  '/trip/manager/{managerId}': {
+  '/trip/manager': {
     get: {
       tags: ['Trip'],
       summary: 'Manager Retrieve all  TripRequest owned',
       description: 'Manager Retrieve all  TripRequest owned',
       operationId: 'managerTripRequest',
-      parameters: [
-        {
-          name: 'managerId',
-          in: 'path',
-          description: 'Retrieve TripRequest',
-          required: true,
-          schema: {
-            $ref: '#/definitions'
-          }
-        }
-      ],
+      parameters: [],
       security: [
         {
           JWT: []

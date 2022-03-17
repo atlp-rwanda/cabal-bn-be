@@ -4,14 +4,15 @@ module.exports = {
       'Trips',
       [
         {
-          userId: 1,
-          managerId: 2,
+          userId: 4,
+          managerId: 3,
           originCity: 'Kigali',
           destination: 'Cairo',
           tripDate: '2020-10-10',
           returnDate: '2023-10-10',
           accomodationId: 1,
           reason: 'Traveling',
+          status: 'pending',
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -24,6 +25,7 @@ module.exports = {
           returnDate: '2023-10-10',
           accomodationId: 1,
           reason: 'Tourism',
+          status: 'approved',
           createdAt: new Date(),
           updatedAt: new Date()
         }

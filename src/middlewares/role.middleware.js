@@ -3,11 +3,7 @@ import { User } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import RoleService from '../services/role.service';
 
-<<<<<<< HEAD
 export const checkLoggedInUser = async (req, res, next, role) => {
-=======
-export const checkLoggedInUser = async (req, res, next,role) => {
->>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
   const token =
     req.headers.authorization && req.headers.authorization.split(' ')[1];
   let payload;
@@ -22,31 +18,14 @@ export const checkLoggedInUser = async (req, res, next,role) => {
     include: 'Role'
   });
 
-<<<<<<< HEAD
   if (user.Role.name !== (role || 'SUPER_ADMIN')) {
     return res.status(401).json({ message: 'access denied' });
   }
-<<<<<<< HEAD
   req.user = {
     email: user.email,
     id: user.id,
     managerId: user.managerId
   };
-=======
-=======
-  if (user.Role.name !== (role ||'SUPER_ADMIN')) {
-    return res.status(401).json({ message: 'access denied' });
-  }
->>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
-req.user={
-  email:user.email,
-  id:user.id,
-  managerId:user.managerId,
-}
-<<<<<<< HEAD
->>>>>>> 0bb1fe4 ([#181339534]-Working on the error)
-=======
->>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
   next();
 };
 

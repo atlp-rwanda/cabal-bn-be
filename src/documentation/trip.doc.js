@@ -37,13 +37,8 @@ export const trip = {
         {
           JWT: []
         }
-<<<<<<< HEAD
       ]
     }
-=======
-      ],
-    },
->>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
   },
   '/trip/manager': {
     get: {
@@ -51,12 +46,7 @@ export const trip = {
       summary: 'Manager Retrieve all  TripRequest owned',
       description: 'Manager Retrieve all  TripRequest owned',
       operationId: 'managerTripRequest',
-<<<<<<< HEAD
       parameters: [],
-=======
-      parameters: [
-      ],
->>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
       security: [
         {
           JWT: []
@@ -131,11 +121,7 @@ export const trip = {
       ],
       responses
     }
-<<<<<<< HEAD
   }
-=======
-  },
->>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
 };
 
 export const tripDefinitions = {
@@ -155,19 +141,11 @@ export const tripDefinitions = {
         type: 'string'
       },
       accomodationId: {
-<<<<<<< HEAD
         type: 'integer'
       },
       reason: {
         type: 'string'
       }
-=======
-        type: 'integer',
-      },
-      reason: {
-        type: 'string',
-      },
->>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
     }
   }
 };

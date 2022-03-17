@@ -6,6 +6,7 @@ module.exports = {
       'Users',
       [
         {
+          
           first_name: 'SUPER_ADMIN',
           last_name: 'SUPER_ADMIN',
           password: hashPassword('SUPER_ADMIN2gmail'),
@@ -42,7 +43,11 @@ module.exports = {
           updatedAt: new Date()
         },
         {
+<<<<<<< HEAD
           managerId: 3,
+=======
+          managerId:3,
+>>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
           first_name: 'REQUESTER',
           last_name: 'REQUESTER',
           password: hashPassword('REQUESTER2gmail'),

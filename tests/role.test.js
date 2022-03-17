@@ -27,6 +27,7 @@ describe('ROLE END-POINT TEST', () => {
       notsuperToken = res.body.token;
     });
     after(async () => {
+<<<<<<< HEAD
       console.log('running');
       const res = await request(app)
         .patch('/api/v1/users/assignRole')
@@ -38,6 +39,20 @@ describe('ROLE END-POINT TEST', () => {
 
       notsuperToken = res.body.token;
     });
+=======
+      console.log("running")
+      const res = await request(app).patch('/api/v1/users/assignRole')
+      .set('Authorization', `Bearer ${superToken}`)
+      .send({
+        email: `REQUESTER@gmail.com`,
+        role: 'REQUESTER'
+        
+      });
+
+      notsuperToken = res.body.token;
+    });
+
+>>>>>>> 3088589d9b5786604e2096ab525dc64603b335e7
 
     it('should assign a role a user', async () => {
       const res = await request(app)

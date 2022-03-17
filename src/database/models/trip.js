@@ -13,19 +13,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.User, { foreignKey: 'userId' });
+      this.belongsTo(models.User,{foreignKey:"userId"})
     }
   }
-  Trip.init(
-    {
-      managerId: DataTypes.INTEGER,
-      originCity: DataTypes.STRING,
-      destination: DataTypes.STRING,
-      reason: DataTypes.STRING,
-      status: {
-        type: DataTypes.STRING,
-        defaultValue: 'pending'
-      }
+  Trip.init({
+    managerId:DataTypes.INTEGER,
+    originCity: DataTypes.STRING,
+    destination: DataTypes.STRING,
+    reason: DataTypes.STRING,
+    status:{
+    type:DataTypes.STRING,
+    defaultValue:'pending'
     },
     {
       sequelize,

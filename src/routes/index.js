@@ -7,5 +7,4 @@ const routes = express.Router();
 routes.use('/users', userRoutes);
 routes.use("/home", home);
 
-
 export default routes;

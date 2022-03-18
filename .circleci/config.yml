@@ -17,6 +17,7 @@ jobs:
       - run:
           name: run test
           command: yarn run test
+          no_output_timeout: 60m
       - run:
           name: coverage
           command: yarn run coverage

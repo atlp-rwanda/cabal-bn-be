@@ -3,7 +3,6 @@
 /* eslint-disable require-jsdoc */
 import { User } from 'database/models';
 import { decodeToken } from '../helpers/user.helpers';
-import client from '../redis/config';
 
 export default class UserService {
   async createUser(data) {
@@ -17,6 +16,8 @@ export default class UserService {
     });
 
     if (userExist) {
+      userExist.Logged_in = true;
+      userExist.save();
       return userExist;
     }
 
@@ -36,7 +37,10 @@ export default class UserService {
       }
     });
 
-    client.setEx(`${accessToken}`, 3600, JSON.stringify(user.email));
+    if (user.Logged_in === true) {
+      user.Logged_in = false;
+      user.save();
+    }
 
     return user;
   }

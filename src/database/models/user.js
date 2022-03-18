@@ -3,6 +3,7 @@
 /* eslint-disable require-jsdoc */
 
 const { Model } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const roles = require('../../utils/roles.utils');
 
 module.exports = (sequelize, DataTypes) => {
@@ -44,6 +45,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM,
         values: ['GOOGLE', 'FACEBOOK', 'EMAIL'],
         defaultValue: 'EMAIL'
+      },
+      Logged_in: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       }
     },
     {

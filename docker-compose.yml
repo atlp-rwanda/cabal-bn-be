@@ -50,7 +50,5 @@ services:
       - ./data:/data
     ports:
       - "6379:6379"
-    environment:
-      - REDIS_HOST=${REDIS_HOST}
       
     container_name: cabal_redis

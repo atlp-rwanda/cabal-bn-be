@@ -54,6 +54,34 @@ module.exports = {
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
           provider: 'EMAIL',
           role_id: 4,
+          manager_id: 3,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          first_name: 'MANAGER1',
+          last_name: 'MANAGER1',
+          password: hashPassword('MANAGER2gmail'),
+          email: 'MANAGER1@gmail.com',
+          address: 'kigali',
+          profile_picture:
+            'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
+          provider: 'EMAIL',
+          role_id: 3,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          first_name: 'REQUESTER1',
+          last_name: 'REQUESTER1',
+          password: hashPassword('REQUESTER2gmail'),
+          email: 'REQUESTER1@gmail.com',
+          address: 'kigali',
+          profile_picture:
+            'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
+          provider: 'EMAIL',
+          role_id: 4,
+          manager_id: 5,
           createdAt: new Date(),
           updatedAt: new Date()
         }

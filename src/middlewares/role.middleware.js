@@ -1,9 +1,10 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import { User } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import RoleService from '../services/role.service';
 
-export const checkLoggedInUser = async (req, res, next) => {
+export const checkLoggedInUser = (role) => async (req, res, next) => {
   const token =
     req.headers.authorization && req.headers.authorization.split(' ')[1];
   let payload;
@@ -18,10 +19,13 @@ export const checkLoggedInUser = async (req, res, next) => {
     include: 'Role'
   });
 
-  if (user.Role.name !== 'SUPER_ADMIN') {
+  if (user.Role.name !== (role || 'SUPER_ADMIN')) {
     return res.status(401).json({ message: 'access denied' });
   }
 
+  const { email, id, manager_id } = user;
+
+  req.user = { email, id, manager_id };
   next();
 };
 

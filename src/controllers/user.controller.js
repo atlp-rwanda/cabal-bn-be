@@ -46,25 +46,18 @@ export default class UserController {
       sgMail
         .send(msg)
         .then(res, () => {
-          return res
-            .status(200)
-            .json({
-              status: 200,
-              message:
-                'Account created! Please check your email for verification.',
-              data: newUser,
-            });
+          console.log("Email has been sent!");
         })
         .catch((err) => {
           console.log(err);
+          return res.status(500).json({message: "Something went wrong!"})
         });
       return res
         .status(200)
         .json({
           status: 200,
           message: 'Account created! Please check your email for verification.',
-          data: newUser,
-          tempToken:token
+          data: token
         });
     } catch (error) {
       return res.status(500).json({
@@ -90,7 +83,7 @@ export default class UserController {
         user.update({ isVerified: true }, { where: { id: userId } });
         return res
           .status(200)
-          .send({  message: 'Account verified!' });
+          .send({  message: 'Account verified! You can proceed to log in.' });
       } catch (error) {
         console.log(error);
         return res.status(500).send({ message: error.message });

@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 require('dotenv').config();
 
 const fs = require('fs');
@@ -5,66 +6,46 @@ const path = require('path');
 const Sequelize = require('sequelize');
 
 const basename = path.basename(__filename);
-const db = {};
 
 const mode = process.env.NODE_ENV || 'development';
+// eslint-disable-next-line import/no-dynamic-require
+// eslint-disable-next-line import/no-dynamic-require
+const config = require(`${__dirname}/../config/config.js`)[mode];
+const db = {};
+
 let sequelize;
 
 // shifted the sequelizer initialization here
-if (mode === 'development') {
-  sequelize = new Sequelize(process.env.DEV_DATABASE_URL);
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
   sequelize
     .authenticate()
     .then(async () => {
-      console.log('DEV DATABASE CONNECTION ESTABLISHED!');
+      console.log(`${mode} DATABASE CONNECTION ESTABLISHED!`);
     })
     .catch((err) => {
       console.log('Unable to connect to the database: ', err);
     });
-}
-if (mode === 'test') {
+} else {
   sequelize = new Sequelize({
     database: process.env.POSTGRES_DB,
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     host: process.env.DB_HOST,
-    port: 5432,
+    port: process.env.POSTGRES_PORT,
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
         require: true,
         rejectUnauthorized: false
       }
-    }
+    },
+    logging: false
   });
   sequelize
     .authenticate()
     .then(() => {
-      console.log('TEST DATABASE CONNECTION ESTABLISHED!');
-    })
-    .catch((err) => {
-      console.log('Unable to connect to the database: ', err);
-    });
-}
-if (mode === 'production') {
-  sequelize = new Sequelize({
-    database: process.env.POSTGRES_DB,
-    username: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    host: process.env.DB_HOST,
-    port: 5432,
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
-  });
-  sequelize
-    .authenticate()
-    .then(() => {
-      console.log('PRODUCTION DATABASE CONNECTION ESTABLISHED!');
+      console.log(`${mode} DATABASE CONNECTION ESTABLISHED!`);
     })
     .catch((err) => {
       console.log('Unable to connect to the database: ', err);
@@ -79,6 +60,7 @@ fs.readdirSync(__dirname)
       file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
   )
   .forEach((file) => {
+    // eslint-disable-next-line import/no-dynamic-require
     const model = require(path.join(__dirname, file))(
       sequelize,
       Sequelize.DataTypes

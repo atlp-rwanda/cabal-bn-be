@@ -21,7 +21,6 @@ export const user = {
       responses
     }
   },
-
   '/users/login': {
     post: {
       tags: ['User'],

@@ -11,7 +11,6 @@ module.exports = {
           password: hashPassword('Password12'),
           email: 'SUPER_ADMIN@gmail.com',
           address: 'kigali',
-          isVerified: true,
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
           provider: 'EMAIL',
@@ -25,7 +24,6 @@ module.exports = {
           password: hashPassword('TRAVEL_ADMIN2gmail'),
           email: 'TRAVEL_ADMIN@gmail.com',
           address: 'kigali',
-          isVerified: true,
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
           provider: 'EMAIL',
@@ -39,7 +37,6 @@ module.exports = {
           password: hashPassword('MANAGER2gmail'),
           email: 'MANAGER@gmail.com',
           address: 'kigali',
-          isVerified: true,
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
           provider: 'EMAIL',
@@ -53,7 +50,6 @@ module.exports = {
           password: hashPassword('REQUESTER2gmail'),
           email: 'REQUESTER@gmail.com',
           address: 'kigali',
-          isVerified: true,
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
           provider: 'EMAIL',

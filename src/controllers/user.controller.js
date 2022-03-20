@@ -1,21 +1,13 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable require-jsdoc */
-import UserService from '../services/user.service';
-const bcrypt = require('bcrypt');
-import { User } from '../database/models';
+
+import UserService from 'services/user.service';
 import {
   generateToken,
   hashPassword,
-  comparePassword,
-  decodeToken
-} from '../helpers/user.helpers';
-import sgMail from '@sendgrid/mail';
-import { config } from 'dotenv';
-import { confirmEmail } from '../utils/email.utils';
-import { verifyEmail } from '../helpers/user.verify';
-import jwt from 'jsonwebtoken';
-config();
+  comparePassword
+} from 'helpers/user.helpers';
 
 export default class UserController {
   constructor() {
@@ -29,32 +21,7 @@ export default class UserController {
       data.role_id = 4;
       const newUser = await this.userService.createUser(data, res);
 
-      const token = generateToken({ id: newUser.id }, '1d');
-
-      const msg = {
-        from: {
-          name: 'Cabal Barefoot Nomad',
-          email: process.env.FROM_EMAIL
-        },
-        to: newUser.email,
-        subject: 'Email Verification',
-        text: `
-        Hello, thanks for registering on Barefoot Nomad site.
-        Please copy and paste the address below into address bar to verify your account.
-        ${process.env.BASE_URL}/api/v1/users/verify-email/${token}
-        `,
-        html: verifyEmail(token)
-      };
-      sgMail
-        .send(msg)
-        .then(res, () => {
-          console.log('Email has been sent!');
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json({ message: 'Something went wrong!' });
-        });
-
+      const token = generateToken({ email: newUser.email }, '1d');
       return res
         .status(201)
         .json({ message: 'user registered successfully', token });
@@ -66,26 +33,6 @@ export default class UserController {
     }
   }
 
-  async verifyNewUser(req, res) {
-    try {
-      const { token } = req.params;
-
-      const userInfo = decodeToken(token);
-
-      const userId = userInfo.id;
-
-      const user = await this.userService.getUserId(userId);
-
-      user.update({ isVerified: true }, { where: { id: userId } });
-      return res
-        .status(200)
-        .send({ message: 'Account verified! You can proceed to log in.' });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send({ message: error.message });
-    }
-  }
-
   async userLogin(req, res) {
     try {
       const user = await this.userService.userLogin(req.body.email, res);
@@ -94,19 +41,12 @@ export default class UserController {
         user.password
       );
       if (validation) {
-        if (!user.isVerified) {
-          return res
-            .status(400)
-            .json({ message: 'Please verify your email to login!' });
-        }
         const token = await generateToken({ email: user.email }, '1d');
         return res
           .status(201)
           .header('authenticate', token)
           .json({ message: 'Logged in successfully', token });
       }
-      console.log(user.password);
-      console.log(req.body.password);
       return res.status(401).json({ message: 'Invalid password' });
     } catch (error) {
       return res.status(404).json({
@@ -115,49 +55,7 @@ export default class UserController {
       });
     }
   }
-  static async forgot(req, res) {
-    const exist = await new UserService().userExist(req.body.email);
 
-    if (exist.email) {
-      const tokenid = generateToken({ id: exist.id }, '10m');
-      const message = {
-        to: exist.email,
-        from: {
-          name: process.env.EMAIL_NAME,
-          email: process.env.FROM_EMAIL
-        },
-        subject: 'reset password',
-        text: 'request for reset password',
-        html: confirmEmail(tokenid)
-      };
-      sgMail
-        .send(message)
-        .then((response) => {
-          res.status(200).json({
-            status: 200,
-            message: 'Password reset link has been sent to your email'
-          });
-        })
-        .catch((error) => console.log(error.message));
-    } else {
-      res.status(404).json({ status: 404, message: 'Email has not found' });
-    }
-  }
-  static async reset(req, res) {
-    try {
-      const { password } = req.body;
-      const { token } = req.params;
-      const userInfo = jwt.verify(token, process.env.SECRETE);
-      const userId = userInfo.id;
-      const newPassword = await bcrypt.hash(password, 10);
-      User.update({ password: newPassword }, { where: { id: userId } });
-      return res
-        .status(200)
-        .send({ message: 'Your new password has been set Return to Login' });
-    } catch (error) {
-      return res.status(500).send({ message: error.message });
-    }
-  }
   async googleLogin(req, res) {
     try {
       const profile = req.user;

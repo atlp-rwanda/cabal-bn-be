@@ -24,9 +24,6 @@ export default class UserService {
     return userExist;
   }
 
-  async getUserId(id) {
-    return User.findOne({ where: { id } });
-  }
   async getUser(email) {
     return User.findOne({ where: { email } });
   }

@@ -34,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true
       },
-      isVerified: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
       address: DataTypes.STRING,
       profile_picture: {
         type: DataTypes.TEXT,

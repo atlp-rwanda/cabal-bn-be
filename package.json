@@ -25,14 +25,14 @@
     "dev": {
       "command": "nodemon --exec npx babel-node src/app.js",
       "env": {
-        "NODE_ENV": "development",
-        "PORT": 3000
+        "NODE_ENV": "docker",
+        "PORT": 5000
       }
     },
     "test": {
       "command": "yarn run dbmigrate:all && nyc --reporter=text --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000 --exit && yarn run migrate:undo",
       "env": {
-        "NODE_ENV": "test",
+        "NODE_ENV": "production",
         "PORT": 3000
       }
     },
@@ -79,19 +79,25 @@
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
+    "@hapi/joi": "^17.1.1",
+    "@sendgrid/mail": "^7.6.2",
     "babel-plugin-module-resolver": "^4.1.0",
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "better-npm-run": "^0.1.1",
+    "cloudinary": "^1.28.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.3",
+    "express-form-data": "^2.0.17",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4",
     "morgan": "^1.10.0",
+    "multer": "^1.4.4",
     "passport": "^0.5.2",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",

@@ -1,4 +1,4 @@
-import chai, { request, expect } from 'chai';
+import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app';
 import 'dotenv/config';

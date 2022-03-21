@@ -5,6 +5,7 @@ import userValidation from '../../validations/user.validation';
 import { checkEmailExist } from '../../middlewares/user.middleware';
 import {
   checkLoggedInUser,
+  roles,
   checkRoleSame,
   checkEmailNotExist
 } from '../../middlewares/role.middleware';
@@ -58,6 +59,7 @@ routes.patch(
   '/assignRole',
   roleValidation,
   checkLoggedInUser,
+  roles('SUPER_ADMIN'),
   checkEmailNotExist,
   checkRoleSame,
   async (req, res) => {
@@ -65,9 +67,14 @@ routes.patch(
   }
 );
 
-routes.get('/getRoles', checkLoggedInUser, async (req, res) => {
-  await new RoleController().getRoles(req, res);
-});
+routes.get(
+  '/getRoles',
+  checkLoggedInUser,
+  roles('SUPER_ADMIN'),
+  async (req, res) => {
+    await new RoleController().getRoles(req, res);
+  }
+);
 routes.patch(
   '/reset-password/:token',
   PasswordValidation,

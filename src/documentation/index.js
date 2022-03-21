@@ -19,17 +19,25 @@ const paths = {
   ...welcome,
   ...user,
   ...role,
+<<<<<<< HEAD
   ...forgotP,
   ...room,
   ...accommodation,
   ...locations,
+=======
+>>>>>>> 66341451f0385f05038801105a49019b8be9575a
   ...trip
 };
 
 const definitions = {
   ...userDefinitions,
+<<<<<<< HEAD
   ...assignRoleDefinitions,
   ...locationDefinitions
+=======
+  ...assignRoleDefinitions
+  // ...tripDefinitions
+>>>>>>> 66341451f0385f05038801105a49019b8be9575a
 };
 
 const config = {

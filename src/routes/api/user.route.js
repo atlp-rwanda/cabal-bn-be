@@ -28,6 +28,10 @@ routes.post(
   }
 );
 
+routes.get('/verify-email/:token', async (req, res) => {
+  await new UserController().verifyNewUser(req, res);
+});
+
 routes.post('/login', userValidation, async (req, res) => {
   await new UserController().userLogin(req, res);
 });

@@ -4,7 +4,6 @@ import app from '../src/app';
 import 'dotenv/config';
 import UserController from '../src/controllers/user.controller';
 import { httpReq, httpRes } from './user.mockData';
-
 chai.use(chaiHttp);
 describe('USER END-POINT TEST', () => {
   describe('REGISTER USER TEST', () => {
@@ -41,6 +40,30 @@ describe('USER END-POINT TEST', () => {
           password: 'df'
         });
       expect(res).to.have.status([400]);
+    });
+  });
+  describe('VALIDATE USER TEST', () => {
+    it('should validate user email', async () => {
+      const res = await request(app)
+        .post('/api/v1/users/register')
+        .send({
+          email: `T${new Date().getMilliseconds()}test@gmail.com`,
+          password: 'Tester12345'
+        });
+      const token = res.body.token;
+
+      const valid = await request(app).get(
+        `/api/v1/users/verify-email/${token}`
+      );
+      expect(valid).to.have.status([200]);
+    });
+
+    it('should not login when not verified', async () => {
+      const res = await request(app).post('/api/v1/users/login').send({
+        email: 'TESTER@gmail.com',
+        password: 'TESTER1cabal'
+      });
+      expect(res.status).to.be.equal(400);
     });
   });
   describe('USER LOGIN', () => {

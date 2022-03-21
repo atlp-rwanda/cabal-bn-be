@@ -40,7 +40,7 @@ describe('ROLE END-POINT TEST', () => {
     it('should assign a role a user', async () => {
       const res1 = await request(app).post('/api/v1/users/login').send({
         email: `SUPER_ADMIN@gmail.com`,
-        password: 'Password12'
+        password: 'SUPER_ADMIN2gmail'
       });
 
       superToken = res1.body.token;

@@ -47,7 +47,7 @@ describe('USER END-POINT TEST', () => {
     it('it should login the user', async () => {
       const res = await request(app).post('/api/v1/users/login').send({
         email: 'SUPER_ADMIN@gmail.com',
-        password: 'Password12'
+        password: 'SUPER_ADMIN2gmail'
       });
       expect(res).to.have.status(201);
       expect(res.body).haveOwnProperty('token');

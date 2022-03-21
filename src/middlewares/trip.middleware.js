@@ -30,7 +30,7 @@ export const checkTripDates = (req, res, next) => {
   if (!compareDates) {
     return res.status(400).json({
       status: 400,
-      message: 'Trip date is grater than or equal to the return date'
+      message: 'Trip date is greater than or equal to the return date'
     });
   }
 

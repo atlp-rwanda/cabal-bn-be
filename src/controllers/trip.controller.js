@@ -77,11 +77,7 @@ class tripController {
 
   static async userUpdateTrip(req, res) {
     try {
-      const updated = await tripService.updateTrip(
-        req.user.id,
-        req.params.id,
-        req.body
-      );
+      const updated = await tripService.updateTrip(req.params.id, req.body);
 
       return res.status(200).json({
         status: 200,
@@ -98,10 +94,7 @@ class tripController {
 
   static async deleteTrip(req, res) {
     try {
-      const deletedTrip = await tripService.deleteTrip(
-        req.user.id,
-        parseInt(req.params.id)
-      );
+      const deletedTrip = await tripService.deleteTrip(parseInt(req.params.id));
 
       return res
         .status(200)

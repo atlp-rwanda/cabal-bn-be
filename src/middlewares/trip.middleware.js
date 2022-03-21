@@ -1,8 +1,10 @@
+/* eslint-disable camelcase */
 /* eslint-disable radix */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/prefer-default-export */
 
 import { validateDate } from '../helpers/dataComparison';
+import accommodationService from '../services/accommodations.service';
 import tripService from '../services/trip.service';
 
 export const checkTripExistStatus = (status) => async (req, res, next) => {
@@ -12,7 +14,7 @@ export const checkTripExistStatus = (status) => async (req, res, next) => {
     const trip = trips.rows[i];
 
     if (trip.id === parseInt(req.params.id)) {
-      if (trip.status === status || trip.status) {
+      if (trip.status === (status || trip.status)) {
         return next();
       }
 
@@ -31,6 +33,21 @@ export const checkTripDates = (req, res, next) => {
     return res.status(400).json({
       status: 400,
       message: 'Trip date is greater than or equal to the return date'
+    });
+  }
+
+  next();
+};
+
+export const checkLocationAccommodation = async (req, res, next) => {
+  const { accommodation_id, arrival_location_id } = req.body;
+  const accommodation = await accommodationService.findSpecificAccommodation(
+    accommodation_id
+  );
+
+  if (accommodation.location_id !== parseInt(arrival_location_id)) {
+    return res.status(400).json({
+      message: `The location and accommodation doesn't match, The accomodation passed has location of id ${accommodation.location_id}`
     });
   }
 

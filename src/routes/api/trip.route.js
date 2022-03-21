@@ -3,6 +3,7 @@ import tripContoller from '../../controllers/trip.controller';
 import tripValidation from '../../validations/trip.validation';
 import { checkLoggedInUser, roles } from '../../middlewares/role.middleware';
 import {
+  checkLocationAccommodation,
   checkTripDates,
   checkTripExistStatus
 } from '../../middlewares/trip.middleware';
@@ -15,13 +16,13 @@ const tripRoutes = express.Router();
 tripRoutes.get(
   '/',
   checkLoggedInUser,
-  roles('REQUESTER'),
+  roles('REQUESTER', 'SUPER_ADMIN'),
   tripContoller.findTrip
 );
 tripRoutes.get(
   '/manager',
   checkLoggedInUser,
-  roles('MANAGER'),
+  roles('MANAGER', 'SUPER_ADMIN'),
   tripContoller.managerFindTrip
 );
 
@@ -33,6 +34,7 @@ tripRoutes.post(
   checkTripDates,
   checkLoggedInUser,
   roles('REQUESTER'),
+  checkLocationAccommodation,
   tripContoller.createTrip
 );
 tripRoutes.put(
@@ -40,7 +42,7 @@ tripRoutes.put(
   tripValidation,
   checkTripDates,
   checkLoggedInUser,
-  roles('REQUESTER'),
+  roles('REQUESTER', 'SUPER_ADMIN'),
   checkTripExistStatus('PENDING'),
   tripContoller.userUpdateTrip
 );
@@ -48,7 +50,7 @@ tripRoutes.put(
 tripRoutes.delete(
   '/:id',
   checkLoggedInUser,
-  roles('REQUESTER'),
+  roles('REQUESTER', 'SUPER_ADMIN'),
   checkTripExistStatus('PENDING'),
   tripContoller.deleteTrip
 );

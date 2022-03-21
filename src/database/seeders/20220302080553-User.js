@@ -8,7 +8,7 @@ module.exports = {
         {
           first_name: 'SUPER_ADMIN',
           last_name: 'SUPER_ADMIN',
-          password: hashPassword('SUPER_ADMIN2gmail'),
+          password: hashPassword('Password12'),
           email: 'SUPER_ADMIN@gmail.com',
           address: 'kigali',
           profile_picture:

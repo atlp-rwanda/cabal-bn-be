@@ -9,6 +9,7 @@ describe('ROLE END-POINT TEST', () => {
   describe('ASSIGNROLE USER TEST', () => {
     let superToken;
     let notsuperToken;
+
     before(async () => {
       const res = await request(app).post('/api/v1/users/login').send({
         email: `SUPER_ADMIN@gmail.com`,
@@ -17,7 +18,6 @@ describe('ROLE END-POINT TEST', () => {
 
       superToken = res.body.token;
     });
-
     before(async () => {
       const res = await request(app).post('/api/v1/users/login').send({
         email: `TRAVEL_ADMIN@gmail.com`,
@@ -25,6 +25,16 @@ describe('ROLE END-POINT TEST', () => {
       });
 
       notsuperToken = res.body.token;
+    });
+    after(async () => {
+      console.log('running');
+      await request(app)
+        .patch('/api/v1/users/assignRole')
+        .set('Authorization', `Bearer ${superToken}`)
+        .send({
+          email: `REQUESTER@gmail.com`,
+          role: 'REQUESTER'
+        });
     });
 
     it('should assign a role a user', async () => {
@@ -57,7 +67,7 @@ describe('ROLE END-POINT TEST', () => {
           role: 'MANAGER'
         });
 
-      expect(res.status).to.equal(403);
+      expect(res.status).to.equal(401);
     });
 
     it("should not assign a role a user if role doesn't exist", async () => {

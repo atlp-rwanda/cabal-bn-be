@@ -1,7 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 export const tripRequest = {
-  origin: 'Kigali',
-  destination: 'Nyarugenge',
+  arrival_location_id: 1,
+  depart_location_id: 2,
+  accommodation_id: 1,
   tripDate: '2022-10-12',
   returnDate: '2023-12-10',
   reason: 'Tourism'
@@ -15,7 +16,7 @@ export const checkValidation = {
   destination: 'Nyarugenge',
   tripDate: '2022-13-12',
   returnDate: '2023-12-10',
-  accomodationId: 2,
+  accommodationId: 2,
   reason: 'Tourism',
   status: 'pending'
 };

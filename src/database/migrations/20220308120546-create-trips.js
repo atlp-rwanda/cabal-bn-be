@@ -1,4 +1,4 @@
-const tripStatus = require('../../utils/trip.util');
+const { tripStatus } = require('../../utils/trip.util');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -20,11 +20,14 @@ module.exports = {
       manager_id: {
         type: Sequelize.INTEGER
       },
-      destination: {
-        type: Sequelize.STRING
+      depart_location_id: {
+        type: Sequelize.INTEGER
       },
-      origin: {
-        type: Sequelize.STRING
+      arrival_location_id: {
+        type: Sequelize.INTEGER
+      },
+      accommodation_id: {
+        type: Sequelize.INTEGER
       },
       reason: {
         type: Sequelize.STRING
@@ -35,7 +38,7 @@ module.exports = {
       returnDate: {
         type: Sequelize.DATE
       },
-      accomodationId: {
+      accommodationId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

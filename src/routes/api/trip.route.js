@@ -6,14 +6,11 @@ import {
   checkTripDates,
   checkTripExistStatus
 } from '../../middlewares/trip.middleware';
+import { validateAccommodationFields } from '../../middlewares/accommodationId.middleware';
+import { validateLocationFields } from '../../middlewares/location.middleware';
+import { accommodationFields, locationFields } from '../../utils/trip.util';
 
 const tripRoutes = express.Router();
-// const checkLoginRequester = (req, res, next) => {
-//   checkLoggedInUser(req, res, next, 'REQUESTER');
-// };
-// const checkLoginManager = (req, res, next) => {
-//   checkLoggedInUser(req, res, next, 'MANAGER');
-// };
 
 tripRoutes.get(
   '/',
@@ -31,6 +28,8 @@ tripRoutes.get(
 tripRoutes.post(
   '/',
   tripValidation,
+  validateLocationFields(...locationFields),
+  validateAccommodationFields(...accommodationFields),
   checkTripDates,
   checkLoggedInUser,
   roles('REQUESTER'),

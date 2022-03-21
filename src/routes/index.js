@@ -15,6 +15,6 @@ routes.use('/home', home);
 routes.use('/', room);
 routes.use('/accommodations', accommodations);
 routes.use('/locations', locations);
-routes.use('/trips', upload.array(''), tripRoutes);
+routes.use('/trips', upload.single(''), tripRoutes);
 
 export default routes;

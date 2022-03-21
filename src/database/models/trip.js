@@ -2,7 +2,7 @@
 /* eslint-disable require-jsdoc */
 
 const { Model } = require('sequelize');
-const tripStatus = require('../../utils/trip.util');
+const { tripStatus } = require('../../utils/trip.util');
 
 module.exports = (sequelize, DataTypes) => {
   class Trip extends Model {
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User }) {
+    static associate({ User, Location, Accommodation }) {
       // define association here
       this.belongsTo(User, {
         foreignKey: 'user_id',
@@ -21,12 +21,21 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'manager_id',
         as: 'manager'
       });
+      this.belongsTo(Location, {
+        foreignKey: 'arrival_location_id',
+        as: 'arrival_location'
+      });
+      this.belongsTo(Location, {
+        foreignKey: 'depart_location_id',
+        as: 'depart_location'
+      });
+      this.belongsTo(Accommodation, {
+        foreignKey: 'accommodation_id'
+      });
     }
   }
   Trip.init(
     {
-      origin: DataTypes.STRING,
-      destination: DataTypes.STRING,
       tripDate: DataTypes.DATE,
       returnDate: DataTypes.DATE,
       reason: DataTypes.STRING,

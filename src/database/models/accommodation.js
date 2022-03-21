@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Rooms',
         onDelete: 'cascade'
       });
+      this.hasMany(models.Trip, {
+        foreignKey: 'accommodation_id'
+      });
     }
   }
   Accommodation.init(

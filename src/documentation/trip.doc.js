@@ -67,13 +67,19 @@ export const trip = {
       operationId: 'postTrip',
       parameters: [
         {
-          name: 'origin',
+          name: 'depart_location_id',
           in: 'formData',
           required: true,
           type: 'string'
         },
         {
-          name: 'destination',
+          name: 'arrival_location_id',
+          in: 'formData',
+          required: true,
+          type: 'string'
+        },
+        {
+          name: 'accommodation_id',
           in: 'formData',
           required: true,
           type: 'string'
@@ -120,13 +126,19 @@ export const trip = {
           required: true
         },
         {
-          name: 'origin',
+          name: 'depart_location_id',
           in: 'formData',
           required: true,
           type: 'string'
         },
         {
-          name: 'destination',
+          name: 'arrival_location_id',
+          in: 'formData',
+          required: true,
+          type: 'string'
+        },
+        {
+          name: 'accommodation_id',
           in: 'formData',
           required: true,
           type: 'string'
@@ -142,6 +154,7 @@ export const trip = {
           name: 'returnDate',
           in: 'formData',
           type: 'string',
+          required: true,
           format: 'date-time'
         },
         {

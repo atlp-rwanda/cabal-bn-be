@@ -21,15 +21,20 @@ export default async function tripValidation(req, res, next) {
       'date.format':
         'returnDate is not correct iso standard must be year-month-day'
     }),
-    destination: Joi.string().required().empty().messages({
-      'string.base': 'destination must be valid',
-      'string.empty': 'destination is not allowed to be empty',
-      'any.required': 'destination is required'
+    arrival_location_id: Joi.number().required().empty().messages({
+      'string.base': 'arrival_location_id must be valid',
+      'string.empty': 'arrival_location_id is not allowed to be empty',
+      'any.required': 'arrival_location_id is required'
     }),
-    origin: Joi.string().required().empty().messages({
-      'string.base': 'originCity must be valid',
-      'string.empty': 'originCity is not allowed to be empty',
-      'any.required': 'originCity is required'
+    depart_location_id: Joi.number().required().empty().messages({
+      'string.base': 'depart_location_id must be valid',
+      'string.empty': 'depart_location_id is not allowed to be empty',
+      'any.required': 'depart_location_id is required'
+    }),
+    accommodation_id: Joi.number().required().empty().messages({
+      'string.base': 'accommodation_id must be valid',
+      'string.empty': 'accommodation_id is not allowed to be empty',
+      'any.required': 'accommodation_id is required'
     })
   });
 

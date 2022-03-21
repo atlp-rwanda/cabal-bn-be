@@ -44,6 +44,7 @@ class locationController {
         data: response
       });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ message: 'internal server error' });
     }
   }
@@ -51,9 +52,7 @@ class locationController {
   static async findOneLocation(req, res) {
     try {
       const { locationId } = req.params;
-      const foundLocation = await locationService.findLocation(
-        locationId,
-      );
+      const foundLocation = await locationService.findLocation(locationId);
       if (!foundLocation)
         return res.status(404).json({ message: 'location not found' });
       return res.status(200).json({ message: 'found Location', foundLocation });

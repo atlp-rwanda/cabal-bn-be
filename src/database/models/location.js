@@ -16,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'location_id',
         as: 'Accommodations'
       });
+      this.hasMany(models.Trip, {
+        foreignKey: 'arrival_location_id',
+        as: 'arrival_location'
+      });
+      this.hasMany(models.Trip, {
+        foreignKey: 'depart_location_id',
+        as: 'depart_location'
+      });
     }
   }
   Location.init(
@@ -23,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       description: DataTypes.STRING,
       country: DataTypes.STRING,
-      longitude:DataTypes.STRING,
-      latitude:DataTypes.STRING
+      longitude: DataTypes.STRING,
+      latitude: DataTypes.STRING
     },
     {
       sequelize,

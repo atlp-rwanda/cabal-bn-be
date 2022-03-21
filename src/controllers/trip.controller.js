@@ -22,7 +22,10 @@ class tripController {
       });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ message: 'internal server error', err });
+      return res.status(500).json({
+        message: 'An unexpected error occurred',
+        error: err.message.replace(/['"`]/g, '')
+      });
     }
   }
 
@@ -47,7 +50,10 @@ class tripController {
         data: getPaginatedData(managerFind, page, limit)
       });
     } catch (err) {
-      return res.status(500).json({ message: 'internal server error', err });
+      return res.status(500).json({
+        message: 'An unexpected error occurred',
+        error: err.message.replace(/['"`]/g, '')
+      });
     }
   }
 
@@ -70,8 +76,10 @@ class tripController {
         data: tripCreated
       });
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ message: 'internal server error', err });
+      return res.status(500).json({
+        message: 'An unexpected error occurred',
+        error: err.message.replace(/['"`]/g, '')
+      });
     }
   }
 
@@ -85,9 +93,9 @@ class tripController {
         data: updated
       });
     } catch (error) {
-      res.status(500).json({
-        message: 'Internal server Error',
-        error
+      return res.status(500).json({
+        message: 'An unexpected error occurred',
+        error: error.message.replace(/['"`]/g, '')
       });
     }
   }
@@ -100,8 +108,10 @@ class tripController {
         .status(200)
         .json({ message: 'Trip deleted successfully', deletedTrip });
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ message: 'internal server error', err });
+      return res.status(500).json({
+        message: 'An unexpected error occurred',
+        error: err.message.replace(/['"`]/g, '')
+      });
     }
   }
 }

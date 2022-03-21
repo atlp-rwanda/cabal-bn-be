@@ -1,6 +1,6 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable require-jsdoc */
-import { Trip, User, Location, Accommodation } from '../database/models';
+import { Trip, User, Location, Role, Accommodation } from '../database/models';
 
 class tripService {
   static async createTrip(userId, managerId, data) {
@@ -29,6 +29,7 @@ class tripService {
   static async findSpecificTrip(userId, limit = 3, offset = 0) {
     let foundOneTrip;
 
+    const userRole = await Role.findOne({ where: { id: userId } });
     const includes = [
       {
         model: User,
@@ -58,7 +59,7 @@ class tripService {
       }
     ];
 
-    if (userId === 1) {
+    if (userRole.name === 'SUPER_ADMIN') {
       foundOneTrip = await Trip.findAndCountAll({
         limit,
         offset,
@@ -79,6 +80,7 @@ class tripService {
   static async managerFindAllTrip(managerId, limit = 3, offset = 0) {
     let foundAllTrip;
 
+    const userRole = await Role.findOne({ where: { id: managerId } });
     const includes = [
       {
         model: User,
@@ -108,7 +110,7 @@ class tripService {
       }
     ];
 
-    if (managerId === 1) {
+    if (userRole.name === 'SUPER_ADMIN') {
       foundAllTrip = await Trip.findAndCountAll({
         limit,
         offset,

@@ -4,6 +4,7 @@ import { User } from '../database/models';
 import 'dotenv';
 
 export const checkEmailExist = async (req, res, next) => {
+  console.log('runned');
   const { email } = req.body;
   const emailExist = await User.findOne({
     where: {

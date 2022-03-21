@@ -3,6 +3,9 @@ import welcome from './welcome';
 import forgotP from './forgot.doc';
 import { user, userDefinitions } from './user.doc';
 import { role, assignRoleDefinitions } from './role.doc';
+import room from './room.doc';
+import accommodation from './accommodation.doc';
+import { locations, locationDefinitions } from './location.doc';
 import { trip } from './trip.doc';
 
 dotenv.config();
@@ -16,11 +19,17 @@ const paths = {
   ...welcome,
   ...user,
   ...role,
+  ...forgotP,
+  ...room,
+  ...accommodation,
+  ...locations,
   ...trip
 };
 
 const definitions = {
   ...userDefinitions,
+  ...assignRoleDefinitions,
+  ...locationDefinitions,
   ...assignRoleDefinitions
   // ...tripDefinitions
 };

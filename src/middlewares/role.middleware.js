@@ -1,10 +1,12 @@
+/* eslint-disable no-shadow */
+/* eslint-disable arrow-body-style */
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import { User } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import RoleService from '../services/role.service';
 
-export const checkLoggedInUser = (role) => async (req, res, next) => {
+export const checkLoggedInUser = async (req, res, next) => {
   const token =
     req.headers.authorization && req.headers.authorization.split(' ')[1];
   if (!token) return res.status(403).json({ message: 'user not logged in' });
@@ -46,8 +48,8 @@ export const TravelAdmin = async (req, res, next) => {
     include: 'Role'
   });
 
-  if (user.Role.name !== (role || 'SUPER_ADMIN')) {
-    return res.status(401).json({ message: 'access denied' });
+  if (user.Role.name !== 'TRAVEL_ADMIN') {
+    return res.status(401).json({ message: 'only Travel Admin is allowed' });
   }
 
   const { email, id, manager_id } = user;

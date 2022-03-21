@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 export const getPagination = (page, limit) => {
-  const newLimit = limit ? +limit : 3;
+  const newLimit = limit ? +limit : 10;
   const offset = page ? +page * newLimit : 0;
   return { newLimit, offset };
 };

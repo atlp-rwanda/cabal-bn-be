@@ -82,7 +82,7 @@ describe('USER END-POINT TEST', () => {
         email: 'SUPER_ADMIN@gmail.com',
         password: 'SUPER_ADMIN2'
       });
-      expect(res.status).to.be.equal(401);
+      expect(res.status).to.be.equal(400);
       expect(res.body).to.haveOwnProperty('message');
     });
     it('should give an error on wrong route', async () => {

@@ -21,23 +21,6 @@ export const user = {
       responses
     }
   },
-  '/users/verify-email/{token}': {
-    get: {
-      tags: ['User'],
-      summary: 'Verify',
-      description: 'Verify a user',
-      operationId: 'getVerifyUser',
-      parameters: [
-        {
-          name: 'token',
-          in: 'path',
-          description: 'Register a user',
-          required: true
-        }
-      ],
-      responses
-    }
-  },
   '/users/login': {
     post: {
       tags: ['User'],

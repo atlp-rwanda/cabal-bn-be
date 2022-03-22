@@ -6,6 +6,8 @@ import room from './api/room.route';
 import locations from './api/location.route';
 import tripRoutes from './api/trip.route';
 import upload from '../helpers/multer';
+import tripCommentRoute from './api/trip.comments.route';
+import { validateTripId } from '../middlewares/tripId.middleware';
 
 const routes = express.Router();
 
@@ -16,5 +18,6 @@ routes.use('/', room);
 routes.use('/accommodations', accommodations);
 routes.use('/locations', locations);
 routes.use('/trips', upload.single(''), tripRoutes);
+routes.use('/trips/:tripId/comment', validateTripId, tripCommentRoute);
 
 export default routes;

@@ -54,6 +54,7 @@ export default class UserController {
           console.log('Email has been sent!');
         })
         .catch((err) =>
+          /* istanbul ignore next */
           res.status(500).json({ message: 'Something went wrong!' })
         );
       return res.status(201).json({

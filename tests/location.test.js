@@ -97,7 +97,7 @@ describe('LOCATION TESTING', () => {
   it('should find a specific locations', async () => {
     const createlocation = await locationService.createLocation(locationData);
     createlocation.save();
-    const res = await request(app).get(`/api/v1/locations/100`);
+    const res = await request(app).get(`/api/v1/locations/200`);
     expect(res.status).to.be.equal(404);
   });
 

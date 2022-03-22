@@ -14,4 +14,4 @@ COPY .env.example .env
 
 EXPOSE ${PORT}
 
-CMD ["yarn", "run", "dev"]
+CMD ["yarn", "run", "docker"]

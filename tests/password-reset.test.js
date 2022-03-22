@@ -28,8 +28,6 @@ describe('TESTING PASSWORD RESET', () => {
         done();
       });
   });
-  //  i commented this test because it is using sendgrid and currentlly the limit of emails per hour or month has exceedded and it is not running
-
   // it('should Send password reset link', (done) => {
   //   chai
   //     .request(app)

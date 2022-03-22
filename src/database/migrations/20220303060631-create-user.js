@@ -46,6 +46,9 @@ module.exports = {
           as: 'manager_id'
         }
       },
+      location_id: {
+        type: DataTypes.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

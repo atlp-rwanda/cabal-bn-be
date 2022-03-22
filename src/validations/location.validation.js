@@ -4,8 +4,8 @@ const locationValidation = (req, res, next) => {
   const locationSchema = Joi.object({
     name: Joi.string().required().min(2),
     description: Joi.string().required().min(2),
-    latitude: Joi.string().required(),
-    longitude: Joi.string().required(),
+    latitude: Joi.number().required(),
+    longitude: Joi.number().required(),
     country: Joi.string().required().min(2)
   });
 

@@ -41,11 +41,8 @@ const userValidation = (req, res, next) => {
             }),
         email: Joi.string().required().email(),
         language: Joi.string().empty(),
-        address: Joi.string().empty(),
+        location_id: Joi.number().empty(),
         profile_picture: Joi.string().empty(),
-        occupation: Joi.string().empty(),
-        bio: Joi.string().empty(),
-        nationality: Joi.string().empty()
     });
 
     const result = userSchema.validate(req.body);

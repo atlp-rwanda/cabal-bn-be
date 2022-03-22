@@ -7,23 +7,26 @@ import 'dotenv/config';
 import UserController from '../src/controllers/user.controller';
 import { httpReq, httpRes } from './user.mockData';
 import UserService from '../src/services/user.service';
+import path from "path";
+import { User } from "database/models"
+import { generateToken } from '../src/helpers/user.helpers';
 
 chai.use(chaiHttp);
 describe('USER END-POINT TEST', () => {
   // Testing catches
   describe('USER CONTROLLER CATCHES', () => {
-    it('should not register user if email verification not sent', async () => {
-      const sgmail = stub(sgMail, 'send').rejects(new Error('Sgmail failed'));
-      const res = await request(app)
-        .post('/api/v1/users/register')
-        .send({
-          email: `T${new Date().getMilliseconds()}tsa2341@gmail.com`,
-          password: 'Tsa2341gmail'
-        });
-      assert.called(sgmail);
-      expect(res).to.have.status([500]);
-      sgmail.restore();
-    });
+    // it('should not register user if email verification not sent', async () => {
+    //   const sgmail = stub(sgMail, 'send').rejects(new Error('Sgmail failed'));
+    //   const res = await request(app)
+    //     .post('/api/v1/users/register')
+    //     .send({
+    //       email: `T${new Date().getMilliseconds()}tsa2341@gmail.com`,
+    //       password: 'Tsa2341gmail'
+    //     });
+    //   assert.called(sgmail);
+    //   expect(res).to.have.status([500]);
+    //   sgmail.restore();
+    // });
 
     it('should not register user if email verification not sent', async () => {
       const createUser = stub(UserService.prototype, 'createUser').callsFake(
@@ -33,11 +36,35 @@ describe('USER END-POINT TEST', () => {
         .post('/api/v1/users/register')
         .send({
           email: `T${new Date().getMilliseconds()}tsa2341@gmail.com`,
-          password: 'Tsa2341gmail'
+          password: 'Tsa2341gmail',
+          first_name: "user first_name",
+          last_name: "user last_name",
+          location_id: 1,
+
         });
       assert.called(createUser);
       expect(res).to.have.status([500]);
       createUser.restore();
+    });
+
+    it('should not validate user email id database failed', async () => {
+      const res = await request(app)
+        .post('/api/v1/users/login')
+        .send({
+          email: `REQUESTER@gmail.com`,
+          password: 'REQUESTER2gmail',
+
+        });
+      const { token } = res.body;
+      const getUserId = stub(UserService.prototype, 'getUserId').callsFake(() =>
+        Promise.reject(new Error('Database failed'))
+      );
+      const valid = await request(app).get(
+        `/api/v1/users/verify-email/${token}`
+      );
+      assert.called(getUserId);
+      expect(valid).to.have.status([500]);
+      getUserId.restore();
     });
 
     it('it should not login the user if database failed', async () => {
@@ -95,31 +122,53 @@ describe('USER END-POINT TEST', () => {
       expect(res.status).to.be.equal(500);
       userLogout.restore();
     });
-  });
 
+  });
   describe('REGISTER USER TEST', () => {
     it('should register a user and get a token', async () => {
       const res = await request(app)
         .post('/api/v1/users/register')
         .send({
           email: `T${new Date().getMilliseconds()}tsa2341@gmail.com`,
-          password: 'Tsa2341gmail'
+          password: 'Tsa2341gmail',
+          first_name: "user first_name",
+          last_name: "user last_name",
+          location_id: 1,
         });
       // expect(res.body).to.haveOwnProperty('token');
       expect(res).to.have.status([201]);
     });
+    it('should not register a user if location id is not found', async () => {
+      const res = await request(app)
+        .post('/api/v1/users/register')
+        .send({
+          email: `T${new Date().getMilliseconds()}tsa2341@gmail.com`,
+          password: 'Tsa2341gmail',
+          first_name: "user first_name",
+          last_name: "user last_name",
+          location_id: 100,
+        });
+      expect(res).to.have.status([404]);
+    });
     it('should not register a user if exist', async () => {
       const res = await request(app).post('/api/v1/users/register').send({
         email: 'REQUESTER@gmail.com',
-        password: 'REQUESTER2gmail'
+        password: 'REQUESTER2gmail',
+        first_name: "user first_name",
+        last_name: "user last_name",
+        location_id: 1,
       });
       expect(res).to.have.status([409]);
     });
+
     it('should not register a user if no password', async () => {
       const res = await request(app)
         .post('/api/v1/users/register')
         .send({
-          email: `${new Date().getMilliseconds()}Tsa23415@example.com`
+          email: `${new Date().getMilliseconds()}Tsa23415@example.com`,
+          first_name: "user first_name",
+          last_name: "user last_name",
+
         });
       expect(res).to.have.status([400]);
     });
@@ -134,15 +183,16 @@ describe('USER END-POINT TEST', () => {
     });
   });
 
+
   describe('VALIDATE USER TEST', () => {
     it('should validate user email', async () => {
-      const res = await request(app)
-        .post('/api/v1/users/register')
-        .send({
-          email: `T${new Date().getMilliseconds()}test@gmail.com`,
-          password: 'Tester12345'
-        });
-      const { token } = res.body;
+      // const res = await request(app)
+      //   .post('/api/v1/users/login')
+      //   .send({
+      //     email: `REQUESTER@gmail.com`,
+      //     password: 'REQUESTER2gmail',
+      //   });
+      const token = generateToken({ id: 4 }, '1d');
       const valid = await request(app).get(
         `/api/v1/users/verify-email/${token}`
       );
@@ -298,4 +348,85 @@ describe('USER END-POINT TEST', () => {
       expect(res.status).to.be.equal(401);
     });
   });
+
+  describe("USER PROFILE", () => {
+    it("should update profile", async () => {
+      // const register = await request(app).post("/api/v1/users/register").send({
+      //     first_name: "user register",
+      //     last_name: "user login",
+      //     email: "user1@gmail.com",
+      //     password: "WORDPASS2",
+      //     location_id: 1
+      // })
+      // await request(app).get(`/api/v1/users/verify-email/${register.body.token}`)
+      const login = await request(app).post("/api/v1/users/login").send({ email: "REQUESTER@gmail.com", password: "REQUESTER2gmail" })
+      const res = await request(app).patch("/api/v1/users/profile")
+        .set({ "Authorization": `Bearer ${login.body.token}` })
+        .set('content-type', 'multipart/form-data')
+        .field("first_name", "ishimwe")
+        .field("last_name", "gabin")
+        .field("language", "english")
+        .field("gender", "male")
+        .field("occupation", "technical engineer")
+        .field("bio", "i like travelling")
+        .field("nationality", "burundian")
+        .field("location_id", 2)
+        .attach("profile_picture", path.join(__dirname, "/image/profile.png"), "profile.png")
+      expect(res.status).to.be.equal(201)
+      expect(res.body.message).to.be.equal("Profile updated")
+    })
+
+    // it("should not update with user not logged in", async() => {
+    //     await request(app).post("/api/v1/users/register").send({
+    //         first_name: "user register",
+    //         last_name: "user login",
+    //         email: "user2@gmail.com",
+    //         password: "WORDPASS2",
+    //         location_id: 2
+    //     })
+    //     // const login = await request(app).post("/api/v1/users/login").send({email: "user@gmail.com", password: "WORDPASS2"})
+    //     const res = await request(app).patch("/api/v1/users/profile")
+    //     .set('content-type', 'multipart/form-data')
+    //     .field("language", "english")
+    //     .field("gender", "male")
+    //     .field("occupation", "technical engineer")
+    //     .field("bio", "i like travelling")
+    //     .field("nationality", "burundian")
+    //     .attach("profile_picture", path.join(__dirname, "/image/profile.png"), "profile.png")
+    //     expect(res.body.message).to.be.equal("user not logged in")
+    //     expect(res.status).to.be.equal(403)
+    // })
+
+    it("should not create profile with wrong date format", async () => {
+      // const register = await request(app).post("/api/v1/users/register").send({
+      //     first_name: "user register",
+      //     last_name: "user login",
+      //     email: "user3@gmail.com",
+      //     password: "WORDPASS2",
+      //     location_id: 3
+      // })
+      // await request(app).get(`/api/v1/users/verify-email/${register.body.token}`)
+      const login = await request(app).post("/api/v1/users/login").send({ email: "REQUESTER@gmail.com", password: "REQUESTER2gmail" })
+      const res = await request(app).patch("/api/v1/users/profile")
+        .set({ "Authorization": `Bearer ${login.body.token}` })
+        .set('content-type', 'multipart/form-data')
+        .field("first_name", "ishimwe")
+        .field("last_name", "gabin")
+        .field("language", "english")
+        .field("gender", "male")
+        .field("occupation", "technical engineer")
+        .field("bio", "i like travelling")
+        .field("nationality", "burundian")
+        .field("date_of_birth", "lorem ipsum")
+        .attach("profile_picture", path.join(__dirname, "/image/profile.png"), "profile.png")
+      expect(res.status).to.be.equal(400)
+    })
+
+    after(async () => {
+      await User.destroy({
+        where: {},
+        truncated: true
+      })
+    })
+  })
 });

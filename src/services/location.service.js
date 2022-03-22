@@ -1,6 +1,6 @@
 /* eslint-disable no-return-await */
 /* eslint-disable require-jsdoc */
-import { Location, Accommodation } from '../database/models';
+import { Location, Accommodation, User } from '../database/models';
 
 class locationService {
   static async createLocation(location) {
@@ -24,6 +24,15 @@ class locationService {
       }
     );
   }
+
+  // static async userLocation(latitude, longitude) {
+  //   return await Location.findOne({
+  //     where: {
+  //       latitude: latitude,
+  //       longitude: longitude
+  //     }
+  //   })
+  // }
 
   static async removeLocation({ where }) {
     return await Location.destroy({ where });

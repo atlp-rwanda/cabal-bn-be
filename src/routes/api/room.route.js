@@ -10,11 +10,11 @@ const room = express.Router();
 
 room.post(
   '/accommodations/:accommodationId/rooms',
+  upload.array('images'),
   checkLoggedInUser,
   roles('TRAVEL_ADMIN', 'SUPER_ADMIN'),
   validateAccommodationId,
   roomValidation,
-  upload.array('images'),
   roomController.createRoom
 );
 room.get(
@@ -30,12 +30,12 @@ room.get(
 );
 room.put(
   '/accommodations/:accommodationId/rooms/:roomId',
+  upload.array('images'),
   checkLoggedInUser,
   roles('TRAVEL_ADMIN', 'SUPER_ADMIN'),
   validateAccommodationId,
   validateRoomId,
   roomValidation,
-  upload.array('images'),
   roomController.updateRoom
 );
 room.delete(

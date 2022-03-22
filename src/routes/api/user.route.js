@@ -18,12 +18,18 @@ import {
   EmailValidation,
   PasswordValidation
 } from '../../validations/resetPassword.validation';
+import upload from '../../helpers/multer';
+import profileValidation from '../../validations/profile.validation';
+import { validateLocationId, checkLocationId } from '../../middlewares/location.middleware';
+// import locationValidation from '../../validations/location.validation';
+import registerValidation from '../../validations/register.validation';
 
 const routes = express.Router();
 
 routes.post(
   '/register',
-  userValidation,
+  registerValidation,
+  validateLocationId,
   checkEmailExist,
   passport.authenticate('local', { session: false }),
   async (req, res) => {
@@ -93,4 +99,13 @@ routes.post('/logout', checkLoggedInUser, async (req, res) => {
   await new UserController().Logout(req, res);
 });
 
+routes.patch("/profile", 
+  upload.single("profile_picture"),
+  checkLoggedInUser,
+  validateLocationId,
+  profileValidation, 
+  async(req, res) => {
+    await new UserController().profileUpdate(req, res)
+  }
+)
 export default routes;

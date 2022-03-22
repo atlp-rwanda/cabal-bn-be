@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Role, Trip, User: USER, tripComments }) {
+    static associate({ Role, Trip, User: USER, Profile, Location, tripComments}) {
       // define association here
       this.belongsTo(Role, { foreignKey: 'role_id' });
       this.hasMany(Trip, {
@@ -27,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         onDelete: 'CASCADE'
       });
+      this.hasOne(Profile, {
+        onDelete: "cascade",
+        foreignKey: "user_id",
+        as: "profile"
+      })
+      this.belongsTo(Location, {
+        foreignKey: "location_id"
+      })
     }
 
     toJSON() {
@@ -46,7 +54,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true
       },
-      address: DataTypes.STRING,
       manager_id: {
         type: DataTypes.INTEGER,
         default: null,

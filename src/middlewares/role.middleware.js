@@ -38,30 +38,6 @@ export const roles = (...roles) => {
     next();
   };
 };
-export const TravelAdmin = async (req, res, next) => {
-  const token =
-    req.headers.authorization && req.headers.authorization.split(' ')[1];
-  let payload;
-  try {
-    payload = decodeToken(token);
-  } catch (error) {
-    return res.status(403).json({ message: 'user not logged in' });
-  }
-
-  const user = await User.findOne({
-    where: { email: payload.email },
-    include: 'Role'
-  });
-
-  if (user.Role.name !== 'TRAVEL_ADMIN') {
-    return res.status(401).json({ message: 'only Travel Admin is allowed' });
-  }
-
-  const { email, id, manager_id } = user;
-
-  req.user = { email, id, manager_id };
-  next();
-};
 
 export const checkRoleSame = async (req, res, next) => {
   const { email, role } = req.body;

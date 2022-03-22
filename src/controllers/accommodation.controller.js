@@ -15,7 +15,7 @@ class accommodationController {
     try {
       const { user } = req;
       const { name } = req.query;
-       /* istanbul ignore next */
+      /* istanbul ignore next */
       const condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
       const searchAccommodation =
         await accommodationService.findAllAccommodations({ where: condition });
@@ -23,7 +23,7 @@ class accommodationController {
       for (let i = 0; i < searchAccommodation.rows.length - 1; i++) {
         if (
           searchAccommodation.rows[i].location_id ==
-            req.accommodations.value.location_id &&
+          req.accommodations.value.location_id &&
           searchAccommodation.rows[i].name == req.accommodations.value.name
         ) {
           return res.status(400).json({
@@ -55,7 +55,7 @@ class accommodationController {
         req.query.limit
       );
       const { name } = req.query;
-       /* istanbul ignore next */
+      /* istanbul ignore next */
       const condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
       const foundAccommodations =
         await accommodationService.findAllAccommodations({

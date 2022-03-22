@@ -24,7 +24,7 @@ describe('ROOM ENDPOINTS TEST', () => {
       .field('details', 'break fast')
       .field('accommodation_id', 1)
       .attach(
-        'image',
+        'images',
         path.join(__dirname, 'weatherApp.PNG'),
         'weatherApp.png'
       );
@@ -113,17 +113,12 @@ describe('ROOM ENDPOINTS TEST', () => {
     const res = await request(app)
       .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
       .set('Authorization', data.token)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      )
       .send({
         price: '23456',
         details: 'breakfast',
-        images: []
+        images: "234"
       });
-    expect(res.status).to.be.equal(400);
+    expect(res.status).to.be.equal(500);
   });
 
   it('should list all rooms of an accommodation', async () => {
@@ -191,7 +186,7 @@ describe('ROOM ENDPOINTS TEST', () => {
       .field('details', 'break fast')
       .field('accommodation_id', 1)
       .attach(
-        'image',
+        'images',
         path.join(__dirname, 'weatherApp.PNG'),
         'weatherApp.png'
       );

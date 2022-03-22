@@ -51,6 +51,22 @@ describe('TRIP END-POINT TESTING', () => {
     expect(res).to.have.status([201]);
   });
 
+  it('Should not create the Trip with invalid location id', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/trips')
+      .set('Authorization', `Bearer ${reqToken}`)
+      .send({
+        arrival_location_id: 100,
+        depart_location_id: 100,
+        accommodation_id: 1,
+        tripDate: '2022-10-12',
+        returnDate: '2023-12-10',
+        reason: 'Tourism'
+      });
+    expect(res).to.have.status([404]);
+  });
+
   it('Should not create the Trip  Request if an error occurred', async () => {
     const createTrip = stub(tripService, 'createTrip').rejects(
       new Error('Database failed')
@@ -241,11 +257,10 @@ describe('TRIP END-POINT TESTING', () => {
   it('Should  Update Trip request which has pending status while logged in user ', async () => {
     const res = await chai
       .request(app)
-      .put(`/api/v1/trips/2`)
+      .put(`/api/v1/trips/1`)
       .set('Authorization', `Bearer ${reqToken}`)
       .send(tripRequest);
-    console.log(res.body);
-    expect(res).to.have.status([404]);
+    expect(res).to.have.status([200]);
   });
 
   it('Should  not update the trip requests that are approved', async () => {
@@ -263,7 +278,6 @@ describe('TRIP END-POINT TESTING', () => {
       .put(`/api/v1/trips/2000`)
       .set('Authorization', `Bearer ${reqToken}`)
       .send(tripRequest);
-    console.log(res.body);
     expect(res).to.have.status([404]);
   });
 
@@ -300,7 +314,6 @@ describe('TRIP END-POINT TESTING', () => {
       .request(app)
       .delete(`/api/v1/trips/2`)
       .set('Authorization', `Bearer ${reqToken}`);
-    console.log(res.body);
     expect(res).to.have.status([404]);
   });
 

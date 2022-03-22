@@ -3,9 +3,9 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable require-jsdoc */
-import { User } from 'database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import { Blacklist } from '../database/models';
+import { User, Profile } from 'database/models';
 
 export default class UserService {
   async createUser(data) {
@@ -49,5 +49,23 @@ export default class UserService {
     await Blacklist.create({ token: accessToken });
 
     return user;
+  }
+  async getUserwithProfile(email) {
+    return User.findOne({
+      where: { email },
+      include: {
+        model: Profile,
+        as: "profile"
+      }
+    });
+  }
+
+  async updateUser(data, id) {
+    return User.update(data, {
+      where: {
+        id
+      },
+      returning: true
+    })
   }
 }

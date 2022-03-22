@@ -1,5 +1,5 @@
 import express from 'express';
-import accommodationController from '../../controllers/accomodation.controller';
+import accommodationController from '../../controllers/accommodation.controller';
 import upload from '../../helpers/multer';
 import { checkLoggedInUser, roles } from '../../middlewares/role.middleware';
 import { validateAccommodationId } from '../../middlewares/accommodationId.middleware';

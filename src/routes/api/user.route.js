@@ -27,7 +27,6 @@ routes.post(
     await new UserController().createUser(req, res);
   }
 );
-
 routes.post('/login', userValidation, async (req, res) => {
   await new UserController().userLogin(req, res);
 });

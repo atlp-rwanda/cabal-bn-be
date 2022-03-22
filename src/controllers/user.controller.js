@@ -41,6 +41,7 @@ export default class UserController {
       });
     }
   }
+
   async userLogin(req, res) {
     try {
       const user = await this.userService.userLogin(req.body.email, res);
@@ -111,6 +112,7 @@ export default class UserController {
       return res.status(500).send({ message: error.message });
     }
   }
+
   async googleLogin(req, res) {
     try {
       const profile = req.user;

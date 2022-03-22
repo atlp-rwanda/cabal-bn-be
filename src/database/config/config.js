@@ -11,18 +11,13 @@ module.exports = {
     logging: false
   },
   development: {
+    use_env_variable: 'DEV_DATABASE_URL',
     database: process.env.POSTGRES_DB,
     host: process.env.DB_HOST,
     username: process.env.POSTGRESS_USER,
     password: process.env.POSTGRES_PASSWORD,
     port: 5432,
     dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    },
     logging: false
   },
   test: {

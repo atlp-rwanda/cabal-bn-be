@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-plusplus */
 /* eslint-disable curly */
 import accommodationService from '../services/accommodations.service';
 
@@ -12,3 +14,21 @@ export const validateAccommodationId = async (req, res, next) => {
   req.accommodation = accommodation;
   next();
 };
+
+export const validateAccommodationFields =
+  (...args) =>
+  async (req, res, next) => {
+    for (let i = 0; i < args.length; i++) {
+      const id = req.body[args[i]];
+      const accommodation =
+        await accommodationService.findSpecificAccommodation(id);
+
+      if (!accommodation) {
+        return res
+          .status(404)
+          .json({ message: `Accommodation with id ${id} not found` });
+      }
+    }
+
+    next();
+  };

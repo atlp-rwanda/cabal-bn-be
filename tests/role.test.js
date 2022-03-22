@@ -9,15 +9,15 @@ describe('ROLE END-POINT TEST', () => {
   describe('ASSIGNROLE USER TEST', () => {
     let superToken;
     let notsuperToken;
+
     before(async () => {
       const res = await request(app).post('/api/v1/users/login').send({
         email: `SUPER_ADMIN@gmail.com`,
-        password: 'Password12'
+        password: 'SUPER_ADMIN2gmail'
       });
 
       superToken = res.body.token;
     });
-
     before(async () => {
       const res = await request(app).post('/api/v1/users/login').send({
         email: `TRAVEL_ADMIN@gmail.com`,
@@ -26,16 +26,18 @@ describe('ROLE END-POINT TEST', () => {
 
       notsuperToken = res.body.token;
     });
+    after(async () => {
+      console.log('running');
+      await request(app)
+        .patch('/api/v1/users/assignRole')
+        .set('Authorization', `Bearer ${superToken}`)
+        .send({
+          email: `REQUESTER@gmail.com`,
+          role: 'REQUESTER'
+        });
+    });
 
     it('should assign a role a user', async () => {
-      const res1 = await request(app).post('/api/v1/users/login').send({
-        email: `SUPER_ADMIN@gmail.com`,
-        password: 'Password12'
-      });
-
-      superToken = res1.body.token;
-
-      console.log(res1.body);
       const res = await request(app)
         .patch('/api/v1/users/assignRole')
         .set('Authorization', `Bearer ${superToken}`)
@@ -43,7 +45,7 @@ describe('ROLE END-POINT TEST', () => {
           email: 'REQUESTER@gmail.com',
           role: 'MANAGER'
         });
-
+      console.log(res.body, res.status);
       expect(res.status).to.equal(200);
       expect(res.body.data.role_id).to.equal(3);
     });

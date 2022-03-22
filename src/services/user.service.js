@@ -1,3 +1,8 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-throw-literal */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable require-jsdoc */
 import { User } from 'database/models';
 
 export default class UserService {
@@ -5,6 +10,7 @@ export default class UserService {
     const newUser = await User.create(data);
     return newUser;
   }
+
   async userExist(email) {
     const user = await User.findOne({ where: { email } });
     if (user) {

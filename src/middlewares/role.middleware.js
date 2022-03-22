@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable arrow-body-style */
+/* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import { User } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
@@ -51,6 +52,9 @@ export const TravelAdmin = async (req, res, next) => {
     return res.status(401).json({ message: 'only Travel Admin is allowed' });
   }
 
+  const { email, id, manager_id } = user;
+
+  req.user = { email, id, manager_id };
   next();
 };
 

@@ -26,7 +26,7 @@ class tripService {
     return exist;
   }
 
-  static async findSpecificTrip(userId, limit = 3, offset = 0) {
+  static async findSpecificTrip(userId, limit, offset) {
     let foundOneTrip;
 
     const userRole = await Role.findOne({ where: { id: userId } });
@@ -77,7 +77,7 @@ class tripService {
     return foundOneTrip;
   }
 
-  static async managerFindAllTrip(managerId, limit = 3, offset = 0) {
+  static async managerFindAllTrip(managerId, limit, offset) {
     let foundAllTrip;
 
     const userRole = await Role.findOne({ where: { id: managerId } });

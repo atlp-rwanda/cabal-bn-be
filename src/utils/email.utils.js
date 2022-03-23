@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 export const confirmEmail = (emailData) => {
-  const SendEmail = `<!doctype html>
+    const SendEmail = `<!doctype html>
     <html lang="en-US">
     
     <head>
@@ -48,7 +48,7 @@ export const confirmEmail = (emailData) => {
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                 We cannot simply send you your old password. A unique link to reset your password has been generated for you. To reset your password, click the following link and follow the instructions.
                                             </p>
-                                            <a href="${process.env.RESET_LINK}/api-docs/${emailData}" style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
+                                            <a href="${process.env.BASE_URL}/api-docs/${emailData}" style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
                                                 Password</a> 
                                         </td>
                                     </tr>
@@ -70,5 +70,5 @@ export const confirmEmail = (emailData) => {
     </body>
     
     </html>`;
-  return SendEmail;
+    return SendEmail;
 };

@@ -6,66 +6,72 @@
 import { decodeToken } from '../helpers/user.helpers';
 import { Blacklist } from '../database/models';
 import { User, Profile } from 'database/models';
-
+import { Role } from 'database/models';
 export default class UserService {
-  async createUser(data) {
-    const newUser = await User.create(data);
-    return newUser;
-  }
-
-  async userExist(email) {
-    const user = await User.findOne({ where: { email } });
-    if (user) {
-      return user;
+    async createUser(data) {
+        const newUser = await User.create(data);
+        return newUser;
     }
-    return false;
-  }
 
-  async userLogin(data, res) {
-    const userExist = await User.findOne({
-      where: { email: data }
-    });
+    async userExist(email) {
+        const user = await User.findOne({ where: { email } });
+        if (user) {
+            return user;
+        }
+        return false;
+    }
 
-    return userExist;
-  }
+    async userLogin(data, res) {
+        const userExist = await User.findOne({
+            where: { email: data }
+        });
 
-  async getUserId(id) {
-    return User.findOne({ where: { id } });
-  }
+        return userExist;
+    }
 
-  async getUser(email) {
-    return User.findOne({ where: { email } });
-  }
+    async getUserId(id) {
+        return User.findOne({ where: { id } });
+    }
 
-  async userLogout(accessToken) {
-    const token = await decodeToken(accessToken);
-    const { email } = token;
-    const user = await User.findOne({
-      where: {
-        email
-      }
-    });
+    async getUser(email) {
+        return User.findOne({ where: { email } });
+    }
 
-    await Blacklist.create({ token: accessToken });
+    async userLogout(accessToken) {
+        const token = await decodeToken(accessToken);
+        const { email } = token;
+        const user = await User.findOne({
+            where: {
+                email
+            }
+        });
 
-    return user;
-  }
-  async getUserwithProfile(email) {
-    return User.findOne({
-      where: { email },
-      include: {
-        model: Profile,
-        as: "profile"
-      }
-    });
-  }
+        await Blacklist.create({ token: accessToken });
 
-  async updateUser(data, id) {
-    return User.update(data, {
-      where: {
-        id
-      },
-      returning: true
-    })
-  }
+        return user;
+    }
+    async getUserwithProfile(email) {
+        return User.findOne({
+            where: { email },
+            include: {
+                model: Profile,
+                as: "profile"
+            }
+        });
+    }
+
+    async updateUser(data, id) {
+        return User.update(data, {
+            where: {
+                id
+            },
+            returning: true
+        })
+    }
+    static async findById(id) {
+        return User.findOne({ where: { id }, include: { model: Role } });
+    }
+    static async update(data, condition) {
+        return User.update(data, { where: {...condition } });
+    }
 }

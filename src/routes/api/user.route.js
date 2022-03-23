@@ -2,7 +2,10 @@ import express from 'express';
 import passport from '../../middlewares/passport.middleware';
 import UserController from '../../controllers/user.controller';
 import userValidation from '../../validations/user.validation';
-import { checkEmailExist } from '../../middlewares/user.middleware';
+import {
+  checkEmailExist,
+  checkVerifiedUser
+} from '../../middlewares/user.middleware';
 import {
   checkLoggedInUser,
   roles,
@@ -27,7 +30,12 @@ routes.post(
     await new UserController().createUser(req, res);
   }
 );
-routes.post('/login', userValidation, async (req, res) => {
+
+routes.get('/verify-email/:token', async (req, res) => {
+  await new UserController().verifyNewUser(req, res);
+});
+
+routes.post('/login', userValidation, checkVerifiedUser, async (req, res) => {
   await new UserController().userLogin(req, res);
 });
 

@@ -19,3 +19,19 @@ export const checkEmailExist = async (req, res, next) => {
       .json({ message: `User with email ${email} already exist` });
   }
 };
+
+export const checkVerifiedUser = async (req, res, next) => {
+  const { email } = req.body;
+  const user = await User.findOne({
+    where: {
+      email
+    }
+  });
+  if (!user || !user.isVerified) {
+    return res
+      .status(400)
+      .json({ message: 'Please verify your email to login!' });
+  } else {
+    next();
+  }
+};

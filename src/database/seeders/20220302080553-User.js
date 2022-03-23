@@ -10,6 +10,7 @@ module.exports = {
           last_name: 'SUPER_ADMIN',
           password: hashPassword('SUPER_ADMIN2gmail'),
           email: 'SUPER_ADMIN@gmail.com',
+          isVerified: true,
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
@@ -23,6 +24,7 @@ module.exports = {
           last_name: 'TRAVEL_ADMIN',
           password: hashPassword('TRAVEL_ADMIN2gmail'),
           email: 'TRAVEL_ADMIN@gmail.com',
+          isVerified: true,
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
@@ -36,6 +38,7 @@ module.exports = {
           last_name: 'MANAGER',
           password: hashPassword('MANAGER2gmail'),
           email: 'MANAGER@gmail.com',
+          isVerified: true,
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
@@ -49,6 +52,7 @@ module.exports = {
           last_name: 'REQUESTER',
           password: hashPassword('REQUESTER2gmail'),
           email: 'REQUESTER@gmail.com',
+          isVerified: true,
           address: 'kigali',
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
@@ -82,6 +86,20 @@ module.exports = {
           provider: 'EMAIL',
           role_id: 4,
           manager_id: 5,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          first_name: 'TESTER',
+          last_name: 'TESTER',
+          password: hashPassword('TESTER1cabal'),
+          email: 'TESTER@gmail.com',
+          address: 'kigali',
+          isVerified: false,
+          profile_picture:
+            'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
+          provider: 'EMAIL',
+          role_id: 4,
           createdAt: new Date(),
           updatedAt: new Date()
         }

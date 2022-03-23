@@ -43,6 +43,32 @@ describe('USER END-POINT TEST', () => {
       expect(res).to.have.status([400]);
     });
   });
+
+  describe('VALIDATE USER TEST', () => {
+    it('should validate user email', async () => {
+      const res = await request(app)
+        .post('/api/v1/users/register')
+        .send({
+          email: `T${new Date().getMilliseconds()}test@gmail.com`,
+          password: 'Tester12345'
+        });
+      const token = res.body.token;
+
+      const valid = await request(app).get(
+        `/api/v1/users/verify-email/${token}`
+      );
+      expect(valid).to.have.status([200]);
+    });
+
+    it('should not login when not verified', async () => {
+      const res = await request(app).post('/api/v1/users/login').send({
+        email: 'TESTER@gmail.com',
+        password: 'TESTER1cabal'
+      });
+      expect(res.status).to.be.equal(400);
+    });
+  });
+
   describe('USER LOGIN', () => {
     it('it should login the user', async () => {
       const res = await request(app).post('/api/v1/users/login').send({
@@ -58,7 +84,7 @@ describe('USER END-POINT TEST', () => {
         email: 'SUPER@gmail.com',
         password: 'SUPER_ADMIN2gmail'
       });
-      expect(res).to.have.status(404);
+      expect(res).to.have.status(400);
       expect(res.body).to.haveOwnProperty('message');
     });
     it('should not login with invalid email', async () => {

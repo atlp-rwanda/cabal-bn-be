@@ -13,8 +13,10 @@ import { User } from '../database/models';
 import {
   generateToken,
   hashPassword,
-  comparePassword
+  comparePassword,
+  decodeToken
 } from '../helpers/user.helpers';
+import { verifyEmail } from '../helpers/user.verify';
 
 config();
 
@@ -30,10 +32,38 @@ export default class UserController {
       data.role_id = 4;
       const newUser = await this.userService.createUser(data, res);
 
-      const token = generateToken({ email: newUser.email }, '1d');
+      const token = generateToken({ id: newUser.id }, '1d');
+
+      const msg = {
+        from: {
+          name: 'Cabal Barefoot Nomad',
+          email: process.env.FROM_EMAIL
+        },
+        to: newUser.email,
+        subject: 'Email Verification',
+        text: `
+        Hello, thanks for registering on Barefoot Nomad site.
+        Please copy and paste the address below into address bar to verify your account.
+        ${process.env.BASE_URL}/api/v1/users/verify-email/${token}
+        `,
+        html: verifyEmail(token)
+      };
+      sgMail
+        .send(msg)
+        .then(res, () => {
+          console.log('Email has been sent!');
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json({ message: 'Something went wrong!' });
+        });
       return res
         .status(201)
-        .json({ message: 'user registered successfully', token });
+        .json({
+          message:
+            'User registered successfully! Please check your email for verification.',
+          token
+        });
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while creating a user',
@@ -42,6 +72,25 @@ export default class UserController {
     }
   }
 
+  async verifyNewUser(req, res) {
+    try {
+      const { token } = req.params;
+
+      const userInfo = decodeToken(token);
+
+      const userId = userInfo.id;
+
+      const user = await this.userService.getUserId(userId);
+
+      user.update({ isVerified: true }, { where: { id: userId } });
+      return res
+        .status(200)
+        .send({ message: 'Account verified! You can proceed to log in.' });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({ message: error.message });
+    }
+  }
   async userLogin(req, res) {
     try {
       const user = await this.userService.userLogin(req.body.email, res);

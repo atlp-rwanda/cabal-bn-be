@@ -57,13 +57,11 @@ export default class UserController {
           console.log(err);
           return res.status(500).json({ message: 'Something went wrong!' });
         });
-      return res
-        .status(201)
-        .json({
-          message:
-            'User registered successfully! Please check your email for verification.',
-          token
-        });
+      return res.status(201).json({
+        message:
+          'User registered successfully! Please check your email for verification.',
+        token
+      });
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while creating a user',
@@ -228,6 +226,27 @@ export default class UserController {
       return res.status(500).json({
         message: 'Error occured while logging in',
         data: error.message
+      });
+    }
+  }
+
+  async Logout(req, res) {
+    try {
+      const user = await this.userService.userLogout(
+        req.headers.authorization.split(' ')[1]
+      );
+      if (user.first_name) {
+        return res.status(200).json({
+          message: `You have been logged out ${user.first_name}`
+        });
+      }
+      return res.status(200).json({
+        message: 'You have been logged out'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: error.message,
+        message: 'error occured while logging you out'
       });
     }
   }

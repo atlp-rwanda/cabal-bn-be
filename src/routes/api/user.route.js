@@ -18,6 +18,7 @@ import {
   EmailValidation,
   PasswordValidation
 } from '../../validations/resetPassword.validation';
+import { authentication } from '../../middlewares/authentication';
 
 const routes = express.Router();
 
@@ -88,4 +89,9 @@ routes.patch(
   UserController.reset
 );
 routes.post('/forgot-password', EmailValidation, UserController.forgot);
+
+routes.post('/logout', authentication, async (req, res) => {
+  await new UserController().Logout(req, res);
+});
+
 export default routes;

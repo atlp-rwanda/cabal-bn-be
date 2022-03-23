@@ -44,7 +44,6 @@ class locationController {
         data: response
       });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ message: 'internal server error' });
     }
   }

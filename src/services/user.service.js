@@ -26,9 +26,6 @@ export default class UserService {
       where: { email: data }
     });
 
-    if (!userExist) {
-      throw 'User not found in database';
-    }
     return userExist;
   }
 

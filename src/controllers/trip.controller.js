@@ -13,41 +13,13 @@ class tripController {
       const show = await tripService.findSpecificTrip(
         req.user.id,
         newLimit,
-        offset
+        offset,
+        req.user.Role.dataValues.name
       );
 
       return res.status(200).json({
         message: 'Trip retrieved Successfully',
         data: getPaginatedData(show, page, limit)
-      });
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({
-        message: 'An unexpected error occurred',
-        error: err.message.replace(/['"`]/g, '')
-      });
-    }
-  }
-
-  static async managerFindTrip(req, res) {
-    try {
-      const { page, limit } = getQuery(req);
-      const { newLimit, offset } = getPagination(page, limit);
-
-      const managerFind = await tripService.managerFindAllTrip(
-        req.user.id,
-        newLimit,
-        offset
-      );
-      if (!managerFind) {
-        return res
-          .status(404)
-          .json({ message: 'Manager with this Id not found' });
-      }
-
-      return res.status(200).json({
-        message: 'Trip retrieved Successfully',
-        data: getPaginatedData(managerFind, page, limit)
       });
     } catch (err) {
       return res.status(500).json({

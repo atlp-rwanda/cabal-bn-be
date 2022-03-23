@@ -1,12 +1,121 @@
+import sgMail from '@sendgrid/mail';
 import chai, { request, expect } from 'chai';
+import { assert, stub } from 'sinon';
 import chaiHttp from 'chai-http';
 import app from '../src/app';
 import 'dotenv/config';
 import UserController from '../src/controllers/user.controller';
 import { httpReq, httpRes } from './user.mockData';
+import UserService from '../src/services/user.service';
 
 chai.use(chaiHttp);
 describe('USER END-POINT TEST', () => {
+  // Testing catches
+  describe('USER CONTROLLER CATCHES', () => {
+    it('should not register user if email verification not sent', async () => {
+      const sgmail = stub(sgMail, 'send').rejects(new Error('Sgmail failed'));
+      const res = await request(app)
+        .post('/api/v1/users/register')
+        .send({
+          email: `T${new Date().getMilliseconds()}tsa2341@gmail.com`,
+          password: 'Tsa2341gmail'
+        });
+      assert.called(sgmail);
+      expect(res).to.have.status([500]);
+      sgmail.restore();
+    });
+
+    it('should not register user if email verification not sent', async () => {
+      const createUser = stub(UserService.prototype, 'createUser').callsFake(
+        () => Promise.reject(new Error('Database failed'))
+      );
+      const res = await request(app)
+        .post('/api/v1/users/register')
+        .send({
+          email: `T${new Date().getMilliseconds()}tsa2341@gmail.com`,
+          password: 'Tsa2341gmail'
+        });
+      assert.called(createUser);
+      expect(res).to.have.status([500]);
+      createUser.restore();
+    });
+
+    it('should not validate user email id database failed', async () => {
+      const res = await request(app)
+        .post('/api/v1/users/register')
+        .send({
+          email: `T${new Date().getMilliseconds()}test@gmail.com`,
+          password: 'Tester12345'
+        });
+      const { token } = res.body;
+      const getUserId = stub(UserService.prototype, 'getUserId').callsFake(() =>
+        Promise.reject(new Error('Database failed'))
+      );
+      const valid = await request(app).get(
+        `/api/v1/users/verify-email/${token}`
+      );
+      assert.called(getUserId);
+      expect(valid).to.have.status([500]);
+      getUserId.restore();
+    });
+
+    it('it should not login the user if database failed', async () => {
+      const userLogin = stub(UserService.prototype, 'userLogin').rejects(
+        new Error('Database failed')
+      );
+      const res = await request(app).post('/api/v1/users/login').send({
+        email: 'SUPER_ADMIN@gmail.com',
+        password: 'SUPER_ADMIN2gmail'
+      });
+      assert.called(userLogin);
+      expect(res).to.have.status(404);
+      userLogin.restore();
+    });
+
+    it('Should not return a token if sign in by google used and database is failing', async () => {
+      const getUser = stub(UserService.prototype, 'getUser').callsFake(() =>
+        Promise.reject(new Error('Database failed'))
+      );
+      const data = await new UserController().googleLogin(
+        httpReq('REQUESTER@gmail.com'),
+        httpRes()
+      );
+      assert.called(getUser);
+      expect(data.status).to.equal(500);
+      getUser.restore();
+    });
+
+    it('Should not return a token if sign in by facebook used and database failed', async () => {
+      const getUser = stub(UserService.prototype, 'getUser').callsFake(() =>
+        Promise.reject(new Error('Database failed'))
+      );
+      const data = await new UserController().facebookLogin(
+        httpReq('REQUESTER@gmail.com'),
+        httpRes()
+      );
+      assert.called(getUser);
+      expect(data.status).to.equal(500);
+      getUser.restore();
+    });
+
+    it('should log out a user', async () => {
+      const login = await chai.request(app).post('/api/v1/users/login').send({
+        email: 'SUPER_ADMIN@gmail.com',
+        password: 'SUPER_ADMIN2gmail'
+      });
+      const userLogout = stub(UserService.prototype, 'userLogout').callsFake(
+        () => Promise.reject(new Error('Database failed'))
+      );
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/users/logout`)
+        .set('Authorization', `Bearer ${login.body.token}`);
+      assert.called(userLogout);
+      expect(res.status).to.be.equal(500);
+      userLogout.restore();
+    });
+  });
+
   describe('REGISTER USER TEST', () => {
     it('should register a user and get a token', async () => {
       const res = await request(app)
@@ -52,7 +161,7 @@ describe('USER END-POINT TEST', () => {
           email: `T${new Date().getMilliseconds()}test@gmail.com`,
           password: 'Tester12345'
         });
-      const token = res.body.token;
+      const { token } = res.body;
 
       const valid = await request(app).get(
         `/api/v1/users/verify-email/${token}`
@@ -120,6 +229,7 @@ describe('USER END-POINT TEST', () => {
       expect(res).to.haveOwnProperty('text');
     });
   });
+
   describe('LOGIN WITH SOCIAL ACCOUNTS USER TEST', () => {
     it('Should hit the endpoint if sign in by google used', async () => {
       const res = await request(app).get('/api/v1/users/google/login');
@@ -164,6 +274,7 @@ describe('USER END-POINT TEST', () => {
       expect(data.body).to.haveOwnProperty('token');
     });
   });
+
   describe('USER-LOGOUT TEST', () => {
     let tok;
     before(async () => {
@@ -204,7 +315,7 @@ describe('USER END-POINT TEST', () => {
         .post(`/api/v1/users/logout`)
         .set({ Authorization: `Bearer kkkkkkkkkkkkkkkkkk` });
 
-      expect(res.status).to.be.equal(403);
+      expect(res.status).to.be.equal(401);
     });
   });
 });

@@ -48,15 +48,14 @@ export default class UserController {
         `,
         html: verifyEmail(token)
       };
-      sgMail
+      await sgMail
         .send(msg)
-        .then(res, () => {
+        .then(() => {
           console.log('Email has been sent!');
         })
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json({ message: 'Something went wrong!' });
-        });
+        .catch((err) =>
+          res.status(500).json({ message: 'Something went wrong!' })
+        );
       return res.status(201).json({
         message:
           'User registered successfully! Please check your email for verification.',
@@ -85,7 +84,6 @@ export default class UserController {
         .status(200)
         .send({ message: 'Account verified! You can proceed to log in.' });
     } catch (error) {
-      console.log(error);
       return res.status(500).send({ message: error.message });
     }
   }
@@ -240,9 +238,6 @@ export default class UserController {
           message: `You have been logged out ${user.first_name}`
         });
       }
-      return res.status(200).json({
-        message: 'You have been logged out'
-      });
     } catch (error) {
       return res.status(500).json({
         error: error.message,

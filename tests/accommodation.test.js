@@ -22,6 +22,41 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
     travelToken = res.body.token;
   });
 
+  it('should like an accomodation when logged in', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/accommodations/1/like')
+      .set('authorization', `Bearer ${travelToken}`);
+    expect(res.status).to.equal(200);
+    expect(res.body.data.like).to.equal(true);
+  });
+
+  it('should remove like on an accomodation when logged in', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/accommodations/1/like')
+      .set('authorization', `Bearer ${travelToken}`);
+    expect(res.status).to.equal(200);
+    expect(res.body.data.like).to.equal(null);
+  });
+
+  it('should add like on an accomodation if previouslly removed it when logged in', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/accommodations/1/like')
+      .set('authorization', `Bearer ${travelToken}`);
+    expect(res.status).to.equal(200);
+    expect(res.body.data.like).to.equal(true);
+  });
+
+  it('should not like an accomodation if not exist', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/accommodations/100000/unlike')
+      .set('authorization', `Bearer ${travelToken}`);
+    expect(res.status).to.equal(404);
+  });
+
   it('should not create an accommodation if user not logged in', async () => {
     const res = await chai
       .request(app)

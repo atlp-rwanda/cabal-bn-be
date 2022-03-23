@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-plusplus */
 /* eslint-disable curly */
@@ -32,3 +33,20 @@ export const validateAccommodationFields =
 
     next();
   };
+
+// export const validateAccommodationParam = async (req, res, next) => {
+//   const id = parseInt(req.params.id);
+//   const trips = await Trip.findAll({ where: { user_id: req.user.id } });
+
+//   for (let i = 0; i < trips.length; i++) {
+//     const trip = trips[i];
+
+//     if (trip.accommodation_id === id) {
+//       return next();
+//     }
+//   }
+
+//   return res
+//     .status(404)
+//     .json({ message: `Accommodation with id ${id} not found` });
+// };

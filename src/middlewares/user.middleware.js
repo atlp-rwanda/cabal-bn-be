@@ -4,7 +4,6 @@ import { User } from '../database/models';
 import 'dotenv';
 
 export const checkEmailExist = async (req, res, next) => {
-  console.log('runned');
   const { email } = req.body;
   const emailExist = await User.findOne({
     where: {
@@ -31,7 +30,6 @@ export const checkVerifiedUser = async (req, res, next) => {
     return res
       .status(400)
       .json({ message: 'Please verify your email to login!' });
-  } else {
-    next();
   }
+  return next();
 };

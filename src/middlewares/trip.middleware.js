@@ -7,24 +7,26 @@ import { validateDate } from '../helpers/dataComparison';
 import accommodationService from '../services/accommodations.service';
 import tripService from '../services/trip.service';
 
-export const checkTripExistStatus = (status) => async (req, res, next) => {
-  const trips = await tripService.findSpecificTrip(req.user.id, 10, 0);
+export const checkTripExistStatus = (status) => (req, res, next) => {
+  tripService
+    .findSpecificTrip(req.user.id, 10, 0, req.user.Role.name)
+    .then((trips) => {
+      for (let i = 0; i < trips.rows.length; i++) {
+        const trip = trips.rows[i];
 
-  for (let i = 0; i < trips.rows.length; i++) {
-    const trip = trips.rows[i];
+        if (trip.id === parseInt(req.params.id)) {
+          if (trip.status === status) {
+            return next();
+          }
 
-    if (trip.id === parseInt(req.params.id)) {
-      if (trip.status === (status || trip.status)) {
-        return next();
+          return res.status(400).json({
+            message: `Trip request should be in pending to perform this request`
+          });
+        }
       }
 
-      return res.status(400).json({
-        message: `Trip request should be in pending to perform this request`
-      });
-    }
-  }
-
-  return res.status(404).json({ message: 'No trip with that Id found' });
+      return res.status(404).json({ message: 'No trip with that Id found' });
+    });
 };
 
 export const checkTripDates = (req, res, next) => {

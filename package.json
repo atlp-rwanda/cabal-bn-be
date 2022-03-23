@@ -82,6 +82,7 @@
     "@hapi/joi": "^17.1.1",
     "@node-redis/client": "^1.0.4",
     "@sendgrid/mail": "^7.6.2",
+    "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-module-resolver": "^4.1.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",

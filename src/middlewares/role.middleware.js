@@ -12,8 +12,10 @@ export const checkLoggedInUser = async (req, res, next) => {
   if (!token) return res.status(403).json({ message: 'user not logged in' });
   try {
     const blackListed = await Blacklist.findOne({ where: { token } });
-    if (blackListed) return res.status(401).json({ message: 'please login first' });
-      
+    if (blackListed) {
+      return res.status(401).json({ message: 'please login first' });
+    }
+
     const decoded = decodeToken(token);
     const freshUser = await User.findByPk(decoded.userId, {
       include: 'Role'

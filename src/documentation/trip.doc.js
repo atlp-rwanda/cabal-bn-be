@@ -31,34 +31,6 @@ export const trip = {
       ]
     }
   },
-  '/trips/manager/?page={page}&limit={limit}': {
-    get: {
-      tags: ['Trip'],
-      summary: 'Manager Retrieve all  TripRequest owned',
-      description: 'Manager Retrieve all  TripRequest owned',
-      operationId: 'managerTripRequest',
-      parameters: [
-        {
-          name: 'page',
-          in: 'path',
-          type: 'integer',
-          required: true
-        },
-        {
-          name: 'limit',
-          in: 'path',
-          type: 'integer',
-          required: true
-        }
-      ],
-      security: [
-        {
-          JWT: []
-        }
-      ],
-      responses
-    }
-  },
   '/trips': {
     post: {
       tags: ['Trip'],
@@ -193,26 +165,3 @@ export const trip = {
     }
   }
 };
-
-// export const tripDefinitions = {
-//   trips: {
-//     type: 'object',
-//     properties: {
-//       origin: {
-//         type: 'string'
-//       },
-//       destination: {
-//         type: 'string'
-//       },
-//       tripDate: {
-//         type: 'string'
-//       },
-//       returnDate: {
-//         type: 'string'
-//       },
-//       reason: {
-//         type: 'string'
-//       }
-//     }
-//   }
-// };

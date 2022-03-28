@@ -184,6 +184,28 @@ const accommodation = {
         }
       ]
     }
+  },
+  '/accommodations/{accommodationId}/like': {
+    post: {
+      tags: ['Accommodation'],
+      summary: 'like an accommodation',
+      description: 'like an accommodation',
+      operationId: 'likeAccommodation',
+      parameters: [
+        {
+          name: 'accommodationId',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        }
+      ],
+      responses,
+      security: [
+        {
+          JWT: []
+        }
+      ]
+    }
   }
 };
 

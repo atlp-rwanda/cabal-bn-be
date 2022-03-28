@@ -84,8 +84,8 @@ module.exports = {
           profile_picture:
             'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
           provider: 'EMAIL',
+          isVerified: true,
           role_id: 4,
-          manager_id: 5,
           createdAt: new Date(),
           updatedAt: new Date()
         },

@@ -124,5 +124,24 @@ class accommodationController {
       return res.status(500).json({ message: 'internal server error' });
     }
   }
+
+  static async likeAccommodation(req, res) {
+    try {
+      const like = await accommodationService.createLike(
+        req.user.id,
+        req.params.accommodationId
+      );
+
+      return res.status(200).json({
+        message: 'Liked accommodation successfully',
+        data: like
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'An unexpected error occurred',
+        error: error.message.replace(/['"`]/g, '')
+      });
+    }
+  }
 }
 export default accommodationController;

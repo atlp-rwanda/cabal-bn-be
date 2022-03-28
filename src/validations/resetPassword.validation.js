@@ -16,7 +16,6 @@ export const EmailValidation = async (req, res, next) => {
   }
 };
 export const PasswordValidation = async (req, res, next) => {
-  console.log('runned');
   const value = joi
     .object({
       password: joi
@@ -27,7 +26,6 @@ export const PasswordValidation = async (req, res, next) => {
     })
     .validate(req.body);
 
-  console.log(value);
   if (value.error) {
     return res.status(400).json({
       error: 1,

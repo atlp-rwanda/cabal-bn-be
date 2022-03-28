@@ -17,6 +17,14 @@ accommodations.post(
   upload.array('images'),
   accommodationController.createAccommodation
 );
+
+accommodations.post(
+  '/:accommodationId/like',
+  checkLoggedInUser,
+  validateAccommodationId,
+  accommodationController.likeAccommodation
+);
+
 accommodations.get('/', accommodationController.findAllAccommodations);
 accommodations.get(
   '/:accommodationId',

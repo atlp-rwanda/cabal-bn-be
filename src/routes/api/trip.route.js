@@ -16,14 +16,8 @@ const tripRoutes = express.Router();
 tripRoutes.get(
   '/',
   checkLoggedInUser,
-  roles('REQUESTER', 'SUPER_ADMIN'),
+  roles('REQUESTER', 'MANAGER', 'SUPER_ADMIN'),
   tripContoller.findTrip
-);
-tripRoutes.get(
-  '/manager',
-  checkLoggedInUser,
-  roles('MANAGER', 'SUPER_ADMIN'),
-  tripContoller.managerFindTrip
 );
 
 tripRoutes.post(
@@ -44,6 +38,9 @@ tripRoutes.put(
   checkLoggedInUser,
   roles('REQUESTER', 'SUPER_ADMIN'),
   checkTripExistStatus('PENDING'),
+  validateLocationFields(...locationFields),
+  validateAccommodationFields(...accommodationFields),
+  checkLocationAccommodation,
   tripContoller.userUpdateTrip
 );
 

@@ -13,10 +13,9 @@ class locationController {
       };
 
       const create = await locationService.createLocation(data);
-      !create
-        ? res.status(404).json({ message: 'location is not created' })
-        : res.status(201).json({ message: 'location Created', create });
+      return res.status(201).json({ message: 'location Created', create });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }
@@ -28,6 +27,7 @@ class locationController {
         req.query.limit
       );
       const { name } = req.query;
+      /* istanbul ignore next */
       const condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
       const foundAccommodations = await locationService.listAllLocation({
         where: condition,
@@ -44,6 +44,7 @@ class locationController {
         data: response
       });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }
@@ -56,6 +57,7 @@ class locationController {
         return res.status(404).json({ message: 'location not found' });
       return res.status(200).json({ message: 'found Location', foundLocation });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }
@@ -64,18 +66,13 @@ class locationController {
     try {
       const { locationId } = req.params;
       const { name, country } = req.query;
-      const foundLocation = await locationService.findLocation(
-        locationId,
-        name,
-        country
-      );
-      if (!foundLocation)
-        return res.status(404).json({ message: 'location not found' });
+      await locationService.findLocation(locationId, name, country);
       await locationService.removeLocation({
         where: { id: locationId }
       });
       return res.status(200).json({ message: 'location removed' });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }

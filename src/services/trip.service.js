@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 /* eslint-disable object-shorthand */
 /* eslint-disable require-jsdoc */
 import { Trip, User, Location, Accommodation } from '../database/models';
@@ -89,6 +90,10 @@ class tripService {
       }
     });
     return deleteTrip;
+  }
+
+  static async findSpecificTripById(tripId) {
+    return await Trip.findByPk(tripId);
   }
 }
 export default tripService;

@@ -100,6 +100,32 @@ describe('ROOM ENDPOINTS TEST', () => {
     expect(res.status).to.be.equal(200);
   });
 
+  it('should test cloudinary', async () => {
+    const logIn = await chai.request(app).post('/api/v1/users/login').send({
+      email: 'TRAVEL_ADMIN@gmail.com',
+      password: 'TRAVEL_ADMIN2gmail'
+    });
+    const data = {
+      token: `Bearer ${logIn.body.token}`
+    };
+    const accommodation = await createAccommodation(accommodatonData);
+    accommodation.save();
+    const res = await request(app)
+      .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
+      .set('Authorization', data.token)
+      .attach(
+        'images',
+        path.join(__dirname, 'weatherApp.PNG'),
+        'weatherApp.png'
+      )
+      .send({
+        price: '23456',
+        details: 'breakfast',
+        images: []
+      });
+    expect(res.status).to.be.equal(400);
+  });
+
   it('should list all rooms of an accommodation', async () => {
     const room = await createRoom(roomData);
     room.save();
@@ -116,7 +142,7 @@ describe('ROOM ENDPOINTS TEST', () => {
     const room = await createRoom(roomData);
     room.save();
 
-    const res = await request(app).get(`/api/v1/accommodations/18/rooms`);
+    const res = await request(app).get(`/api/v1/accommodations/222/rooms`);
     expect(res.status).to.be.equal(404);
   });
 
@@ -234,7 +260,7 @@ describe('ROOM ENDPOINTS TEST', () => {
         name: 'Marriot Hotel',
         description:
           'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .',
-        location_id: 13,
+        location_id: 15,
         services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
         amenities: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
         images: [

@@ -39,6 +39,18 @@ describe('ROLE END-POINT TEST', () => {
         });
     });
 
+    it('should assign a role a user', async () => {
+      const res = await request(app)
+        .patch('/api/v1/users/assignRole')
+        .set('Authorization', `Bearer ${superToken}`)
+        .send({
+          email: 'REQUESTER@gmail.com',
+          role: 'MANAGER'
+        });
+      expect(res.status).to.equal(200);
+      expect(res.body.data.role_id).to.equal(3);
+    });
+
     it('should not assign a role a user if not SUPER_ADMIN', async () => {
       const res = await request(app)
         .patch('/api/v1/users/assignRole')
@@ -110,17 +122,17 @@ describe('ROLE END-POINT TEST', () => {
       getUser.restore();
     });
 
-    it('should assign a role a user', async () => {
-      const res = await request(app)
-        .patch('/api/v1/users/assignRole')
-        .set('Authorization', `Bearer ${superToken}`)
-        .send({
-          email: 'REQUESTER@gmail.com',
-          role: 'MANAGER'
-        });
-      expect(res.status).to.equal(200);
-      expect(res.body.data.role_id).to.equal(3);
-    });
+    // it('should assign a role a user', async () => {
+    //   const res = await request(app)
+    //     .patch('/api/v1/users/assignRole')
+    //     .set('Authorization', `Bearer ${superToken}`)
+    //     .send({
+    //       email: 'REQUESTER@gmail.com',
+    //       role: 'MANAGER'
+    //     });
+    //   expect(res.status).to.equal(200);
+    //   expect(res.body.data.role_id).to.equal(3);
+    // });
 
     it('should retrieve all roles', async () => {
       const res = await request(app)

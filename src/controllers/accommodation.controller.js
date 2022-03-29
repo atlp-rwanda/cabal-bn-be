@@ -8,18 +8,14 @@
 // eslint-disable-next-line import/no-unresolved
 import { Op } from 'sequelize';
 import accommodationService from '../services/accommodations.service';
-import { decodeToken } from '../helpers/user.helpers';
 import { getPagination, getPaginatedData } from '../utils/pagination.utils';
 
 class accommodationController {
   static async createAccommodation(req, res) {
     try {
-      const user = req.headers;
-      const token = req.headers.authorization.split(' ')[1];
-      const verify = await decodeToken(token);
-      if (!user) return res.status(200).json({ message: 'there is no user' });
-      // if (decodedToken) return res.status(200).json({ message: 'this is it' });
+      const { user } = req;
       const { name } = req.query;
+       /* istanbul ignore next */
       const condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
       const searchAccommodation =
         await accommodationService.findAllAccommodations({ where: condition });
@@ -39,7 +35,7 @@ class accommodationController {
 
       const data = {
         ...req.accommodations.value,
-        user_id: verify.userId
+        user_id: user.dataValues.id
       };
       const accommodationCreated =
         await accommodationService.createAccommodation(data);
@@ -59,6 +55,7 @@ class accommodationController {
         req.query.limit
       );
       const { name } = req.query;
+       /* istanbul ignore next */
       const condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
       const foundAccommodations =
         await accommodationService.findAllAccommodations({
@@ -87,6 +84,7 @@ class accommodationController {
         .status(200)
         .json({ message: 'Accommodation found', data: foundAccommodation });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error', err });
     }
   }
@@ -137,6 +135,7 @@ class accommodationController {
         data: like
       });
     } catch (error) {
+      /* istanbul ignore next */
       return res.status(500).json({
         message: 'An unexpected error occurred',
         error: error.message.replace(/['"`]/g, '')

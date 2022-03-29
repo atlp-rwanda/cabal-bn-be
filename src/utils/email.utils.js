@@ -1,8 +1,9 @@
+/* eslint-disable import/prefer-default-export */
 import dotenv from 'dotenv';
 
 dotenv.config();
 export const confirmEmail = (emailData) => {
-    const SendEmail = `<!doctype html>
+  const SendEmail = `<!doctype html>
     <html lang="en-US">
     
     <head>
@@ -69,5 +70,5 @@ export const confirmEmail = (emailData) => {
     </body>
     
     </html>`;
-    return SendEmail;
+  return SendEmail;
 };

@@ -2,7 +2,7 @@ require('dotenv').config();
 
 module.exports = {
   docker: {
-    use_env_variable: 'DEV_DATABASE_URL',
+    use_env_variable: 'DOCKER_DATABASE_URL',
     database: process.env.POSTGRES_DB,
     host: process.env.DB_HOST,
     username: process.env.POSTGRESS_USER,

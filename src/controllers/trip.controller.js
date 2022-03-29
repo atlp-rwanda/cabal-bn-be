@@ -65,6 +65,7 @@ class tripController {
         data: updated
       });
     } catch (error) {
+      /* istanbul ignore next */
       return res.status(500).json({
         message: 'An unexpected error occurred',
         error: error.message.replace(/['"`]/g, '')
@@ -80,6 +81,7 @@ class tripController {
         .status(200)
         .json({ message: 'Trip deleted successfully', deletedTrip });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({
         message: 'An unexpected error occurred',
         error: err.message.replace(/['"`]/g, '')

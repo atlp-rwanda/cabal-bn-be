@@ -7,42 +7,21 @@
     "yarn": "1.x"
   },
   "scripts": {
-    "dev": "better-npm-run dev",
+    "dev": " cross-env NODE_ENV=development yarn run dbmigrate:all && cross-env NODE_ENV=development nodemon --exec npx babel-node src/app.js",
+    "docker": "cross-env NODE_ENV=docker nodemon --exec npx babel-node src/app.js",
+    "start:docker": "docker-compose up",
     "build": "babel src -d build",
-    "start": "better-npm-run prod",
-    "test": "better-npm-run test",
-    "coverage": "better-npm-run cov",
+    "start": "cross-env NODE_ENV=production yarn run dbmigrate:all && cross-env NODE_ENV=production yarn run build && cross-env NODE_ENV=production node ./build/app.js",
+    "test": "cross-env NODE_ENV=test yarn run dbmigrate:all && cross-env NODE_ENV=test nyc --reporter=text --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000 --exit && cross-env NODE_ENV=test yarn run migrate:undo",
+    "coverage": "yarn run test",
     "prepare": "husky install",
     "format": "pretty-quick",
     "lint": "eslint src/*.js --fix",
     "dbmigrate": "npx sequelize-cli db:migrate",
     "seeding": "npx sequelize-cli db:seed:all",
     "migrate:undo": "npx sequelize-cli db:migrate:undo:all",
-    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run dbmigrate",
-    "dbmigrate:all": "npx sequelize-cli db:migrate:undo:all && npm run dbmigrate && npm run seeding"
-  },
-  "betterScripts": {
-    "dev": {
-      "command": "nodemon --exec npx babel-node src/app.js",
-      "env": {
-        "NODE_ENV": "docker",
-        "PORT": 5000
-      }
-    },
-    "test": {
-      "command": "yarn run dbmigrate:all && nyc --reporter=text --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000 --exit && yarn run migrate:undo",
-      "env": {
-        "NODE_ENV": "test",
-        "PORT": 3000
-      }
-    },
-    "cov": "yarn run test",
-    "prod": {
-      "command": "yarn run dbmigrate:all && yarn run build && node ./build/app.js",
-      "env": {
-        "NODE_ENV": "production"
-      }
-    }
+    "migrate:reset": "yarn run migrate:undo && yarn run dbmigrate",
+    "dbmigrate:all": "yarn run migrate:undo && yarn run dbmigrate && yarn run seeding"
   },
   "repository": {
     "type": "git",
@@ -89,6 +68,7 @@
     "better-npm-run": "^0.1.1",
     "cloudinary": "^1.28.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",

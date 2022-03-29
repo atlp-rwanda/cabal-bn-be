@@ -18,6 +18,7 @@ class roomController {
         .status(200)
         .json({ message: 'successfully created a room', room });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }
@@ -35,13 +36,12 @@ class roomController {
         offset,
         limit: newLimit
       });
-      if (!foundRooms)
-        return res.status(404).json({ message: 'No room found' });
       const response = getPaginatedData(foundRooms, req.query.page, newLimit);
       return res
         .status(200)
         .json({ message: 'list of all found rooms', response });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error', err });
     }
   }
@@ -51,6 +51,7 @@ class roomController {
       const foundRoom = req.room.dataValues;
       return res.status(200).json({ message: 'Room found', foundRoom });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }
@@ -77,6 +78,7 @@ class roomController {
         .status(200)
         .json({ message: 'Room has been updated', findUpdatedRoom });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }
@@ -90,6 +92,7 @@ class roomController {
       });
       return res.status(200).json({ message: 'Room deleted', destroyRoom });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }

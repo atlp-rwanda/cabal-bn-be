@@ -38,6 +38,7 @@ module.exports = {
           last_name: 'MANAGER',
           password: hashPassword('MANAGER2gmail'),
           email: 'MANAGER@gmail.com',
+          manager_id: 3,
           isVerified: true,
           address: 'kigali',
           profile_picture:

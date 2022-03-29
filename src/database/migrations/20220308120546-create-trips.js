@@ -38,8 +38,8 @@ module.exports = {
       returnDate: {
         type: Sequelize.DATE
       },
-      accommodationId: {
-        type: Sequelize.INTEGER
+      arrival_location: {
+        type: Sequelize.ARRAY(Sequelize.JSON)
       },
       createdAt: {
         allowNull: false,

@@ -6,22 +6,17 @@ import { Location, Accommodation, User } from '../database/models';
 import UserService from '../services/user.service';
 
 /* eslint-disable import/prefer-default-export */
-export const validateLocationFields =
-  (...args) =>
-  async (req, res, next) => {
-    for (let i = 0; i < args.length; i++) {
-      const id = req.body[args[i]];
-      const location = await locationService.findLocation(id);
-
-      if (!location) {
-        return res
-          .status(404)
-          .json({ message: `Location with id ${id} not found` });
-      }
-    }
-
-    next();
-  };
+export const validateLocationFields = async (req, res, next) => {
+  const id = req.body.depart_location_id;
+  const location = await locationService.findLocation(id);
+  /* istanbul ignore next */
+  if (!location) {
+    return res
+      .status(404)
+      .json({ message: `Location with id ${id} not found` });
+  }
+  return next();
+};
 
 export const validateLocationId = async (req, res, next) => {
   try {
@@ -37,40 +32,8 @@ export const validateLocationId = async (req, res, next) => {
     }
     return next();
   } catch (error) {
+    /* istanbul ignore next */
+
     return res.status(500).json({ message: error.message });
   }
 };
-
-// export const checkLocationId = async(req, res, next) => {
-//   try {
-//     const {email} = req.user
-//     const userLocation = await new UserService().getUser(email)
-//     const location =  await locationService.findLocation(userLocation.location_id);
-//     if(!location) {
-//       return res
-//             .status(404)
-//             .json({ message: `Location with id ${location.id} not found` });
-//     }
-
-//     return next()
-//   } catch (error) {
-
-//   }
-// }
-
-// export const findLocation = async(req, res, next) => {
-//   try {
-//     const {name, description, longitude, latitude, country} = req.body
-//     const location = await Location.findOne({where: {longitude, latitude}})
-//     if(location) {
-//       req.query = {id: location.id}
-//       return next()
-//     }
-//     const newLocation = await locationService.createLocation({name, description, longitude, latitude, country})
-//     req.query = {id: newLocation.id}
-//     return next()
-//   } catch (error) {
-//     return res.status(500).json({message: error.message})
-//   }
-
-// }

@@ -6,7 +6,7 @@ import { role, assignRoleDefinitions } from './role.doc';
 import room from './room.doc';
 import accommodation, { accommodationDefinitions } from './accommodation.doc';
 import { locations, locationDefinitions } from './location.doc';
-import { trip } from './trip.doc';
+import { trip, tripDefinitions } from './trip.doc';
 import { tripCommentDefinitions, tripComments } from './trip.comment.doc';
 import { booking, bookingDefinitions } from './booking.doc';
 
@@ -37,7 +37,8 @@ const definitions = {
   ...locationDefinitions,
   ...assignRoleDefinitions,
   ...tripCommentDefinitions,
-  ...accommodationDefinitions
+  ...accommodationDefinitions,
+  ...tripDefinitions
 };
 
 const config = {

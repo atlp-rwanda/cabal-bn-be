@@ -14,6 +14,7 @@ class locationController {
       const create = await locationService.createLocation(data);
       return res.status(201).json({ message: 'location Created', create });
     } catch (err) {
+      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error' });
     }
   }

@@ -17,23 +17,8 @@ export const validateAccommodationId = async (req, res, next) => {
   next();
 };
 
-export const validateAccommodationFields =
-  (...args) =>
-  async (req, res, next) => {
-    for (let i = 0; i < args.length; i++) {
-      const id = req.body[args[i]];
-      const accommodation =
-        await accommodationService.findSpecificAccommodation(id);
 
-      if (!accommodation) {
-        return res
-          .status(404)
-          .json({ message: `Accommodation with id ${id} not found` });
-      }
-    }
-
-    next();
-  };
+      
 
 export const checkUserCreatedComment = async (req, res, next) => {
   const { id } = req.user;

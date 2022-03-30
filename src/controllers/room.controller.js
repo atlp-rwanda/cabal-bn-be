@@ -56,7 +56,7 @@ class roomController {
     }
   }
 
-  static async updateRoom(req, res) {
+  static async updateRoom(req, res, next) {
     try {
       const accommodationExists = req.accommodation.dataValues;
       const accommodationId = accommodationExists.id;

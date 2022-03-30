@@ -25,25 +25,21 @@ export const validateLocationFields =
 
 export const validateLocationId = async (req, res, next) => {
   try {
-    const {location_id} = req.body
-    if(location_id) {
+    const { location_id } = req.body;
+    if (location_id) {
       // const userLocation = await new UserService().getUser(email)
-      const location =  await locationService.findLocation(location_id);
-      if(!location) {
-        return res
-              .status(404)
-              .json({ message: `Location with id not found` });
+      const location = await locationService.findLocation(location_id);
+      if (!location) {
+        return res.status(404).json({ message: `Location with id not found` });
       }
 
-      return next()
+      return next();
     }
-    return next()
-    
+    return next();
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({message: error.message})
+    return res.status(500).json({ message: error.message });
   }
-}
+};
 
 // export const checkLocationId = async(req, res, next) => {
 //   try {
@@ -58,7 +54,7 @@ export const validateLocationId = async (req, res, next) => {
 
 //     return next()
 //   } catch (error) {
-    
+
 //   }
 // }
 
@@ -76,5 +72,5 @@ export const validateLocationId = async (req, res, next) => {
 //   } catch (error) {
 //     return res.status(500).json({message: error.message})
 //   }
-  
+
 // }

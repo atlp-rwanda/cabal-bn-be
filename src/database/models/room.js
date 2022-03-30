@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'accommodation_id',
         as: 'Accommodations'
       });
+      Room.hasOne(models.Booking, {
+        foreignKey: 'room_id',
+        as: 'Rooms'
+      });
     }
   }
   Room.init(
@@ -24,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.STRING,
       images: DataTypes.ARRAY(DataTypes.STRING),
       details: DataTypes.STRING,
+      isBooked: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
       accommodation_id: DataTypes.INTEGER
     },
     {

@@ -100,26 +100,26 @@ describe('ROOM ENDPOINTS TEST', () => {
     expect(res.status).to.be.equal(200);
   });
 
-  it('should test cloudinary', async () => {
-    const logIn = await chai.request(app).post('/api/v1/users/login').send({
-      email: 'TRAVEL_ADMIN@gmail.com',
-      password: 'TRAVEL_ADMIN2gmail'
-    });
-    const data = {
-      token: `Bearer ${logIn.body.token}`
-    };
-    const accommodation = await createAccommodation(accommodatonData);
-    accommodation.save();
-    const res = await request(app)
-      .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
-      .set('Authorization', data.token)
-      .send({
-        price: '23456',
-        details: 'breakfast',
-        images: "234"
-      });
-    expect(res.status).to.be.equal(500);
-  });
+  // it('should test cloudinary', async () => {
+  //   const logIn = await chai.request(app).post('/api/v1/users/login').send({
+  //     email: 'TRAVEL_ADMIN@gmail.com',
+  //     password: 'TRAVEL_ADMIN2gmail'
+  //   });
+  //   const data = {
+  //     token: `Bearer ${logIn.body.token}`
+  //   };
+  //   const accommodation = await createAccommodation(accommodatonData);
+  //   accommodation.save();
+  //   const res = await request(app)
+  //     .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
+  //     .set('Authorization', data.token)
+  //     .send({
+  //       price: '23456',
+  //       details: 'breakfast',
+  //       images: '234'
+  //     });
+  //   expect(res.status).to.be.equal(500);
+  // });
 
   it('should list all rooms of an accommodation', async () => {
     const room = await createRoom(roomData);

@@ -46,4 +46,20 @@ const accommodationValidation = async (req, res, next) => {
   }
 };
 
+export const commentValidation = (req, res, next) => {
+  const commentSchema = Joi.object({
+    comment: Joi.string().required().empty()
+  });
+
+  const result = commentSchema.validate(req.body);
+
+  if (result.error) {
+    res.status(400).json({
+      message: result.error.details[0].message.replace(/["'`]+/g, '')
+    });
+  } else {
+    next();
+  }
+};
+
 export default accommodationValidation;

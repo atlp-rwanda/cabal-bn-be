@@ -198,6 +198,31 @@ const accommodation = {
           required: true,
           type: 'integer'
         }
+      ]
+    }
+  },
+  '/accommodations/{accommodationId}/comment': {
+    post: {
+      tags: ['Accommodation'],
+      summary: 'give a feedback an accommodation',
+      description: 'give a feedback an ccommodation',
+      operationId: 'PostCommentAccommodation',
+      parameters: [
+        {
+          name: 'accommodationId',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
+        {
+          name: 'comment',
+          in: 'body',
+          required: true,
+          description: 'Write your comment here',
+          schema: {
+            $ref: '#/definitions/comment'
+          }
+        }
       ],
       responses,
       security: [
@@ -205,6 +230,110 @@ const accommodation = {
           JWT: []
         }
       ]
+    }
+  },
+  '/accommodations/{accommodationId}/comment/?pages={pages}&limit={limit}': {
+    get: {
+      tags: ['Accommodation'],
+      summary: 'get all comments of an accommodation',
+      description: 'get all comments of an ccommodation',
+      operationId: 'GetCommentAccommodation',
+      parameters: [
+        {
+          name: 'accommodationId',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
+        {
+          name: 'pages',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
+        {
+          name: 'limit',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        }
+      ],
+      responses
+    }
+  },
+  '/accommodations/{accommodationId}/comment/{commentId}': {
+    put: {
+      tags: ['Accommodation'],
+      summary: 'update an accommodation',
+      description: 'update an ccommodation',
+      operationId: 'UpdateCommentAccommodation',
+      parameters: [
+        {
+          name: 'commentId',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
+        {
+          name: 'accommodationId',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
+        {
+          name: 'comment',
+          in: 'body',
+          required: true,
+          description: 'Write your comment here',
+          schema: {
+            $ref: '#/definitions/comment'
+          }
+        }
+      ],
+      responses,
+      security: [
+        {
+          JWT: []
+        }
+      ]
+    },
+    delete: {
+      tags: ['Accommodation'],
+      summary: 'delete an accommodation',
+      description: 'delete an ccommodation',
+      operationId: 'DeleteCommentAccommodation',
+      parameters: [
+        {
+          name: 'commentId',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
+        {
+          name: 'accommodationId',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        }
+      ],
+      responses,
+      security: [
+        {
+          JWT: []
+        }
+      ]
+    }
+  }
+};
+
+export const accommodationDefinitions = {
+  comment: {
+    type: 'object',
+    properties: {
+      comment: {
+        type: 'string',
+        required: true
+      }
     }
   }
 };

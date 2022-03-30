@@ -2,8 +2,15 @@ import express from 'express';
 import accommodationController from '../../controllers/accommodation.controller';
 import upload from '../../helpers/multer';
 import { checkLoggedInUser, roles } from '../../middlewares/role.middleware';
-import { validateAccommodationId } from '../../middlewares/accommodationId.middleware';
-import accommodationValidation from '../../validations/accommodation.validation';
+import {
+  checkCommentOnAccommodation,
+  checkUserCreatedComment,
+  validateAccommodationId
+} from '../../middlewares/accommodationId.middleware';
+import accommodationValidation, {
+  commentValidation
+} from '../../validations/accommodation.validation';
+import { checkTimeOnTrip } from '../../middlewares/trip.middleware';
 
 const accommodations = express.Router();
 const app = express();
@@ -46,6 +53,37 @@ accommodations.delete(
   roles('TRAVEL_ADMIN', 'SUPER_ADMIN'),
   validateAccommodationId,
   accommodationController.destroyAccommodation
+);
+
+accommodations.get(
+  '/:accommodationId/comment',
+  validateAccommodationId,
+  accommodationController.getAllComments
+);
+accommodations.post(
+  '/:accommodationId/comment',
+  commentValidation,
+  checkLoggedInUser,
+  validateAccommodationId,
+  checkTimeOnTrip(1),
+  accommodationController.createComment
+);
+accommodations.put(
+  '/:accommodationId/comment/:commentId',
+  commentValidation,
+  checkLoggedInUser,
+  validateAccommodationId,
+  checkCommentOnAccommodation,
+  checkUserCreatedComment,
+  accommodationController.updateComment
+);
+accommodations.delete(
+  '/:accommodationId/comment/:commentId',
+  checkLoggedInUser,
+  validateAccommodationId,
+  checkCommentOnAccommodation,
+  checkUserCreatedComment,
+  accommodationController.deleteComment
 );
 
 export default accommodations;

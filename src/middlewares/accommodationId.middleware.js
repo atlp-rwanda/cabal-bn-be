@@ -1,8 +1,9 @@
-/* eslint-disable radix */
+/* eslint-disable camelcase */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-plusplus */
 /* eslint-disable curly */
 import accommodationService from '../services/accommodations.service';
+import { AccommodationComment } from '../database/models';
 
 // eslint-disable-next-line import/prefer-default-export
 export const validateAccommodationId = async (req, res, next) => {
@@ -34,19 +35,44 @@ export const validateAccommodationFields =
     next();
   };
 
-// export const validateAccommodationParam = async (req, res, next) => {
-//   const id = parseInt(req.params.id);
-//   const trips = await Trip.findAll({ where: { user_id: req.user.id } });
+export const checkUserCreatedComment = async (req, res, next) => {
+  const { id } = req.user;
+  const { commentId } = req.params;
 
-//   for (let i = 0; i < trips.length; i++) {
-//     const trip = trips[i];
+  const comment = await AccommodationComment.findOne({
+    where: { id: commentId }
+  });
 
-//     if (trip.accommodation_id === id) {
-//       return next();
-//     }
-//   }
+  // if a logged in user is a super-admin just let him in before checking
+  if (req.user.Role.name === 'SUPER_ADMIN') return next();
 
-//   return res
-//     .status(404)
-//     .json({ message: `Accommodation with id ${id} not found` });
-// };
+  if (comment.user_id !== id) {
+    return res.status(404).json({
+      message: `User didn't create this comment`
+    });
+  }
+
+  return next();
+};
+
+export const checkCommentOnAccommodation = async (req, res, next) => {
+  const { accommodationId, commentId } = req.params;
+
+  const comment = await AccommodationComment.findOne({
+    where: { id: commentId }
+  });
+
+  if (!comment) {
+    return res.status(404).json({
+      message: `No comment with id ${commentId} exists`
+    });
+  }
+
+  if (comment.accommodation_id !== parseInt(accommodationId, 10)) {
+    return res.status(400).json({
+      message: `Comment with id ${commentId} doesn't exist on acommodation with id ${accommodationId}`
+    });
+  }
+
+  return next();
+};

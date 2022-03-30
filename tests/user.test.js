@@ -1,14 +1,13 @@
-import sgMail from '@sendgrid/mail';
 import chai, { request, expect } from 'chai';
 import { assert, stub } from 'sinon';
 import chaiHttp from 'chai-http';
+import path from 'path';
+import { User } from 'database/models';
 import app from '../src/app';
 import 'dotenv/config';
 import UserController from '../src/controllers/user.controller';
 import { httpReq, httpRes } from './user.mockData';
 import UserService from '../src/services/user.service';
-import path from 'path';
-import { User } from 'database/models';
 import { generateToken } from '../src/helpers/user.helpers';
 
 chai.use(chaiHttp);
@@ -166,10 +165,6 @@ describe('USER END-POINT TEST', () => {
 
   describe('VALIDATE USER TEST', () => {
     it('should validate user email', async () => {
-      const res = await request(app).post('/api/v1/users/login').send({
-        email: `REQUESTER@gmail.com`,
-        password: 'REQUESTER2gmail'
-      });
       const token = generateToken({ id: 4 }, '1d');
       const valid = await request(app).get(
         `/api/v1/users/verify-email/${token}`

@@ -1,7 +1,12 @@
 /* eslint-disable camelcase */
 /* eslint-disable require-jsdoc */
-import { Accommodation, Room, Like } from '../database/models';
 import { formatLikeOne, formatLikeMany } from '../helpers/accommodation.hepler';
+import {
+  Accommodation,
+  Room,
+  Like,
+  AccommodationComment
+} from '../database/models';
 
 class accommodationService {
   static async createAccommodation(accommodation) {
@@ -33,8 +38,8 @@ class accommodationService {
   static async updateSpecificAccommodation({ where, id }, dataUpdate) {
     const updateAccommodaton = await Accommodation.update(dataUpdate, {
       where: id ? { id } : where,
-      returning: true,
-      raw: true
+      returning: true
+      // raw: true
     });
     return updateAccommodaton;
   }
@@ -61,6 +66,43 @@ class accommodationService {
     await likeData.save();
 
     return likeData;
+  }
+
+  static async getAllComments(accommodation_id, offset, limit) {
+    const comments = await AccommodationComment.findAndCountAll({
+      where: { accommodation_id },
+      offset,
+      limit,
+      order: [['id', 'DESC']]
+    });
+
+    return comments;
+  }
+
+  static async createComment(accommodation_id, user_id, comment) {
+    const createdComment = await AccommodationComment.create({
+      accommodation_id,
+      user_id,
+      comment
+    });
+
+    return createdComment;
+  }
+
+  static async updateComment(id, accommodation_id, comment) {
+    const updatedComment = await AccommodationComment.update(
+      { comment },
+      {
+        where: { id, accommodation_id },
+        returning: true
+      }
+    );
+
+    return updatedComment;
+  }
+
+  static async deleteComment(id, accommodation_id) {
+    await AccommodationComment.destroy({ where: { id, accommodation_id } });
   }
 }
 export default accommodationService;

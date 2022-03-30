@@ -1,43 +1,45 @@
+/* eslint-disable func-names */
+/* eslint-disable object-shorthand */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface, DataTypes) {
     await queryInterface.createTable('Accommodations', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       description: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       images: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+        type: DataTypes.ARRAY(DataTypes.STRING)
       },
       imagesId: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+        type: DataTypes.ARRAY(DataTypes.STRING)
       },
       location_id: {
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       },
       services: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+        type: DataTypes.ARRAY(DataTypes.STRING)
       },
       amenities: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+        type: DataTypes.ARRAY(DataTypes.STRING)
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       }
     });
   },

@@ -28,16 +28,27 @@ describe('TESTING PASSWORD RESET', () => {
         done();
       });
   });
-  // it('should Send password reset link', (done) => {
-  //   chai
-  //     .request(app)
-  //     .post(`/api/v1/users/forgot-password`)
-  //     .send({ email: 'SUPER_ADMIN@gmail.com' })
-  //     .end((err, res) => {
-  //       expect(res).to.have.status([200]);
-  //       done();
-  //     });
-  // });
+  it('should Send password reset link', (done) => {
+    chai
+      .request(app)
+      .post(`/api/v1/users/forgot-password`)
+      .send({ email: 's.ishimwegabin@gmail.com' })
+      .end((err, res) => {
+        expect(res).to.have.status([200]);
+        done();
+      });
+  });
+
+  it('should Send password reset link with invalid email', (done) => {
+    chai
+      .request(app)
+      .post(`/api/v1/users/forgot-password`)
+      .send({ email: 'SUPER@gmail.com' })
+      .end((err, res) => {
+        expect(res).to.have.status([404]);
+        done();
+      });
+  });
   it('should reset password', (done) => {
     chai
       .request(app)

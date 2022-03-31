@@ -58,6 +58,17 @@ describe('TRIP COMMENTS TESTING', () => {
     expect(res.status).to.be.equal(201);
   });
 
+  it('should not create a comment if trip id doesnt exist', async () => {
+    const res = await chai
+      .request(app)
+      .post(`/api/v1/trips/100/comment`)
+      .set('Authorization', `Bearer ${reqToken}`)
+      .send({
+        comment: 'the trip was awesome'
+      });
+    expect(res.status).to.be.equal(404);
+  });
+
   it('should throw an error while creating a comment after a user is loggedIn', async () => {
     const createComment = stub(tripCommentsServices, 'createComment').rejects(
       new Error('database failed')

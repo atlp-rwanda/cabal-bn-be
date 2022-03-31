@@ -12,7 +12,7 @@ module.exports = {
           returnDate: new Date('2020-10-10').toISOString(),
           accommodation_id: 1,
           reason: 'Traveling',
-          status: 'APPROVED',
+          status: "PENDING",
           createdAt: new Date(),
           updatedAt: new Date()
         },

@@ -154,8 +154,8 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
         description:
           'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .',
         location_id: 1,
-        services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        amenities: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
+        services: 'restaurant',
+        amenities: 'restaurant',
         images: [
           'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
         ]
@@ -200,11 +200,6 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
       .request(app)
       .post('/api/v1/accommodations')
       .set('Authorization', data.token)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      )
       .send({
         name: 'Galaxy Hotel',
         description:
@@ -214,7 +209,7 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
         amenities: 'restaurant',
         images: []
       });
-    expect(res.status).to.be.equal(400);
+    expect(res.status).to.be.equal(200);
   });
   it('should not create an accommodation if location Id are the same and accommodation name', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({

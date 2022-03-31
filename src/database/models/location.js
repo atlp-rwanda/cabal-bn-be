@@ -24,6 +24,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'depart_location_id',
         as: 'depart_location'
       });
+      this.hasMany(models.User, {
+        foreignKey: "location_id",
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+      })
     }
   }
   Location.init(
@@ -31,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       description: DataTypes.STRING,
       country: DataTypes.STRING,
-      longitude: DataTypes.STRING,
-      latitude: DataTypes.STRING
+      longitude: DataTypes.FLOAT,
+      latitude: DataTypes.FLOAT
     },
     {
       sequelize,

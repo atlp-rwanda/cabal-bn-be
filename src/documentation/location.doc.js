@@ -104,11 +104,11 @@ export const locationDefinitions = {
         required: true
       },
       longitude: {
-        type: 'string',
+        type: 'number',
         required: true
       },
       latitude: {
-        type: 'string',
+        type: 'number',
         required: true
       }
     }

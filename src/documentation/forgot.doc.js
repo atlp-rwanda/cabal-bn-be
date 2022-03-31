@@ -43,6 +43,30 @@ const forgot = {
             consumes: ['application/json'],
             responses,
         }
+    },
+
+    '/users/assign-to-manager': {
+        put: {
+            summary: 'assign user to manager',
+            tags: ['User'],
+            parameters: [{ in: 'body',
+                    name: 'name',
+                    required: true,
+                    schema: {
+                        example: {
+                            userId: 12,
+                            managerId: 10
+                        },
+                    },
+                },
+
+            ],
+            security: [{
+                JWT: []
+            }],
+            consumes: ['application/json'],
+            responses,
+        }
     }
 };
 

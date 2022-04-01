@@ -8,6 +8,7 @@ import accommodation from './accommodation.doc';
 import { locations, locationDefinitions } from './location.doc';
 import { trip } from './trip.doc';
 import { tripCommentDefinitions, tripComments } from './trip.comment.doc';
+import { booking, bookingDefinitions } from './booking.doc';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ const paths = {
   ...role,
   ...forgotP,
   ...room,
+  ...booking,
   ...accommodation,
   ...locations,
   ...trip,
@@ -31,6 +33,7 @@ const paths = {
 const definitions = {
   ...userDefinitions,
   ...assignRoleDefinitions,
+  ...bookingDefinitions,
   ...locationDefinitions,
   ...assignRoleDefinitions,
   ...tripCommentDefinitions

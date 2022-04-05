@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+/* eslint-disable object-shorthand */
 /* eslint-disable valid-jsdoc */
 /* eslint-disable require-jsdoc */
 
@@ -26,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'accommodation_id'
       });
       this.hasMany(models.Like, { foreignKey: 'accommodation_id' });
+      this.hasMany(models.AccommodationComment, {
+        foreignKey: 'accommodation_id'
+      });
     }
   }
   Accommodation.init(

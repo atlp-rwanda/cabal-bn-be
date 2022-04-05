@@ -1,12 +1,14 @@
+/* eslint-disable no-else-return */
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* eslint-disable lines-between-class-members */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable require-jsdoc */
 import bcryptjs from 'bcryptjs';
-import sgMail from '@sendgrid/mail';
 import { config } from 'dotenv';
 import jwt from 'jsonwebtoken';
+import Profiles from 'services/profile.service';
 import { confirmEmail } from '../utils/email.utils';
 import UserService from '../services/user.service';
 import { User } from '../database/models';
@@ -17,7 +19,6 @@ import {
   decodeToken
 } from '../helpers/user.helpers';
 import { verifyEmail } from '../helpers/user.verify';
-import Profiles from 'services/profile.service';
 import cloudinary from '../config/cloudinary';
 import nodemailer from '../helpers/nodemailer.helper';
 
@@ -280,7 +281,7 @@ export default class UserController {
 
       if (userExist) {
         const manager = await UserService.findById(managerId);
-        if (manager && manager.Role.name == 'MANAGER') {
+        if (manager && manager.Role.name === 'MANAGER') {
           await UserService.update({ manager_id: managerId }, { id: userId });
           return res.status(200).send({ message: 'User assigned to manager' });
         }

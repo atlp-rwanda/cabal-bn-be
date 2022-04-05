@@ -1,8 +1,8 @@
 import chai, { expect } from 'chai';
+import { stub, assert } from 'sinon';
 import chaiHttp from 'chai-http';
 import 'dotenv/config';
 import path from 'path';
-import { assert, stub } from 'sinon';
 import app from '../src/app';
 import accommodationService from '../src/services/accommodations.service';
 import accommodatonData from './mock/accommodation.mock';
@@ -63,28 +63,17 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
     expect(res.status).to.equal(404);
   });
 
-  it('should not create an accommodation if user not logged in', async () => {
+  it('should not like an accomodation if database failed ', async () => {
+    const createLike = stub(accommodationService, 'createLike').rejects(
+      new Error('databse failed')
+    );
     const res = await chai
       .request(app)
-      .post('/api/v1/accommodations')
-      .set('Content-Type', 'multipart/form-data')
-      .field('name', 'Mariot Hotel')
-      .field(
-        'description',
-        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .'
-      )
-      .field('location', 'Kigal-Rwanda')
-      .field('latitude', '232436458765')
-      .field('longitude', '45678998765')
-      .field('services', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .field('amenities', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .field('user_id', 1)
-      .attach(
-        'image',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
-    expect(res.status).to.be.equal(403);
+      .post('/api/v1/accommodations/1/like')
+      .set('authorization', `Bearer ${travelToken}`);
+    assert.called(createLike);
+    expect(res.status).to.equal(500);
+    createLike.restore();
   });
 
   it('should not create an accommodation if loggedIn user is not a travel admin', async () => {
@@ -375,6 +364,11 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
     const res = await chai
       .request(app)
       .post('/api/v1/accommodations')
+      .attach(
+        'image',
+        path.join(__dirname, '/image/profile.png'),
+        'weatherApp.png'
+      )
       .set('Content-Type', 'multipart/form-data')
       .field('name', 'Mariot Hotel')
       .field(
@@ -386,12 +380,8 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
       .field('longitude', '45678998765')
       .field('services', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
       .field('amenities', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .field('user_id', 1)
-      .attach(
-        'image',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .field('user_id', 1);
+    console.log(res.body);
     expect(res.status).to.be.equal(403);
   });
 

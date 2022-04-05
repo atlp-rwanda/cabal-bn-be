@@ -3,7 +3,10 @@ import multer from 'multer';
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     /* istanbul ignore next */
-    cb(null, `${new Date().toISOString()}-${file.originalname}`);
+    cb(
+      null,
+      `${new Date().toISOString()}-${file.originalname}`.replace(/:/g, '-')
+    );
   }
 });
 

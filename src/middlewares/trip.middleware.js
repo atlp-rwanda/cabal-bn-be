@@ -6,7 +6,7 @@
 import { validateDate } from '../helpers/dataComparison';
 import accommodationService from '../services/accommodations.service';
 import tripService from '../services/trip.service';
-import { Trip, User, Location, Role, Accommodation } from '../database/models';
+import { Trip } from '../database/models';
 
 export const checkTripExistStatus = (status) => (req, res, next) => {
   tripService
@@ -68,10 +68,45 @@ export const checkTripIdExist = async (req, res, next) => {
 };
 
 export const checkManagerId = async (req, res, next) => {
-  const trip = req.trip;
-  if (trip.manager_id == req.user.id || req.user.Role.name == 'SUPER_ADMIN') {
+  const { trip } = req;
+  if (trip.manager_id === req.user.id || req.user.Role.name === 'SUPER_ADMIN') {
     return next();
   }
   console.log(trip.manager_id, req.user.id);
   return res.status(404).json({ message: 'No manager with that Id found' });
+};
+// get a time in days and check if a requester has pent that much time in a given accommodation
+export const checkTimeOnTrip = (days) => async (req, res, next) => {
+  const { id: user_id } = req.user;
+  const { accommodationId: accommodation_id } = req.params;
+
+  // get all trips created by that user and have the given accommodaton
+  const trips = await Trip.findAll({
+    where: { user_id, accommodation_id, status: 'APPROVED' }
+  });
+
+  if (!trips.length) {
+    return res.status(400).json({
+      message: 'You never had a trip at this accommodation'
+    });
+  }
+
+  // get the now date and the passed In date in milliseconds
+  const nowDate = new Date().getTime();
+  const timeMillisecs = days * 24 * 60 * 60 * 1000;
+
+  // loop to find if a user have spend larger than the passed In time in atleast one of the trips
+  for (let i = 0; i < trips.length; i++) {
+    const trip = trips[i];
+
+    const departDate = new Date(trip.tripDate).getTime();
+
+    if (nowDate - departDate > timeMillisecs) {
+      return next();
+    }
+  }
+
+  return res.status(400).json({
+    message: `You should spend atleast ${days} days in this accommodation to comment on it`
+  });
 };

@@ -241,5 +241,30 @@ class accommodationController {
       });
     }
   }
+
+  static async rateAccommodation(req, res) {
+    try {
+      const { rate } = req.body;
+      const { id: user_id } = req.user;
+      const { accommodationId: accommodation_id } = req.params;
+
+      const accommodation = await accommodationService.rateAccommodation(
+        accommodation_id,
+        user_id,
+        rate
+      );
+
+      return res.status(200).json({
+        message: 'Rated the accommodation successfully',
+        data: accommodation
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error occured while creating a user',
+        error: error.message
+      });
+    }
+  }
 }
+
 export default accommodationController;

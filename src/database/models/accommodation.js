@@ -42,7 +42,16 @@ module.exports = (sequelize, DataTypes) => {
       location_id: DataTypes.INTEGER,
       services: DataTypes.ARRAY(DataTypes.STRING),
       amenities: DataTypes.ARRAY(DataTypes.STRING),
-      user_id: DataTypes.INTEGER
+      user_id: DataTypes.INTEGER,
+      rates: {
+        type: DataTypes.TEXT,
+        get: function () {
+          return JSON.parse(this.getDataValue('rates') || '[]');
+        },
+        set: function (value) {
+          return this.setDataValue('rates', JSON.stringify(value));
+        }
+      }
     },
     {
       sequelize,

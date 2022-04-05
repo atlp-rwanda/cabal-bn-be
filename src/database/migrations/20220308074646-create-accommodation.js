@@ -33,6 +33,15 @@ module.exports = {
       user_id: {
         type: DataTypes.INTEGER
       },
+      rates: {
+        type: DataTypes.TEXT,
+        get: function () {
+          return JSON.parse(this.getDataValue('rates') || '[]');
+        },
+        set: function (value) {
+          return this.setDataValue('rates', JSON.stringify(value));
+        }
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

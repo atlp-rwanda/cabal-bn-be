@@ -18,7 +18,7 @@ const { createAccommodation } = accommodationService;
 
 describe('ACCOMMODATION ENDPOINT TESTING', () => {
   // eslint-disable-next-line no-unused-vars
-  let travelToken;
+  let travelToken, reqToken;
   before(async () => {
     const res = await chai.request(app).post('/api/v1/users/login').send({
       email: `TRAVEL_ADMIN@gmail.com`,
@@ -26,6 +26,78 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
     });
 
     travelToken = res.body.token;
+  });
+  before(async () => {
+    const res = await chai.request(app).post('/api/v1/users/login').send({
+      email: `REQUESTER@gmail.com`,
+      password: 'REQUESTER2gmail'
+    });
+
+    reqToken = res.body.token;
+  });
+
+  describe('RATE ACCOMMODATION TEST', () => {
+    it('should not rate an accommodation database failed', async () => {
+      const rateAccommodation = stub(
+        accommodationService,
+        'rateAccommodation'
+      ).rejects(new Error('Database failed'));
+      const res = await chai
+        .request(app)
+        .put('/api/v1/accommodations/1/rate')
+        .set('Authorization', `Bearer ${reqToken}`)
+        .send({ rate: 1 });
+      assert.called(rateAccommodation);
+      expect(res.status).to.equal(500);
+      rateAccommodation.restore();
+    });
+    it('should not rate an accommodation if not logged in', async () => {
+      const res = await chai
+        .request(app)
+        .put('/api/v1/accommodations/1/rate')
+        .send({ rate: 1 });
+      expect(res.status).to.equal(403);
+    });
+    it("should not rate an accommodation accommodation does't exist", async () => {
+      const res = await chai
+        .request(app)
+        .put('/api/v1/accommodations/10000/rate')
+        .set('Authorization', `Bearer ${reqToken}`)
+        .send({ rate: 1 });
+      expect(res.status).to.equal(404);
+    });
+    it('should not rate an accommodation if rate is below 1', async () => {
+      const res = await chai
+        .request(app)
+        .put('/api/v1/accommodations/1/rate')
+        .set('Authorization', `Bearer ${reqToken}`)
+        .send({ rate: 0 });
+      expect(res.status).to.equal(400);
+    });
+    it("should not rate an accommodation if haven't spent atlest a day at it", async () => {
+      const res = await chai
+        .request(app)
+        .put('/api/v1/accommodations/2/rate')
+        .set('Authorization', `Bearer ${reqToken}`)
+        .send({ rate: 1 });
+      expect(res.status).to.equal(400);
+    });
+    it('should rate an accommodation if logged in', async () => {
+      const res = await chai
+        .request(app)
+        .put('/api/v1/accommodations/1/rate')
+        .set('Authorization', `Bearer ${reqToken}`)
+        .send({ rate: 1 });
+      expect(res.status).to.equal(200);
+    });
+    it('should update rate of an accommodation if logged in', async () => {
+      const res = await chai
+        .request(app)
+        .put('/api/v1/accommodations/1/rate')
+        .set('Authorization', `Bearer ${reqToken}`)
+        .send({ rate: 5 });
+      expect(res.status).to.equal(200);
+    });
   });
 
   it('should like an accomodation when logged in', async () => {
@@ -361,28 +433,31 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
   });
 
   it('should not update an accommodation if user not logged in', async () => {
-    const res = await chai
-      .request(app)
-      .post('/api/v1/accommodations')
-      .attach(
-        'image',
-        path.join(__dirname, '/image/profile.png'),
-        'weatherApp.png'
-      )
-      .set('Content-Type', 'multipart/form-data')
-      .field('name', 'Mariot Hotel')
-      .field(
-        'description',
-        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .'
-      )
-      .field('location', 'Kigal-Rwanda')
-      .field('latitude', '232436458765')
-      .field('longitude', '45678998765')
-      .field('services', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .field('amenities', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .field('user_id', 1);
-    console.log(res.body);
-    expect(res.status).to.be.equal(403);
+    try {
+      const res = await chai
+        .request(app)
+        .post('/api/v1/accommodations')
+        .set('Content-Type', 'multipart/form-data')
+        .attach(
+          'image',
+          path.join(__dirname, '/image/profile.png'),
+          'weatherApp.png'
+        )
+        .field('name', 'Mariot Hotel')
+        .field(
+          'description',
+          'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .'
+        )
+        .field('location', 'Kigal-Rwanda')
+        .field('latitude', '232436458765')
+        .field('longitude', '45678998765')
+        .field('services', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
+        .field('amenities', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
+        .field('user_id', 1);
+      expect(res.status).to.be.equal(403);
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   it('should not update an accommodation if loggedIn user is not a travel admin', async () => {

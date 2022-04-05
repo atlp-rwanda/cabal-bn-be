@@ -1,6 +1,11 @@
 /* eslint-disable camelcase */
 /* eslint-disable require-jsdoc */
-import { formatLikeOne, formatLikeMany } from '../helpers/accommodation.hepler';
+import {
+  formatLikeOne,
+  formatLikeMany,
+  findUserRate,
+  formatAvgRates
+} from '../helpers/accommodation.hepler';
 import {
   Accommodation,
   Room,
@@ -103,6 +108,20 @@ class accommodationService {
 
   static async deleteComment(id, accommodation_id) {
     await AccommodationComment.destroy({ where: { id, accommodation_id } });
+  }
+
+  static async rateAccommodation(accommodation_id, user_id, rate) {
+    const accommodation = await Accommodation.findOne({
+      where: { id: accommodation_id }
+    });
+
+    const rates = findUserRate(accommodation.rates, user_id);
+    rates.push({ user_id, rate }); // add the removed rate
+
+    accommodation.rates = rates;
+    await accommodation.save();
+
+    return formatAvgRates(accommodation);
   }
 }
 export default accommodationService;

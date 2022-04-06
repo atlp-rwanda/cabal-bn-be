@@ -16,11 +16,15 @@ module.exports = {
       country: {
         type: Sequelize.STRING
       },
-      longitude:{
-        type:Sequelize.FLOAT
+      longitude: {
+        type: Sequelize.FLOAT
       },
-      latitude:{
-        type:Sequelize.FLOAT
+      latitude: {
+        type: Sequelize.FLOAT
+      },
+      visitCount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

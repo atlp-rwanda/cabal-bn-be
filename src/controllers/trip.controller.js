@@ -5,6 +5,7 @@
 import tripService from '../services/trip.service';
 import { getQuery } from '../helpers/trip.helpers';
 import { getPaginatedData, getPagination } from '../utils/pagination.utils';
+import eventEmitter from '../services/event.services';
 
 class tripController {
   static async findTrip(req, res) {
@@ -44,7 +45,6 @@ class tripController {
         data: multiCityTrip
       });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({
         message: 'An unexpected error occurred',
         error: err.message.replace(/['"`]/g, '')
@@ -82,7 +82,6 @@ class tripController {
         .json({ message: 'Trip deleted successfully', deletedTrip });
     } catch (err) {
       /* istanbul ignore next */
-
       return res.status(500).json({
         message: 'An unexpected error occurred',
         error: err.message.replace(/['"`]/g, '')
@@ -90,9 +89,16 @@ class tripController {
     }
   }
 
-  static async updateStatus(req, res) {
+  static async updateStatus(req, res, next) {
     try {
-      await tripService.updateStatus(req.params.id, req.body.status);
+      const updateStatus = await tripService.updateStatus(
+        req.params.id,
+        req.body.status
+      );
+      const { arrival_location, status } = updateStatus[1][0];
+      if (status === 'APPROVED') {
+        eventEmitter.emit('tripRequestApproved', arrival_location);
+      }
       return res.status(200).json({
         message: 'Trip updated successfully'
       });

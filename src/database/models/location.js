@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'depart_location'
       });
       this.hasMany(models.User, {
-        foreignKey: "location_id",
-        as: "user",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
-      })
+        foreignKey: 'location_id',
+        as: 'user',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   }
   Location.init(
@@ -38,7 +38,11 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.STRING,
       country: DataTypes.STRING,
       longitude: DataTypes.FLOAT,
-      latitude: DataTypes.FLOAT
+      latitude: DataTypes.FLOAT,
+      visitCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      }
     },
     {
       sequelize,

@@ -7,7 +7,8 @@
 import { validateDate, subDays } from '../helpers/dataComparison';
 import accommodationService from '../services/accommodations.service';
 import tripService from '../services/trip.service';
-import { Trip } from '../database/models';
+import { Trip, User, Location, Role, Accommodation } from '../database/models';
+import locationService from '../services/location.service';
 
 export const checkTripExistStatus = (status) => (req, res, next) => {
   tripService
@@ -56,7 +57,6 @@ export const checkLocationAccommodation = async (req, res, next) => {
 
   for (let i = 0; i <= destination.length - 1; i++) {
     if (destination[i] === null) {
-      console.log(destination[i]);
       return res.status(400).json({
         message: `This accomodation is not availble on destination number ${
           i + 1

@@ -31,7 +31,6 @@ export const trip = {
       ]
     }
   },
-
   '/trips': {
     post: {
       tags: ['Trip'],
@@ -164,9 +163,9 @@ export const trip = {
 
     patch: {
       tags: ['Trip'],
-      summary: 'Requester reject and approve Trip Request with pending status',
+      summary: 'Manager reject or approve Trip Request with pending status',
       description: 'Approved and reject TripRequest',
-      operationId: 'Reject and approve TripRequest',
+      operationId: 'Reject or approve TripRequest',
       security: [
         {
           JWT: []

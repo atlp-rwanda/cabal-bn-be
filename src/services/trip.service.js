@@ -75,7 +75,10 @@ class tripService {
   }
 
   static async updateStatus(id, status) {
-    const updateStatus = await Trip.update({ status }, { where: { id } });
+    const updateStatus = await Trip.update(
+      { status },
+      { where: { id }, returning: true }
+    );
     return updateStatus;
   }
 

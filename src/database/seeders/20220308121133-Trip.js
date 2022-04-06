@@ -98,6 +98,32 @@ module.exports = {
           status: 'APPROVED',
           createdAt: new Date(),
           updatedAt: new Date()
+        },
+        {
+          user_id: 4,
+          manager_id: 5,
+          depart_location_id: 1,
+          arrival_location_id: 2,
+          tripDate: new Date('2024-10-10').toISOString(),
+          returnDate: new Date('2024-12-10').toISOString(),
+          accommodation_id: 3,
+          reason: 'Tourism',
+          status: 'APPROVED',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          user_id: 6,
+          manager_id: 5,
+          depart_location_id: 1,
+          arrival_location_id: 1,
+          tripDate: new Date('2022-10-10').toISOString(),
+          returnDate: new Date('2022-12-10').toISOString(),
+          accommodation_id: 1,
+          reason: 'Tourism',
+          status: 'PENDING',
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       ],
       {}

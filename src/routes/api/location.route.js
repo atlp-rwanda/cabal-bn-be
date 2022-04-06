@@ -5,17 +5,13 @@ import { roles, checkLoggedInUser } from '../../middlewares/role.middleware';
 
 const locations = express.Router();
 
-locations.post(
-  '/',
-  locationValidation,
-  locationController.locationCreate
-);
+locations.post('/', locationValidation, locationController.locationCreate);
 locations.get('/', locationController.findLocation);
 locations.get('/:locationId', locationController.findOneLocation);
 locations.delete(
   '/:locationId',
   checkLoggedInUser,
-  roles("TRAVEL_ADMIN", "REQUESTER", "SUPER_ADMIN"),
+  roles('TRAVEL_ADMIN', 'REQUESTER', 'SUPER_ADMIN'),
   locationController.deleteLocation
 );
 

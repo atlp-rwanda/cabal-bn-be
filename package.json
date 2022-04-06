@@ -74,6 +74,7 @@
     "ejs": "^3.1.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "events": "^3.3.0",
     "express": "^4.17.3",
     "express-form-data": "^2.0.17",
     "joi": "^17.6.0",

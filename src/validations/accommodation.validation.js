@@ -62,4 +62,20 @@ export const commentValidation = (req, res, next) => {
   }
 };
 
+export const rateValidation = (req, res, next) => {
+  const rateSchema = Joi.object({
+    rate: Joi.number().min(1).max(5).required().empty()
+  });
+
+  const result = rateSchema.validate(req.body);
+
+  if (result.error) {
+    res.status(400).json({
+      message: result.error.details[0].message.replace(/["'`]+/g, '')
+    });
+  } else {
+    next();
+  }
+};
+
 export default accommodationValidation;

@@ -72,7 +72,6 @@ export const checkManagerId = async (req, res, next) => {
   if (trip.manager_id === req.user.id || req.user.Role.name === 'SUPER_ADMIN') {
     return next();
   }
-  console.log(trip.manager_id, req.user.id);
   return res.status(404).json({ message: 'No manager with that Id found' });
 };
 // get a time in days and check if a requester has pent that much time in a given accommodation

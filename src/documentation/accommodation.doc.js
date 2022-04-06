@@ -264,8 +264,8 @@ const accommodation = {
   '/accommodations/{accommodationId}/comment/{commentId}': {
     put: {
       tags: ['Accommodation'],
-      summary: 'update an accommodation',
-      description: 'update an ccommodation',
+      summary: 'update an accommodation comment',
+      description: 'update an accommodation comment',
       operationId: 'UpdateCommentAccommodation',
       parameters: [
         {
@@ -299,8 +299,8 @@ const accommodation = {
     },
     delete: {
       tags: ['Accommodation'],
-      summary: 'delete an accommodation',
-      description: 'delete an ccommodation',
+      summary: 'delete an accommodation comment',
+      description: 'delete an ccommodation comment',
       operationId: 'DeleteCommentAccommodation',
       parameters: [
         {
@@ -323,6 +323,36 @@ const accommodation = {
         }
       ]
     }
+  },
+  '/accommodations/{accommodationId}/rate': {
+    put: {
+      tags: ['Accommodation'],
+      summary: 'rate an accommodation',
+      description: 'rate an ccommodation',
+      operationId: 'PutRateAccommodation',
+      parameters: [
+        {
+          name: 'accommodationId',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
+        {
+          name: 'rate',
+          in: 'body',
+          required: true,
+          schema: {
+            $ref: '#/definitions/rate'
+          }
+        }
+      ],
+      responses,
+      security: [
+        {
+          JWT: []
+        }
+      ]
+    }
   }
 };
 
@@ -332,6 +362,15 @@ export const accommodationDefinitions = {
     properties: {
       comment: {
         type: 'string',
+        required: true
+      }
+    }
+  },
+  rate: {
+    type: 'object',
+    properties: {
+      rate: {
+        type: 'integer',
         required: true
       }
     }

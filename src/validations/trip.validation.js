@@ -8,14 +8,16 @@ export default async function tripValidation(req, res, next) {
             'string.empty': 'trip Reason is not allowed to be empty',
             'any.required': 'trip Reason is required'
         }),
-        tripDate: Joi.date().iso().required().empty().messages({
+        tripDate: Joi.date().iso().min(new Date()).required().empty().messages({
             'date.base': 'tripDate must be valid date',
             'date.empty': 'tripDate is not allowed to be empty',
+            'date.min':'trip date is out dated',
             'any.required': 'tripDate is required',
             'date.format': 'tripDate is not correct iso standard must be year-month-day'
         }),
-        returnDate: Joi.date().iso().empty().messages({
+        returnDate: Joi.date().iso().min(new Date()).empty().messages({
             'date.base': 'returnDate must be valid',
+            'date.min':'return date is out dated',
             'any.required': 'returnDate is required',
             'date.format': 'returnDate is not correct iso standard must be year-month-day'
         }),
@@ -40,7 +42,7 @@ export default async function tripValidation(req, res, next) {
 
     if (validate.error) {
         return res.status(400).json({
-            message: validate.error.details[0].message.replace(/["'`]+/g, '')
+            message: validate.error.details[0].message.replace(/arrival|location|[023456789]|[_.[\]"'`]+/g, '')
         });
     }
 

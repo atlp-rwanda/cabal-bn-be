@@ -8,7 +8,8 @@ import {
   validateAccommodationId
 } from '../../middlewares/accommodationId.middleware';
 import accommodationValidation, {
-  commentValidation
+  commentValidation,
+  rateValidation
 } from '../../validations/accommodation.validation';
 import { checkTimeOnTrip } from '../../middlewares/trip.middleware';
 
@@ -84,6 +85,15 @@ accommodations.delete(
   checkCommentOnAccommodation,
   checkUserCreatedComment,
   accommodationController.deleteComment
+);
+
+accommodations.put(
+  '/:accommodationId/rate',
+  checkLoggedInUser,
+  validateAccommodationId,
+  rateValidation,
+  checkTimeOnTrip(1),
+  accommodationController.rateAccommodation
 );
 
 export default accommodations;

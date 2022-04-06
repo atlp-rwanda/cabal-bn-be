@@ -1,5 +1,37 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/prefer-default-export */
+
+// will take n array of rates and a user id
+// return null or the rates array without that rate object if user have not rated or have rated
+export const findUserRate = (rates, user_id) => {
+  if (!rates) return rates;
+
+  const newRates = [...rates];
+
+  for (let i = 0; i < newRates.length; i++) {
+    if (newRates[i].user_id === user_id) {
+      newRates.splice(i, 1); // remove that rate from the array so that i can re add it in the service
+      return newRates;
+    }
+  }
+
+  return newRates;
+};
+
+export const formatAvgRates = (accommodation) => {
+  const { rates } = accommodation;
+  let sum = 2.5;
+
+  for (let i = 0; i < rates.length; i++) {
+    sum += rates[i].rate;
+  }
+
+  accommodation.dataValues.rates =
+    Math.round((sum / (rates.length + 1)) * 2) / 2;
+
+  return accommodation;
+};
 
 export const formatLikeOne = (accommodation) => {
   if (!accommodation) return accommodation;
@@ -19,7 +51,8 @@ export const formatLikeOne = (accommodation) => {
   accommodation.dataValues.likes = likes;
   delete accommodation.dataValues.Likes;
 
-  return accommodation;
+  /** will also format the accommodation and add the average rate instead of the array of rates */
+  return formatAvgRates(accommodation);
 };
 
 export const formatLikeMany = (accommodations) => {

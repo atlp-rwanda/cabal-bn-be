@@ -1,8 +1,17 @@
 /* eslint-disable import/prefer-default-export */
 export const tripRequest = {
-  arrival_location_id: 1,
   depart_location_id: 2,
-  accommodation_id: 1,
+  arrival_location: [
+    {
+      accommodation_id: 1,
+      days: 2
+    },
+    {
+      accommodation_id: 2,
+      days: 1
+    }
+  ],
+
   tripDate: '2022-10-12',
   returnDate: '2023-12-10',
   reason: 'Tourism'
@@ -17,6 +26,7 @@ export const checkValidation = {
   tripDate: '2022-13-12',
   returnDate: '2023-12-10',
   accommodationId: 2,
+  multiCityTripId: 0,
   reason: 'Tourism',
   status: 'pending'
 };
@@ -32,7 +42,6 @@ export const commentsDifferentUserId = {
 };
 
 export const tripApprove = {
-  arrival_location_id: 1,
   depart_location_id: 2,
   accommodation_id: 1,
   tripDate: '2022-10-12',
@@ -78,4 +87,22 @@ export const accommodationInternalServer = {
     'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
   ],
   imagesId: ['456780rty']
+};
+
+export const multiCityTripRequest = {
+  arrival_location: [
+    {
+      accommodation_id: 1,
+      days: 3
+    },
+    {
+      accommodation_id: 1,
+      days: 3
+    }
+  ],
+  depart_location_id: 2,
+
+  tripDate: '2022-10-12',
+  returnDate: '2023-12-10',
+  reason: 'Tourism'
 };

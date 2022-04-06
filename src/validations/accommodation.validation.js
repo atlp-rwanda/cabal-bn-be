@@ -18,6 +18,7 @@ const accommodationValidation = async (req, res, next) => {
     }
     if (!Array.isArray(req.body.images)) {
       const file = await cloudinary.uploader.upload(req.body.images.path);
+      /* istanbul ignore next */
       if (!file) return res.status(400).json({ message: 'not able to upload' });
       urls.push(file.url);
       imageId.push(file.public_id);

@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(Location, {
         foreignKey: 'arrival_location_id',
-        as: 'arrival_location'
+        as: 'location'
       });
       this.belongsTo(Location, {
         foreignKey: 'depart_location_id',
@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Trip.init(
     {
+      arrival_location: DataTypes.ARRAY(DataTypes.JSON),
       tripDate: DataTypes.DATE,
       returnDate: DataTypes.DATE,
       reason: DataTypes.STRING,

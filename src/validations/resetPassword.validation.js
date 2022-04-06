@@ -7,6 +7,7 @@ export const EmailValidation = async (req, res, next) => {
     })
     .validate(req.body);
   if (value.error) {
+    /* istanbul ignore next */
     res.json({
       error: 1,
       message: value.error.details[0].message

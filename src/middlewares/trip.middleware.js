@@ -1,9 +1,10 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable camelcase */
 /* eslint-disable radix */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/prefer-default-export */
 
-import { validateDate } from '../helpers/dataComparison';
+import { validateDate, subDays } from '../helpers/dataComparison';
 import accommodationService from '../services/accommodations.service';
 import tripService from '../services/trip.service';
 import { Trip } from '../database/models';
@@ -43,15 +44,25 @@ export const checkTripDates = (req, res, next) => {
 };
 
 export const checkLocationAccommodation = async (req, res, next) => {
-  const { accommodation_id, arrival_location_id } = req.body;
-  const accommodation = await accommodationService.findSpecificAccommodation(
-    accommodation_id
+  const { arrival_location } = req.body;
+  const destination = await Promise.all(
+    arrival_location.map(async (data) => {
+      const { accommodation_id } = data;
+      const accommodation =
+        await accommodationService.findSpecificAccommodation(accommodation_id);
+      return accommodation;
+    })
   );
 
-  if (accommodation.location_id !== parseInt(arrival_location_id)) {
-    return res.status(400).json({
-      message: `The location and accommodation doesn't match, The accomodation passed has location of id ${accommodation.location_id}`
-    });
+  for (let i = 0; i <= destination.length - 1; i++) {
+    if (destination[i] === null) {
+      console.log(destination[i]);
+      return res.status(400).json({
+        message: `This accomodation is not availble on destination number ${
+          i + 1
+        }`
+      });
+    }
   }
 
   next();
@@ -72,6 +83,8 @@ export const checkManagerId = async (req, res, next) => {
   if (trip.manager_id === req.user.id || req.user.Role.name === 'SUPER_ADMIN') {
     return next();
   }
+  /* istanbul ignore next */
+
   return res.status(404).json({ message: 'No manager with that Id found' });
 };
 // get a time in days and check if a requester has pent that much time in a given accommodation
@@ -108,4 +121,32 @@ export const checkTimeOnTrip = (days) => async (req, res, next) => {
   return res.status(400).json({
     message: `You should spend atleast ${days} days in this accommodation to comment on it`
   });
+};
+
+export const checkDuration = async (req, res, next) => {
+  const { arrival_location } = req.body;
+  const time = subDays(req.body.returnDate, req.body.tripDate);
+
+  const duration = arrival_location.map((data) => {
+    return data.days;
+  });
+
+  const sum = duration.reduce((a, b) => a + b);
+
+  if (sum > time) {
+    return res
+      .status(400)
+      .json({ message: 'days in trips exceed trip duration' });
+  }
+
+  next();
+};
+
+export const checkManager = async (req, res, next) => {
+  if (!req.user.manager_id) {
+    return res.status(400).json({
+      message: 'Access denied, You are not assigned a manager'
+    });
+  }
+  next();
 };

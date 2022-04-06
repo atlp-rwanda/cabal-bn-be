@@ -129,6 +129,7 @@ export default class UserController {
         res.status(404).json({ status: 404, message: 'Email has not found' });
       }
     } catch (error) {
+      /* istanbul ignore next */
       return res.status(500).json({ error: error.message });
     }
   }
@@ -267,6 +268,7 @@ export default class UserController {
         message: 'Profile updated',
         data: [updatedUser[0] && updatedUser[1][0], updated[0] && updated[1][0]]
       });
+      /* istanbul ignore next */
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while updating your profile',

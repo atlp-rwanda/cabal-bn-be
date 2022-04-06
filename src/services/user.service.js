@@ -50,6 +50,7 @@ export default class UserService {
 
         return user;
     }
+    
     async getUserwithProfile(email) {
         return User.findOne({
             where: { email },
@@ -68,9 +69,11 @@ export default class UserService {
             returning: true
         })
     }
+    
     static async findById(id) {
         return User.findOne({ where: { id }, include: { model: Role } });
     }
+
     static async update(data, condition) {
         return User.update(data, { where: {...condition } });
     }

@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       User: USER,
       Profile,
       Location,
-      tripComments
+      tripComments,
+      Message
     }) {
       // define association here
       this.belongsTo(Role, { foreignKey: 'role_id' });
@@ -45,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Location, {
         foreignKey: 'location_id'
       });
+      this.hasMany(Message, { foreignKey: 'user_id' });
     }
 
     toJSON() {

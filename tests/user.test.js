@@ -348,30 +348,6 @@ describe('USER END-POINT TEST', () => {
       expect(res.body.message).to.be.equal('Profile updated');
     });
 
-    it('should not create profile with wrong date format', async () => {
-      const login = await request(app)
-        .post('/api/v1/users/login')
-        .send({ email: 'REQUESTER@gmail.com', password: 'REQUESTER2gmail' });
-      const res = await request(app)
-        .patch('/api/v1/users/profile')
-        .set({ Authorization: `Bearer ${login.body.token}` })
-        .set('content-type', 'multipart/form-data')
-        .field('first_name', 'ishimwe')
-        .field('last_name', 'gabin')
-        .field('language', 'english')
-        .field('gender', 'male')
-        .field('occupation', 'technical engineer')
-        .field('bio', 'i like travelling')
-        .field('nationality', 'burundian')
-        .field('date_of_birth', 'lorem ipsum')
-        .attach(
-          'profile_picture',
-          path.join(__dirname, '/image/profile.png'),
-          'profile.png'
-        );
-      expect(res.status).to.be.equal(400);
-    });
-
     after(async () => {
       await User.destroy({
         where: {},

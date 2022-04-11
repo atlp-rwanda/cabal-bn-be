@@ -9,6 +9,7 @@ import { locations, locationDefinitions } from './location.doc';
 import { trip, tripDefinitions } from './trip.doc';
 import { tripCommentDefinitions, tripComments } from './trip.comment.doc';
 import { booking, bookingDefinitions } from './booking.doc';
+import search from './search';
 
 dotenv.config();
 
@@ -27,7 +28,8 @@ const paths = {
   ...accommodation,
   ...locations,
   ...trip,
-  ...tripComments
+  ...tripComments,
+  ...search
 };
 
 const definitions = {

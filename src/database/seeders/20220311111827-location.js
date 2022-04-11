@@ -2,7 +2,7 @@ module.exports = {
   up: (queryInterface) =>
     queryInterface.bulkInsert('Locations', [
       {
-        name: 'Kigali',
+        name: 'kigali',
         description: 'down Town',
         country: 'Rwanda',
         longitude: 345678,
@@ -12,7 +12,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: 'Lagos',
+        name: 'lagos',
         description: 'business town',
         country: 'Nigeria',
         longitude: 345678,
@@ -22,7 +22,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: 'NewYork',
+        name: 'newyork',
         description: 'near UN',
         country: 'USA',
         longitude: 345678,
@@ -32,7 +32,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: 'Kigali',
+        name: 'rio ave',
         description: 'south america',
         country: 'Mexico',
         longitude: 345678,
@@ -42,7 +42,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: 'Dubai',
+        name: 'dubai',
         description: 'east arabs',
         country: 'UAE',
         longitude: 345678,

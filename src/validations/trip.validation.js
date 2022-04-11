@@ -40,13 +40,9 @@ export default async function tripValidation(req, res, next) {
 
   if (validate.error) {
     return res.status(400).json({
-<<<<<<< HEAD
       message: validate.error.details[0].message
         .replace(/(\[.*\])*["'`]*/g, '')
         .replace(/\./, ' ')
-=======
-      message: validate.error.details[0].message.replace(/["'`]+/g, '')
->>>>>>> multi city trips
     });
   }
 

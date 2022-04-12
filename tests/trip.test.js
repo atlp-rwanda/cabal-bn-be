@@ -129,6 +129,7 @@ describe('TRIP END-POINT TESTING', () => {
       .post('/api/v1/trips')
       .set('Authorization', `Bearer ${reqToken}`)
       .send({
+        arrival_location_id: 1,
         depart_location_id: 2,
         accommodation_id: 1,
         tripDate: '2023-10-12',
@@ -188,7 +189,6 @@ describe('TRIP END-POINT TESTING', () => {
       .send();
     expect(res).to.have.status([200]);
   });
-  // ///////
   it('Should retrieve all user Trips with pending status while logged in as super_admin', async () => {
     const res = await chai
       .request(app)
@@ -255,7 +255,6 @@ describe('TRIP END-POINT TESTING', () => {
     expect(res).to.have.status(500);
     findSpecificTrip.restore();
   });
-  // ////////
   it(' should retrieve all Trip requests owned while logged in as super_admin', async () => {
     const res = await chai
       .request(app)
@@ -282,7 +281,6 @@ describe('TRIP END-POINT TESTING', () => {
       .put(`/api/v1/trips/2`)
       .set('Authorization', `Bearer ${reqToken}`)
       .send(tripRequest);
-
     expect(res).to.have.status([200]);
   });
 
@@ -301,7 +299,6 @@ describe('TRIP END-POINT TESTING', () => {
       .put(`/api/v1/trips/2000`)
       .set('Authorization', `Bearer ${reqToken}`)
       .send(tripRequest);
-    console.log(res.body);
     expect(res).to.have.status([404]);
   });
 
@@ -353,7 +350,6 @@ describe('TRIP END-POINT TESTING', () => {
       .request(app)
       .delete(`/api/v1/trips/1`)
       .set('Authorization', `Bearer ${reqToken}`);
-    console.log(res.body);
     expect(res).to.have.status([400]);
   });
 

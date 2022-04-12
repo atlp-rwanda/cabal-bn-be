@@ -29,20 +29,24 @@ describe('LOCATION TESTING', () => {
     expect(res.status).to.be.equal(400);
   });
 
-  it("should create a location", async() => {
-    const res = await request(app).post("/api/v1/locations")
-    .send({
+  it('should create a location', async () => {
+    const res = await request(app).post('/api/v1/locations').send({
       name: 'Muhazi',
       description: 'Africa',
       latitude: 456.12342432423,
       longitude: 89.24243234242,
       country: 'Rwanda'
-    })
-    expect(res.status).to.be.equal(201)
-  })
+    });
+    expect(res.status).to.be.equal(201);
+  });
 
   it('should find all locations', async () => {
     const res = await request(app).get('/api/v1/locations');
+    expect(res.status).to.be.equal(200);
+  });
+
+  it('should find most visited locations', async () => {
+    const res = await request(app).get('/api/v1/locations?mostvisited=true');
     expect(res.status).to.be.equal(200);
   });
 
@@ -69,7 +73,7 @@ describe('LOCATION TESTING', () => {
     );
     expect(res.status).to.be.equal(403);
   });
-  
+
   it('should not delete a location if loggedIn user is not travel admin', async () => {
     const createlocation = await locationService.createLocation(locationData);
     createlocation.save();

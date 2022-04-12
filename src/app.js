@@ -25,18 +25,18 @@ app.use('/api/v1', routes);
 app.use('/api-docs', serve, setup(docs));
 
 app.get('/', (req, res) => {
-    res.status(200).json({ message: 'Welcome to Barefoot Nomad.' });
+  res.status(200).json({ message: 'Welcome to Barefoot Nomad.' });
 });
 
 app.get('*', (req, res) => {
-    res.status(404).json({ message: 'Route not found.' });
+  res.status(404).json({ message: 'Route not found.' });
 });
 
 const port = process.env.PORT || 5000;
 const KEY = process.env.API_KEY;
 sgMail.setApiKey(KEY);
 app.listen(port, () => {
-    console.log('server up running on port ', port);
+  console.log('server up running on port ', port);
 });
 
 export default app;

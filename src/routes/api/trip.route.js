@@ -11,7 +11,8 @@ import {
   checkTripIdExist,
   checkManagerId,
   checkDuration,
-  checkManager
+  checkManager,
+  updateTripLocation
 } from '../../middlewares/trip.middleware';
 import { validateLocationFields } from '../../middlewares/location.middleware';
 

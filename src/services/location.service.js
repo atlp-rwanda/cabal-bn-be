@@ -12,7 +12,7 @@ class locationService {
       where,
       offset,
       limit,
-      order: order || [['createdAt', 'DESC']]
+      order
     });
   }
 
@@ -25,14 +25,12 @@ class locationService {
     );
   }
 
-  // static async userLocation(latitude, longitude) {
-  //   return await Location.findOne({
-  //     where: {
-  //       latitude: latitude,
-  //       longitude: longitude
-  //     }
-  //   })
-  // }
+  static async findAndUpdateLocation({ where, id }, locData) {
+    const updateLoc = await Location.update(locData, {
+      where: id ? { id } : where
+    });
+    return updateLoc;
+  }
 
   static async removeLocation({ where }) {
     return await Location.destroy({ where });

@@ -455,9 +455,7 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
         .field('amenities', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
         .field('user_id', 1);
       expect(res.status).to.be.equal(403);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   });
 
   it('should not update an accommodation if loggedIn user is not a travel admin', async () => {

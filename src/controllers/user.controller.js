@@ -249,13 +249,10 @@ export default class UserController {
         age,
         gender,
         date_of_birth,
-        location_id
-      } = req.body;
-      let profile_picture = null;
-      if (req.file) {
-        const uploadFile = await cloudinary.uploader.upload(req.file.path);
-        profile_picture = uploadFile.url;
-      }
+        location_id,
+        profile_picture
+      } = req.profile.value;
+
       const updatedUser = await this.userService.updateUser(
         { first_name, last_name, location_id, profile_picture },
         user.id

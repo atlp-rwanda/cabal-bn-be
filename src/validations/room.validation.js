@@ -7,6 +7,7 @@ const roomValidation = async (req, res, next) => {
   /* istanbul ignore next */
   if (!Array.isArray(req.body.images)) {
     const file = await cloudinary.uploader.upload(req.body.images.path);
+
     if (!file) return res.status(400).json({ message: 'not able to upload' });
     urls.push(file.url);
     req.body.images = urls;

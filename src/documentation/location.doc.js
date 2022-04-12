@@ -33,6 +33,14 @@ export const locations = {
       description: 'list of all locations',
       operationId: 'location Listing',
       produces: 'application/json',
+      parameters: [
+        {
+          name: 'mostvisited',
+          in: 'query',
+          required: false,
+          type: 'boolean'
+        }
+      ],
       responses
     }
   },

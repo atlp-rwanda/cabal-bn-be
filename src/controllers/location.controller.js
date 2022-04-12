@@ -25,13 +25,22 @@ class locationController {
         req.query.page,
         req.query.limit
       );
-      const { name } = req.query;
+      const { name, mostvisited } = req.query;
+
       /* istanbul ignore next */
-      const condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+      let condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+      let order = [['createdAt', 'DESC']];
+      if (mostvisited === 'true') {
+        condition = {
+          visitCount: { [Op.gt]: -1 }
+        };
+        order = [['visitCount', 'DESC']];
+      }
       const foundAccommodations = await locationService.listAllLocation({
         where: condition,
         offset,
-        newLimit
+        newLimit,
+        order
       });
       const response = getPaginatedData(
         foundAccommodations,

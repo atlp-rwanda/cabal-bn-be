@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import express from 'express';
 import passport from '../../middlewares/passport.middleware';
 import UserController from '../../controllers/user.controller';
@@ -20,10 +21,7 @@ import {
 } from '../../validations/resetPassword.validation';
 import upload from '../../helpers/multer';
 import profileValidation from '../../validations/profile.validation';
-import {
-  validateLocationId,
-  checkLocationId
-} from '../../middlewares/location.middleware';
+import { validateLocationId } from '../../middlewares/location.middleware';
 // import locationValidation from '../../validations/location.validation';
 import registerValidation from '../../validations/register.validation';
 import { updateProfilePicture } from '../../middlewares/imageUpload.middleware';

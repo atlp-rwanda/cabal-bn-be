@@ -198,7 +198,8 @@ const accommodation = {
           required: true,
           type: 'integer'
         }
-      ]
+      ],
+      responses
     }
   },
   '/accommodations/{accommodationId}/comment': {

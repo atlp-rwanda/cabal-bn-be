@@ -181,15 +181,15 @@ describe('ROOM ENDPOINTS TEST', () => {
     accommodation.save();
     const res = await request(app)
       .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
-      .set('Content-Type', 'multipart/form-data')
-      .field('cost', '1234')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
       .attach(
         'images',
         path.join(__dirname, 'weatherApp.PNG'),
         'weatherApp.png'
-      );
+      )
+      .set('Content-Type', 'multipart/form-data')
+      .field('cost', '1234')
+      .field('details', 'break fast')
+      .field('accommodation_id', 1);
     expect(res.status).to.be.equal(403);
   });
 

@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 describe('TRIP COMMENTS TESTING', () => {
     let reqToken;
-    before(async() => {
+    before(async () => {
         const login = await chai
             .request(app)
             .post('/api/v1/users/login')
@@ -18,14 +18,14 @@ describe('TRIP COMMENTS TESTING', () => {
 
         reqToken = login.body.token;
     });
-    it('should not comment on a trip if a user is not loggedIn', async() => {
+    it('should not comment on a trip if a user is not loggedIn', async () => {
         const res = await chai.request(app).post(`/api/v1/trips/2/comment`).send({
             comment: 'this is for testing this comment'
         });
         expect(res.status).to.be.equal(403);
     });
 
-    it('should not create a comment if there is a field missing', async() => {
+    it('should not create a comment if there is a field missing', async () => {
         const res = await chai
             .request(app)
             .post(`/api/v1/trips/2/comment`)
@@ -36,7 +36,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(400);
     });
 
-    it('should create a comment after a user is loggedIn and not assigned a trip', async() => {
+    it('should create a comment after a user is loggedIn and not assigned a trip', async () => {
         const res = await chai
             .request(app)
             .post(`/api/v1/trips/3/comment`)
@@ -47,7 +47,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(400);
     });
 
-    it('should create a comment after a user is loggedIn', async() => {
+    it('should create a comment after a user is loggedIn', async () => {
         const res = await chai
             .request(app)
             .post(`/api/v1/trips/1/comment`)
@@ -58,7 +58,22 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(201);
     });
 
-    it('should not create a comment if trip id doesnt exist', async() => {
+    it('should create a comment after a user is loggedIn and is manager', async () => {
+        const login = await chai.request(app).post("/api/v1/users/login").send({
+            email: "MANAGER@gmail.com",
+            password: "MANAGER2gmail"
+        })
+        const res = await chai
+            .request(app)
+            .post(`/api/v1/trips/1/comment`)
+            .set('Authorization', `Bearer ${login.body.token}`)
+            .send({
+                comment: 'the trip was awesome'
+            });
+        expect(res.status).to.be.equal(201);
+    });
+
+    it('should not create a comment if trip id doesnt exist', async () => {
         const res = await chai
             .request(app)
             .post(`/api/v1/trips/100/comment`)
@@ -69,7 +84,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(404);
     });
 
-    it('should throw an error while creating a comment after a user is loggedIn', async() => {
+    it('should throw an error while creating a comment after a user is loggedIn', async () => {
         const createComment = stub(tripCommentsServices, 'createComment').rejects(
             new Error('database failed')
         );
@@ -85,12 +100,12 @@ describe('TRIP COMMENTS TESTING', () => {
         createComment.restore();
     });
 
-    it('should find all comments assigned to a specific trip', async() => {
+    it('should find all comments assigned to a specific trip', async () => {
         const res = await chai.request(app).get('/api/v1/trips/2/comment');
         expect(res.status).to.equal(200);
     });
 
-    it('should not edit a comment if not loggedIn', async() => {
+    it('should not edit a comment if not loggedIn', async () => {
         const comment = await tripCommentsServices.createComment(comments);
         comment.save();
         const res = await chai
@@ -102,7 +117,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(403);
     });
 
-    it('should not edit a comment if user id is different', async() => {
+    it('should not edit a comment if user id is different', async () => {
         const comment = await tripCommentsServices.createComment(
             commentsDifferentUserId
         );
@@ -116,7 +131,7 @@ describe('TRIP COMMENTS TESTING', () => {
             });
         expect(res.status).to.be.equal(409);
     });
-    it('should not edit a comment if user is loggedIn is not assigned a trip', async() => {
+    it('should not edit a comment if user is loggedIn is not assigned a trip', async () => {
         const comment = await tripCommentsServices.createComment(comments);
         comment.save();
         const res = await chai
@@ -129,7 +144,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(409);
     });
 
-    it('should edit a comment if a user is loggedIn', async() => {
+    it('should edit a comment if a user is loggedIn', async () => {
         const comment = await tripCommentsServices.createComment(comments);
         comment.save();
         const res = await chai
@@ -142,7 +157,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(200);
     });
 
-    it('should throw an error while editing a comment after a user is loggedIn', async() => {
+    it('should throw an error while editing a comment after a user is loggedIn', async () => {
         const editComment = stub(tripCommentsServices, 'editComment').rejects(
             new Error('database failed')
         );
@@ -160,7 +175,7 @@ describe('TRIP COMMENTS TESTING', () => {
         editComment.restore();
     });
 
-    it('should not delete a comment if you are not loggedIn', async() => {
+    it('should not delete a comment if you are not loggedIn', async () => {
         const comment = await tripCommentsServices.createComment(comments);
         comment.save();
         const res = await chai
@@ -172,7 +187,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(403);
     });
 
-    it('should not delete a comment if a userId is diferent', async() => {
+    it('should not delete a comment if a userId is diferent', async () => {
         const comment = await tripCommentsServices.createComment(
             commentsDifferentUserId
         );
@@ -187,7 +202,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(400);
     });
 
-    it('should not delete a comment id a user is loggedIn and not assigned a trip', async() => {
+    it('should not delete a comment id a user is loggedIn and not assigned a trip', async () => {
         const comment = await tripCommentsServices.createComment(comments);
         comment.save();
         const res = await chai
@@ -199,7 +214,7 @@ describe('TRIP COMMENTS TESTING', () => {
             });
         expect(res.status).to.be.equal(409);
     });
-    it('should delete a comment id a user is loggedIn', async() => {
+    it('should delete a comment id a user is loggedIn', async () => {
         const comment = await tripCommentsServices.createComment(comments);
         comment.save();
         const res = await chai
@@ -212,7 +227,7 @@ describe('TRIP COMMENTS TESTING', () => {
         expect(res.status).to.be.equal(200);
     });
 
-    it('should throw an error while deleting a comment after a user is loggedIn', async() => {
+    it('should throw an error while deleting a comment after a user is loggedIn', async () => {
         const deleteComment = stub(tripCommentsServices, 'removeComment').rejects(
             new Error('database failed')
         );

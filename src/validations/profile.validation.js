@@ -12,10 +12,13 @@ const profileValidation = (req, res, next) => {
     age: Joi.number().empty(),
     language: Joi.string().empty(),
     location_id: Joi.number().empty(),
-    profile_picture: Joi.string()
+    profile_picture: Joi.string(),
+    in_app_notification: Joi.bool(),
+    email_notification: Joi.bool()
   });
   const validating = profileSchema.validate(req.body);
   if (validating.error) {
+    /* istanbul ignore next */
     res.status(400).json({
       message: validating.error.details[0].message.replace(/["'`]+/g, '')
     });

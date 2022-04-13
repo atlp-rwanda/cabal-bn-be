@@ -5,7 +5,6 @@ import path from 'path';
 import app from '../src/app';
 import roomService from '../src/services/rooms.service';
 import { roomData, bookedRoomData } from './mock/room.mock';
-import bookingService from '../src/services/booking.service';
 import { bookingData, badBookingData } from './mock/booking.mock';
 
 chai.use(chaiHttp);
@@ -46,7 +45,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     const room = await createRoom(roomData);
     room.save();
     const res = await request(app)
-      .post(`/api/v1/rooms/${room.dataValues.id}/booking`)
+      .post(`/api/v1/rooms/1/booking`)
       .set('Authorization', data.token)
       .send(bookingData);
     expect(res.status).to.be.equal(200);

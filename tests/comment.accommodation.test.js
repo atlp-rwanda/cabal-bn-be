@@ -66,7 +66,7 @@ describe('ACCOMMODATION COMMENT TESTING', () => {
 
     it('should not create a comment if he never had a trip at that accommodation', async () => {
       const res = await request(app)
-        .post('/api/v1/accommodations/3/comment')
+        .post('/api/v1/accommodations/5/comment')
         .set('Authorization', `Bearer ${reqToken1}`)
         .send({ comment: 'comment' });
       expect(res.status).to.equal(400);

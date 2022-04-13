@@ -1,6 +1,10 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable curly */
 /* eslint-disable require-jsdoc */
 import tripCommentsServices from '../services/trip.comments.service';
+import UserService from '../services/user.service';
+import Notification from '../services/notification.service';
+import eventEmitter from '../services/event.service';
 
 class tripCommentController {
     static async createComment(req, res) {
@@ -18,7 +22,33 @@ class tripCommentController {
                 user_id: user.dataValues.id,
                 trip_id: req.trip.id
             };
+
             const sendComment = await tripCommentsServices.createComment(data);
+            if (user.role_id != 3) {    // notification goes to the manager
+                const manager = await new UserService().getUserId(user.manager_id)
+                if (manager.in_app_notification == true) {
+                    const notify = await Notification.createNotification({
+                        details: `Requester ${user.first_name} ${user.last_name} has commented on a trip request`,
+                        type: "comment",
+                        from_user_id: user.id,
+                        to_user_id: manager.id
+                    })
+                    eventEmitter.emit("appNotification", { recipient: manager, notify })
+                }
+            }
+            if (user.role_id == 3) {    // notification goes to the user
+                const recieveUser = await new UserService().getUserId(req.trip.user_id)
+                if (recieveUser.in_app_notification == true) {
+                    const notify = await Notification.createNotification({
+                        details: `Manager ${user.first_name} ${user.last_name} has commented on a trip request`,
+                        type: "comment",
+                        from_user_id: user.id,
+                        to_user_id: recieveUser.id
+                    })
+                    eventEmitter.emit("appNotification", { recipient: recieveUser, notify })
+                }
+            }
+
             return res
                 .status(201)
                 .json({ message: 'comment sent successfully', sendComment });

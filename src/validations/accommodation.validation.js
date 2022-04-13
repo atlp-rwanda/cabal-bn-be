@@ -16,12 +16,17 @@ const accommodationValidation = async (req, res, next) => {
       amenities.push(req.body.amenities);
       req.body.amenities = amenities;
     }
-    if (!Array.isArray(req.body.images)) {
-      const file = await cloudinary.uploader.upload(req.body.images.path);
+    /* istanbul ignore next */
+    if (Array.isArray(req.files)) {
+      let file
+      for (let i = 0; i < req.files.length; i++) {
+        file = await cloudinary.uploader.upload(req.files[i].path)
+        urls.push(file.url);
+        imageId.push(file.public_id);
+      }
       /* istanbul ignore next */
       if (!file) return res.status(400).json({ message: 'not able to upload' });
-      urls.push(file.url);
-      imageId.push(file.public_id);
+
       req.body.images = urls;
       req.body.imagesId = imageId;
     }
@@ -43,6 +48,7 @@ const accommodationValidation = async (req, res, next) => {
     req.accommodations = results;
     next();
   } catch (err) {
+    /* istanbul ignore next */
     return res.status(500).json({ message: 'internal server error' });
   }
 };

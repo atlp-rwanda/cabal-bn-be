@@ -16,10 +16,6 @@ describe('test pagination', async () => {
     expect(accommodationValidation).to.be.a('function');
   });
 
-  // it('should check in a function service is an array', async()=>{
-  //   expect(accommodationValidation()).
-  // })
-
   it('should test the return', async () => {
     expect(getPagination().newLimit).to.equal(10);
     expect(getPagination().offset).to.equal(0);

@@ -12,11 +12,10 @@ import locationService from '../services/location.service';
 
 export const checkTripExistStatus = (status) => (req, res, next) => {
   tripService
-    .findSpecificTrip(req.user.id, 10, 0, req.user.Role.name)
+    .findSpecificTrip(req.user.id, null, 0, req.user.Role.name)
     .then((trips) => {
       for (let i = 0; i < trips.rows.length; i++) {
         const trip = trips.rows[i];
-
         if (trip.id === parseInt(req.params.id)) {
           if (trip.status === status) {
             return next();
@@ -35,6 +34,7 @@ export const checkTripExistStatus = (status) => (req, res, next) => {
 export const checkTripDates = (req, res, next) => {
   const compareDates = validateDate(req.body.returnDate, req.body.tripDate);
   if (!compareDates) {
+    /* istanbul ignore next */
     return res.status(400).json({
       status: 400,
       message: 'Trip date is greater than or equal to the return date'
@@ -58,9 +58,8 @@ export const checkLocationAccommodation = async (req, res, next) => {
   for (let i = 0; i <= destination.length - 1; i++) {
     if (destination[i] === null) {
       return res.status(400).json({
-        message: `This accomodation is not availble on destination number ${
-          i + 1
-        }`
+        message: `This accomodation is not availble on destination number ${i + 1
+          }`
       });
     }
   }
@@ -84,7 +83,6 @@ export const checkManagerId = async (req, res, next) => {
     return next();
   }
   /* istanbul ignore next */
-
   return res.status(404).json({ message: 'No manager with that Id found' });
 };
 // get a time in days and check if a requester has pent that much time in a given accommodation
@@ -134,6 +132,7 @@ export const checkDuration = async (req, res, next) => {
   const sum = duration.reduce((a, b) => a + b);
 
   if (sum > time) {
+    /* istanbul ignore next */
     return res
       .status(400)
       .json({ message: 'days in trips exceed trip duration' });

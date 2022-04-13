@@ -1,3 +1,6 @@
+/* eslint-disable import/newline-after-import */
+/* eslint-disable valid-jsdoc */
+/* eslint-disable require-jsdoc */
 'use strict';
 const { Model } = require('sequelize');
 const { bookingStatus } = require('../../utils/booking.utils');

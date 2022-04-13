@@ -72,7 +72,7 @@ export const user = {
           required: true
         }
       ]
-   }
+    }
   },
   '/users/profile': {
     patch: {
@@ -94,13 +94,13 @@ export const user = {
         },
         {
           name: "last_name",
-          in: "formData", 
+          in: "formData",
           description: "last name",
           type: "string"
         },
         {
           name: "age",
-          in: "formData", 
+          in: "formData",
           description: "user age",
           type: "integer"
         },
@@ -112,46 +112,58 @@ export const user = {
         },
         {
           name: "language",
-          in: "formData", 
+          in: "formData",
           description: "user language",
           type: "string"
         },
         {
           name: "nationality",
-          in: "formData", 
+          in: "formData",
           description: "user nationality",
           type: "string"
         },
         {
           name: "bio",
-          in: "formData", 
+          in: "formData",
           description: "description about the user",
           type: "string"
         },
         {
           name: "gender",
-          in: "formData", 
+          in: "formData",
           description: "user gender",
           type: "string"
         },
         {
           name: "profile_picture",
-          in: "formData", 
+          in: "formData",
           description: "last name",
           type: "file"
         },
         {
           name: "date_of_birth",
-          in: "formData", 
+          in: "formData",
           description: "date of birth",
           type: "string",
           format: "date-time"
         },
         {
           name: "location_id",
-          in: "formData", 
+          in: "formData",
           description: "location_id",
           type: "integer"
+        },
+        {
+          name: "in_app_notification",
+          in: "formData",
+          description: "in app notification",
+          type: "boolean"
+        },
+        {
+          name: "email_notification",
+          in: "formData",
+          description: "email notification",
+          type: "boolean"
         }
       ],
       responses

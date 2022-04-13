@@ -9,54 +9,101 @@ import { Op } from 'sequelize';
 import { Trip, User, Location, Role, Accommodation } from '../database/models';
 
 class tripService {
-  static async findSpecificTrip(userId, limit, offset) {
+  // static async findSpecificTrip(userId, limit, offset) {
+  //   let foundOneTrip;
+
+  //   const userRole = await Role.findOne({ where: { id: userId } });
+  //   const includes = [
+  //     {
+  //       model: User,
+  //       as: 'user',
+  //       attributes: [
+  //         'id',
+  //         'first_name',
+  //         'last_name',
+  //         'email',
+  //         'provider',
+  //         'manager_id'
+  //       ]
+  //     },
+  //     {
+  //       model: Location,
+  //       as: 'location',
+  //       attributes: ['id', 'name', 'latitude', 'longitude', 'country']
+  //     },
+  //     {
+  //       model: Location,
+  //       as: 'depart_location',
+  //       attributes: ['id', 'name', 'latitude', 'longitude', 'country']
+  //     },
+  //     {
+  //       model: Accommodation,
+  //       attributes: ['id', 'name', 'services', 'amenities', 'imagesId']
+  //     }
+  //   ];
+
+  //   if (userRole.name === 'SUPER_ADMIN') {
+  //     foundOneTrip = await Trip.findAndCountAll({
+  //       limit,
+  //       offset,
+  //       include: includes
+  //     });
+  //   } else {
+  //     foundOneTrip = await Trip.findAndCountAll({
+  //       where: { user_id: userId },
+  //       limit,
+  //       offset,
+  //       include: includes
+  //     });
+  //   }
+
+  //   return foundOneTrip;
+  // }
+  static async findSpecificTrip(userId, limit, offset, roleName) {
     let foundOneTrip;
-
-    const userRole = await Role.findOne({ where: { id: userId } });
-    const includes = [
-      {
-        model: User,
-        as: 'user',
-        attributes: [
-          'id',
-          'first_name',
-          'last_name',
-          'email',
-          'provider',
-          'manager_id'
-        ]
-      },
-      {
-        model: Location,
-        as: 'location',
-        attributes: ['id', 'name', 'latitude', 'longitude', 'country']
-      },
-      {
-        model: Location,
-        as: 'depart_location',
-        attributes: ['id', 'name', 'latitude', 'longitude', 'country']
-      },
-      {
-        model: Accommodation,
-        attributes: ['id', 'name', 'services', 'amenities', 'imagesId']
-      }
+    const includes = [{
+      model: User,
+      as: roleName === 'MANAGER' ? 'manager' : 'user',
+      attributes: [
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'provider',
+        'manager_id'
+      ]
+    },
+    {
+      model: Location,
+      as: 'depart_location',
+      attributes: ['id', 'name', 'latitude', 'longitude', 'country']
+    },
+    {
+      model: Accommodation,
+      attributes: ['id', 'name', 'services', 'amenities', 'imagesId']
+    }
     ];
-
-    if (userRole.name === 'SUPER_ADMIN') {
+    if (roleName === 'MANAGER') {
       foundOneTrip = await Trip.findAndCountAll({
+        where: { manager_id: userId },
         limit,
         offset,
         include: includes
       });
-    } else {
+    } else if (roleName === 'REQUESTER') {
       foundOneTrip = await Trip.findAndCountAll({
         where: { user_id: userId },
         limit,
         offset,
         include: includes
       });
+    } else {
+      foundOneTrip = await Trip.findAndCountAll({
+        limit,
+        offset,
+        include: includes
+      });
     }
-
     return foundOneTrip;
   }
 
@@ -75,10 +122,7 @@ class tripService {
   }
 
   static async updateStatus(id, status) {
-    const updateStatus = await Trip.update(
-      { status },
-      { where: { id }, returning: true }
-    );
+    const updateStatus = await Trip.update({ status }, { where: { id }, returning: true, raw: true });
     return updateStatus;
   }
 

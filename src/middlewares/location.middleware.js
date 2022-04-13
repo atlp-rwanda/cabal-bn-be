@@ -22,7 +22,6 @@ export const validateLocationId = async (req, res, next) => {
   try {
     const { location_id } = req.body;
     if (location_id) {
-      // const userLocation = await new UserService().getUser(email)
       const location = await locationService.findLocation(location_id);
       if (!location) {
         return res.status(404).json({ message: `Location with id not found` });
@@ -30,7 +29,6 @@ export const validateLocationId = async (req, res, next) => {
 
       return next();
     }
-    return next();
   } catch (error) {
     /* istanbul ignore next */
 

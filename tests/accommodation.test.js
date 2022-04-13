@@ -173,30 +173,6 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
       });
     expect(res.status).to.be.equal(403);
   });
-  it('should not create instead give internal server error', async () => {
-    const logIn = await chai.request(app).post('/api/v1/users/login').send({
-      email: `TRAVEL_ADMIN@gmail.com`,
-      password: 'TRAVEL_ADMIN2gmail'
-    });
-    const data = {
-      token: `Bearer ${logIn.body.token}`
-    };
-    const res = await chai
-      .request(app)
-      .post('/api/v1/accommodations')
-      .set('Authorization', data.token)
-      .send({
-        name: 'Marriot Hotel',
-        description:
-          'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .',
-        location_id: 1,
-        services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        amenities: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        images:
-          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-      });
-    expect(res.status).to.be.equal(500);
-  });
 
   it('should not  create an accommodation if there is a field missing', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
@@ -313,33 +289,6 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
     expect(res.status).to.be.equal(400);
   });
 
-  it('should throw an internal server error', async () => {
-    const logIn = await chai.request(app).post('/api/v1/users/login').send({
-      email: 'TRAVEL_ADMIN@gmail.com',
-      password: 'TRAVEL_ADMIN2gmail'
-    });
-    const data = {
-      token: `Bearer ${logIn.body.token}`
-    };
-    await chai.request(app).get('/api/v1/accommodations');
-    const res = await chai
-      .request(app)
-      .post('/api/v1/accommodations')
-      .set('Authorization', data.token)
-      .send({
-        name: 'Marriot Hotel',
-        description:
-          'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .',
-        location_id: 12,
-        services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        amenities: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        images:
-          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        imagesId: ['456780rty']
-      });
-    expect(res.status).to.be.equal(500);
-  });
-
   it('should send an internal server error while creating an accommodation', async () => {
     const accommodationCreated = stub(
       accommodationService,
@@ -396,6 +345,7 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
         services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
         amenities: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
         images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
           'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
         ],
         imagesId: ['456780rty']
@@ -455,7 +405,9 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
         .field('amenities', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
         .field('user_id', 1);
       expect(res.status).to.be.equal(403);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   it('should not update an accommodation if loggedIn user is not a travel admin', async () => {
@@ -627,25 +579,4 @@ describe('ACCOMMODATION ENDPOINT TESTING', () => {
     accommodationDelete.restore();
   });
 
-  it('should catch an error', async () => {
-    const logIn = await chai.request(app).post('/api/v1/users/login').send({
-      email: 'TRAVEL_ADMIN@gmail.com',
-      password: 'TRAVEL_ADMIN2gmail'
-    });
-    const data = {
-      token: `Bearer ${logIn.body.token}`
-    };
-    const res1 = await chai
-      .request(app)
-      .post('/api/v1/accommodations')
-      .set('authorization', data.token)
-      .send(accommodationLocation);
-    const res = await chai
-      .request(app)
-      .put(`/api/v1/accommodations/${res1.body.data.id}`)
-      .set('Authorization', data.token)
-      .send(accommodationInternalServer);
-    expect(res.body).to.have.property('message');
-    expect(res.status).to.be.equal(500);
-  });
 });

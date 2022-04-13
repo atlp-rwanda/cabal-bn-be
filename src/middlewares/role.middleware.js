@@ -6,12 +6,13 @@ import { User, Blacklist } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import RoleService from '../services/role.service';
 
-export const checkLoggedInUser = async(req, res, next) => {
+export const checkLoggedInUser = async (req, res, next) => {
     const token =
         req.headers.authorization && req.headers.authorization.split(' ')[1];
     if (!token) return res.status(403).json({ message: 'user not logged in' });
     try {
         const blackListed = await Blacklist.findOne({ where: { token } });
+        /* istanbul ignore next */
         if (blackListed) return res.status(401).json({ message: 'please login first' });
 
         const decoded = decodeToken(token);
@@ -29,14 +30,14 @@ export const roles = (...roles) => {
         if (!roles.includes(req.user.dataValues.Role.dataValues.name)) {
             return next(
                 res
-                .status(403)
-                .json({ message: 'you are not allowed to perform this action' })
+                    .status(403)
+                    .json({ message: 'you are not allowed to perform this action' })
             );
         }
         next();
     };
 };
-export const checkRoleSame = async(req, res, next) => {
+export const checkRoleSame = async (req, res, next) => {
     const { email, role } = req.body;
 
     const user = await User.findOne({ where: { email } });
@@ -51,7 +52,7 @@ export const checkRoleSame = async(req, res, next) => {
     next();
 };
 
-export const checkEmailNotExist = async(req, res, next) => {
+export const checkEmailNotExist = async (req, res, next) => {
     const { email } = req.body;
     const emailExist = await User.findOne({
         where: {

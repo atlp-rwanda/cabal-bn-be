@@ -116,7 +116,6 @@ describe('USER END-POINT TEST', () => {
           last_name: 'user last_name',
           location_id: 1
         });
-      // expect(res.body).to.haveOwnProperty('token');
       expect(res).to.have.status([201]);
     });
     it('should not register a user if location id is not found', async () => {

@@ -199,7 +199,12 @@ const accommodation = {
           type: 'integer'
         }
       ],
-      responses
+      responses,
+      security: [
+        {
+          JWT: []
+        }
+      ]
     }
   },
   '/accommodations/{accommodationId}/comment': {

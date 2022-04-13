@@ -10,6 +10,9 @@ import { Op } from 'sequelize';
 import accommodationService from '../services/accommodations.service';
 import { getPagination, getPaginatedData } from '../utils/pagination.utils';
 import { getQuery } from '../helpers/trip.helpers';
+import Notification from '../services/notification.service';
+import UserService from '../services/user.service';
+import eventEmitter from '../services/event.service';
 
 class accommodationController {
   static async createAccommodation(req, res) {
@@ -19,10 +22,10 @@ class accommodationController {
       /* istanbul ignore next */
       const condition = name
         ? {
-            name: {
-              [Op.like]: `%${name}%`
-            }
+          name: {
+            [Op.like]: `%${name}%`
           }
+        }
         : null;
       const searchAccommodation =
         await accommodationService.findAllAccommodations({ where: condition });
@@ -30,7 +33,7 @@ class accommodationController {
       for (let i = 0; i < searchAccommodation.rows.length - 1; i++) {
         if (
           searchAccommodation.rows[i].location_id ==
-            req.accommodations.value.location_id &&
+          req.accommodations.value.location_id &&
           searchAccommodation.rows[i].name == req.accommodations.value.name
         ) {
           return res.status(400).json({
@@ -65,10 +68,10 @@ class accommodationController {
       /* istanbul ignore next */
       const condition = name
         ? {
-            name: {
-              [Op.like]: `%${name}%`
-            }
+          name: {
+            [Op.like]: `%${name}%`
           }
+        }
         : null;
       const foundAccommodations =
         await accommodationService.findAllAccommodations({
@@ -142,7 +145,20 @@ class accommodationController {
         req.user.id,
         req.params.accommodationId
       );
-
+      const user = await new UserService().getUserId(req.user.id)
+      const accommodation = await accommodationService.findSpecificAccommodation(req.params.accommodationId);
+      const travel_admin = await new UserService().getUserId(accommodation.user_id)
+      if (like.like == true) {
+        const notify = await Notification.createNotification({
+          details: `${user.first_name} ${user.last_name} has liked your accommodation`,
+          type: "like",
+          from_user_id: user.id,
+          to_user_id: travel_admin.id
+        })
+        if (travel_admin.in_app_notification == true) {
+          eventEmitter.emit("appNotification", { recipient: travel_admin, notify })
+        }
+      }
       return res.status(200).json({
         message: 'Liked accommodation successfully',
         data: like
@@ -190,6 +206,18 @@ class accommodationController {
         user_id,
         comment
       );
+      const user = await new UserService().getUserId(req.user.id)
+      const accommodation = await accommodationService.findSpecificAccommodation(req.params.accommodationId);
+      const travel_admin = await new UserService().getUserId(accommodation.user_id)
+      const notify = await Notification.createNotification({
+        details: `${user.first_name} ${user.last_name} has commented on your accommodation`,
+        type: "like",
+        from_user_id: user.id,
+        to_user_id: travel_admin.id
+      })
+      if (travel_admin.in_app_notification == true) {
+        eventEmitter.emit("appNotification", { recipient: travel_admin, notify })
+      }
 
       return res.status(201).json({
         message: 'Created the comment successfully',
@@ -253,6 +281,17 @@ class accommodationController {
         user_id,
         rate
       );
+      const user = await new new UserService().getUserId(user_id)
+      const travel_admin = await new UserService().getUserId(accommodation.user_id)
+      const notify = await Notification.createNotification({
+        details: `${user.first_name} ${user.last_name} has rated your accommodation`,
+        type: "rating",
+        from_user_id: user.id,
+        to_user_id: travel_admin.id
+      })
+      if (travel_admin.in_app_notification == true) {
+        eventEmitter.emit("appNotification", { recipient: travel_admin, notify })
+      }
 
       return res.status(200).json({
         message: 'Rated the accommodation successfully',

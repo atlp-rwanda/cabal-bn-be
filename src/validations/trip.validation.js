@@ -28,7 +28,7 @@ export default async function tripValidation(req, res, next) {
       'date.format':
         'returnDate is not correct iso standard must be year-month-day'
     }),
-    arrival_location: Joi.array().required().items(trips),
+    arrivalLocations: Joi.array().required().items(trips),
     depart_location_id: Joi.number().required().empty().messages({
       'string.base': 'depart_location_id must be valid',
       'string.empty': 'depart_location_id is not allowed to be empty',

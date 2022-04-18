@@ -1,10 +1,9 @@
 import chai, { expect, request } from 'chai';
 import chaiHttp from 'chai-http';
 import 'dotenv/config';
-import path from 'path';
 import app from '../src/app';
 import roomService from '../src/services/rooms.service';
-import { roomData, bookedRoomData } from './mock/room.mock';
+import { roomData } from './mock/room.mock';
 import { bookingData, badBookingData } from './mock/booking.mock';
 
 chai.use(chaiHttp);
@@ -18,6 +17,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       .send(bookingData);
     expect(res.status).to.be.equal(403);
   });
+
   it('should not book a room if a user is not a requester', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'TRAVEL_ADMIN@gmail.com',
@@ -31,7 +31,8 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     const res = await request(app)
       .post(`/api/v1/rooms/${room.dataValues.id}/booking`)
       .set('Authorization', data.token)
-      .send(bookingData);
+      .field('checkinDate', new Date('2025-04-01').toISOString())
+      .field('checkoutDate', new Date('2025-04-03').toISOString());
     expect(res.status).to.be.equal(403);
   });
   it('should book a room if a user is a requester', async () => {
@@ -42,14 +43,13 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     const data = {
       token: `Bearer ${logIn.body.token}`
     };
-    const room = await createRoom(roomData);
-    room.save();
     const res = await request(app)
       .post(`/api/v1/rooms/1/booking`)
       .set('Authorization', data.token)
-      .send(bookingData);
+      .send({ checkinDate: '2022-12-10', checkoutDate: '2022-12-24' });
     expect(res.status).to.be.equal(200);
   });
+
   it('should not book a room with wrong dates', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'REQUESTER@gmail.com',
@@ -58,14 +58,13 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     const data = {
       token: `Bearer ${logIn.body.token}`
     };
-    const room = await createRoom(roomData);
-    room.save();
     const res = await request(app)
-      .post(`/api/v1/rooms/${room.dataValues.id}/booking`)
+      .post(`/api/v1/rooms/2/booking`)
       .set('Authorization', data.token)
       .send(badBookingData);
     expect(res.status).to.be.equal(400);
   });
+
   it('should not book a room if it was booked already', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'REQUESTER@gmail.com',
@@ -74,14 +73,14 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     const data = {
       token: `Bearer ${logIn.body.token}`
     };
-    const room = await createRoom(bookedRoomData);
-    room.save();
     const res = await request(app)
-      .post(`/api/v1/rooms/${room.dataValues.id}/booking`)
+      .post(`/api/v1/rooms/5/booking`)
       .set('Authorization', data.token)
-      .send(bookingData);
+      .field('checkinDate', new Date('2025-04-01').toISOString())
+      .field('checkoutDate', new Date('2025-04-03').toISOString());
     expect(res.status).to.be.equal(404);
   });
+
   it('should list all bookings of a room', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'TRAVEL_ADMIN@gmail.com',
@@ -95,6 +94,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       .set('Authorization', data.token);
     expect(res.status).to.be.equal(200);
   });
+
   it('should return booking of a logged in requester only', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'REQUESTER@gmail.com',
@@ -108,6 +108,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       .set('Authorization', data.token);
     expect(res.status).to.be.equal(200);
   });
+
   it('should not get bookings of a logged in requester if no booking', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'REQUESTER@gmail.com',
@@ -134,6 +135,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       .set('Authorization', data.token);
     expect(res.status).to.be.equal(200);
   });
+
   it('should not return any booking', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'TRAVEL_ADMIN@gmail.com',
@@ -147,6 +149,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       .set('Authorization', data.token);
     expect(res.status).to.be.equal(404);
   });
+
   it('should update a specific room booking', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'TRAVEL_ADMIN@gmail.com',
@@ -171,9 +174,10 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       token: `Bearer ${logIn.body.token}`
     };
     const res = await request(app)
-      .patch(`/api/v1/rooms/2/booking/6`)
+      .patch(`/api/v1/rooms/4/booking/6`)
       .set('Authorization', data.token)
-      .send({ checkinDate: '2022-10-20', checkoutDate: '2022-12-20' });
+      .field('checkinDate', '2025-04-01')
+      .field('checkoutDate', '2025-04-03');
     expect(res.status).to.be.equal(200);
   });
 
@@ -188,7 +192,8 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     const res = await request(app)
       .patch(`/api/v1/rooms/3/booking/5`)
       .set('Authorization', data.token)
-      .send({ checkinDate: '2022-10-20', checkoutDate: '2022-12-20' });
+      .field('checkinDate', '2025-04-01')
+      .field('checkoutDate', '2025-04-03');
     expect(res.status).to.be.equal(400);
   });
   it('requester should not update a booking he did not create', async () => {
@@ -200,11 +205,13 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       token: `Bearer ${logIn.body.token}`
     };
     const res = await request(app)
-      .patch(`/api/v1/rooms/5/booking/3`)
+      .patch(`/api/v1/rooms/2/booking/3`)
       .set('Authorization', data.token)
-      .send({ checkinDate: '2022-10-20', checkoutDate: '2022-12-20' });
+      .field('checkinDate', new Date('2025-04-01').toISOString())
+      .field('checkoutDate', new Date('2025-04-03').toISOString());
     expect(res.status).to.be.equal(404);
   });
+
   it('requester should not update a booking if none booked', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'REQUESTER@gmail.com',
@@ -230,7 +237,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     const res = await request(app)
       .patch(`/api/v1/rooms/1/booking/1`)
       .set('Authorization', data.token)
-      .send({ status: 'OK' });
+      .field('status', 'ok');
     expect(res.status).to.be.equal(400);
   });
   it('requester should delete his booking', async () => {
@@ -247,10 +254,10 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     expect(res.status).to.be.equal(201);
   });
 
-  it('manager should update a specific room booking', async () => {
+  it('travel admin should update a booking in his accommodation', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
-      email: 'MANAGER@gmail.com',
-      password: 'MANAGER2gmail'
+      email: 'TRAVEL_ADMIN@gmail.com',
+      password: 'TRAVEL_ADMIN2gmail'
     });
     const data = {
       token: `Bearer ${logIn.body.token}`
@@ -261,6 +268,22 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       .send({ status: 'APPROVED' });
     expect(res.status).to.be.equal(200);
   });
+
+  it('should not allow travel admin to update a booking outside his accommodation', async () => {
+    const logIn = await chai.request(app).post('/api/v1/users/login').send({
+      email: 'TRAVEL_ADMIN@gmail.com',
+      password: 'TRAVEL_ADMIN2gmail'
+    });
+    const data = {
+      token: `Bearer ${logIn.body.token}`
+    };
+    const res = await request(app)
+      .patch(`/api/v1/rooms/4/booking/8`)
+      .set('Authorization', data.token)
+      .send({ status: 'APPROVED' });
+    expect(res.status).to.be.equal(401);
+  });
+
   it('super admin should update a specific room booking', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'SUPER_ADMIN@gmail.com',
@@ -272,7 +295,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     const res = await request(app)
       .patch(`/api/v1/rooms/2/booking/2`)
       .set('Authorization', data.token)
-      .send({ status: 'APPROVED' });
+      .field('status', 'APPROVED');
     expect(res.status).to.be.equal(200);
   });
 });

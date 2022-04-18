@@ -6,8 +6,11 @@ import { roles, checkLoggedInUser } from '../../middlewares/role.middleware';
 const locations = express.Router();
 
 locations.post('/', locationValidation, locationController.locationCreate);
+
 locations.get('/', locationController.findLocation);
+
 locations.get('/:locationId', locationController.findOneLocation);
+
 locations.delete(
   '/:locationId',
   checkLoggedInUser,

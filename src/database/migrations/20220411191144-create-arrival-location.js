@@ -1,25 +1,19 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Bookings', {
+    await queryInterface.createTable('arrivalLocations', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      TripId: {
         type: Sequelize.INTEGER
       },
-      checkinDate: {
-        type: Sequelize.DATE
+      accommodation_id: {
+        type: Sequelize.INTEGER
       },
-      checkoutDate: {
-        type: Sequelize.DATE
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      room_id: {
+      days: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -33,6 +27,6 @@ module.exports = {
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('Bookings');
+    await queryInterface.dropTable('arrivalLocations');
   }
 };

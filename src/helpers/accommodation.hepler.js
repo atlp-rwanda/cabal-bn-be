@@ -11,6 +11,7 @@ export const findUserRate = (rates, user_id) => {
   const newRates = [...rates];
 
   for (let i = 0; i < newRates.length; i++) {
+    /* istanbul ignore next */
     if (newRates[i].user_id === user_id) {
       newRates.splice(i, 1); // remove that rate from the array so that i can re add it in the service
       return newRates;

@@ -11,16 +11,41 @@ import accommodationService from "./accommodations.service";
 import { io, users } from '../utils/socket.utils';
 
 const eventEmitter = new events.EventEmitter()
-eventEmitter.on("tripEmailNotification", async ({ user, multiCityTrip, manager, title, description, url }) => {
-  const depart_location = await locationService.findLocation(multiCityTrip.depart_location_id)
-  let accommodationList = ""
-  for (let i = 0; i < multiCityTrip.arrival_location.length; i++) {
-    const accommodation = await accommodationService.findSpecificAccommodation(multiCityTrip.arrival_location[i].accommodation_id)
-    accommodationList += `<li>${accommodation.name}</li>`
+eventEmitter.on(
+  'tripEmailNotification',
+  async ({
+    user,
+    multiCityTrip,
+    tripLocations,
+    manager,
+    title,
+    description,
+    url
+  }) => {
+    const depart_location = await locationService.findLocation(
+      multiCityTrip.depart_location_id
+    );
+    let accommodationList = '';
+    if (multiCityTrip.arrivalLocations === undefined) {
+      for (let i = 0; i < tripLocations.length; i++) {
+        const accommodation =
+          await accommodationService.findSpecificAccommodation(
+            tripLocations[i].accommodation_id
+          );
+        accommodationList += `<li>${accommodation.name}</li>`;
+      }
+    } else {
+      for (let i = 0; i < multiCityTrip.arrivalLocations.length; i++) {
+        const accommodation =
+          await accommodationService.findSpecificAccommodation(
+            multiCityTrip.arrivalLocations[i].accommodation_id
+          );
+        accommodationList += `<li>${accommodation.name}</li>`;
+      }
+    }
 
-  }
-  const details = "Trip created"
-  const code = `
+    const details = 'Trip created';
+    const code = `
   <h1><strong>${title}</strong></h1>
   <p>Manager ${manager.first_name} ${manager.last_name},</p>
 <p>Requester ${user.first_name} ${user.last_name} ${description}</p>
@@ -43,17 +68,20 @@ eventEmitter.on("tripEmailNotification", async ({ user, multiCityTrip, manager, 
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td> <a href="${url.baseUrl}/${url.route}" target="_blank">More details</a> </td>
+                        <td> <a href="${url.baseUrl}/${
+      url.route
+    }" target="_blank">More details</a> </td>
                       </tr>
                     </tbody>
                   </table>
                 </td>
               </tr>
             </tbody>
-          </table>`
-  const html = message(code);
-  await nodemailer(manager.email, title, details, html);
-})
+          </table>`;
+    const html = message(code);
+    await nodemailer(manager.email, title, details, html);
+  }
+);
 
 eventEmitter.on("appNotification", async ({ recipient, notify }) => {
   for (let i = 0; i < users.length; i++) {
@@ -140,9 +168,9 @@ eventEmitter.on("bookingStatusNotification", async ({ user, travel_admin, title,
   await nodemailer(user.email, title, details, html);
 })
 
-eventEmitter.on('tripRequestApproved', async (arrival_location) => {
+eventEmitter.on('tripRequestApproved', async (arrivalLocations) => {
   /* istanbul ignore next */
-  arrival_location.forEach(async (acc) => {
+  arrivalLocations.forEach(async (acc) => {
     const id = acc.accommodation_id;
     const accommodation = await accommodationService.findSpecificAccommodation(
       id

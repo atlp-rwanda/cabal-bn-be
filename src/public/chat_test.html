@@ -40,17 +40,14 @@
       });
 
       socket.on('connect_error', (err) => {
-        console.log(err.message); // prints the message associated with the error
         document.getElementById('error').textContent = err;
       });
 
       socket.on('user:login', (data) => {
-        console.log(data);
         document.getElementById('error').textContent = data.message;
       });
 
       socket.on('user:online', (data) => {
-        console.log(data);
 
         let textContent = document.getElementById('status').textContent;
         document.getElementById(
@@ -64,7 +61,6 @@
       });
 
       socket.on('message:recieve', (data) => {
-        console.log(JSON.stringify(data.message));
         const content = document.getElementById('messages').textContent;
         document.getElementById('messages').innerHTML +=
           '<hr \>' + '<br \>' + JSON.stringify(data.message) + '<hr \>';

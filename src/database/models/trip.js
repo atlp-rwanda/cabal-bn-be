@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable valid-jsdoc */
 /* eslint-disable require-jsdoc */
 
@@ -11,7 +12,13 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Location, Accommodation, tripComments }) {
+    static associate({
+      User,
+      Location,
+      Accommodation,
+      tripComments,
+      arrivalLocation
+    }) {
       // define association here
       this.hasMany(tripComments, {
         foreignKey: 'trip_id',
@@ -32,11 +39,11 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Accommodation, {
         foreignKey: 'accommodation_id'
       });
+      this.hasMany(arrivalLocation, { foreignKey: 'TripId' });
     }
   }
   Trip.init(
     {
-      arrival_location: DataTypes.ARRAY(DataTypes.JSON),
       tripDate: DataTypes.DATE,
       returnDate: DataTypes.DATE,
       reason: DataTypes.STRING,

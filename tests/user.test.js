@@ -2,7 +2,7 @@ import chai, { request, expect } from 'chai';
 import { assert, stub } from 'sinon';
 import chaiHttp from 'chai-http';
 import path from 'path';
-import { User } from 'database/models';
+import { User } from '../src/database/models';
 import app from '../src/app';
 import 'dotenv/config';
 import UserController from '../src/controllers/user.controller';

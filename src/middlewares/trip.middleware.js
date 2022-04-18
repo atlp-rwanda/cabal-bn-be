@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable arrow-body-style */
 /* eslint-disable camelcase */
 /* eslint-disable radix */
@@ -7,12 +10,11 @@
 import { validateDate, subDays } from '../helpers/dataComparison';
 import accommodationService from '../services/accommodations.service';
 import tripService from '../services/trip.service';
-import { Trip, User, Location, Role, Accommodation } from '../database/models';
-import locationService from '../services/location.service';
+import { Trip, arrivalLocation } from '../database/models';
 
 export const checkTripExistStatus = (status) => (req, res, next) => {
   tripService
-    .findSpecificTrip(req.user.id, null, 0, req.user.Role.name)
+    .findAllTrips(req.user, 10, 0, req.user.Role.name)
     .then((trips) => {
       for (let i = 0; i < trips.rows.length; i++) {
         const trip = trips.rows[i];
@@ -33,6 +35,7 @@ export const checkTripExistStatus = (status) => (req, res, next) => {
 
 export const checkTripDates = (req, res, next) => {
   const compareDates = validateDate(req.body.returnDate, req.body.tripDate);
+  /* istanbul ignore next */
   if (!compareDates) {
     /* istanbul ignore next */
     return res.status(400).json({
@@ -45,9 +48,9 @@ export const checkTripDates = (req, res, next) => {
 };
 
 export const checkLocationAccommodation = async (req, res, next) => {
-  const { arrival_location } = req.body;
+  const { arrivalLocations } = req.body;
   const destination = await Promise.all(
-    arrival_location.map(async (data) => {
+    arrivalLocations.map(async (data) => {
       const { accommodation_id } = data;
       const accommodation =
         await accommodationService.findSpecificAccommodation(accommodation_id);
@@ -56,10 +59,24 @@ export const checkLocationAccommodation = async (req, res, next) => {
   );
 
   for (let i = 0; i <= destination.length - 1; i++) {
+    /* istanbul ignore next */
     if (destination[i] === null) {
       return res.status(400).json({
-        message: `This accomodation is not availble on destination number ${i + 1
-          }`
+        message: `This accomodation is not availble on destination number ${
+          i + 1
+        }`
+      });
+    }
+  }
+  arrivalLocations.sort((a, b) => a.accommodation_id - b.accommodation_id);
+  for (let i = 0; i < arrivalLocations.length; i++) {
+    if (
+      i > 0 &&
+      arrivalLocations[i].accommodation_id ===
+        arrivalLocations[i - 1].accommodation_id
+    ) {
+      return res.status(400).json({
+        message: 'you can not have two same accommodation id'
       });
     }
   }
@@ -79,6 +96,7 @@ export const checkTripIdExist = async (req, res, next) => {
 
 export const checkManagerId = async (req, res, next) => {
   const { trip } = req;
+  /* istanbul ignore next */
   if (trip.manager_id === req.user.id || req.user.Role.name === 'SUPER_ADMIN') {
     return next();
   }
@@ -92,9 +110,10 @@ export const checkTimeOnTrip = (days) => async (req, res, next) => {
 
   // get all trips created by that user and have the given accommodaton
   const trips = await Trip.findAll({
-    where: { user_id, accommodation_id, status: 'APPROVED' }
+    where: { user_id, status: 'APPROVED' },
+    include: [{ model: arrivalLocation }]
   });
-
+  /* istanbul ignore next */
   if (!trips.length) {
     return res.status(400).json({
       message: 'You never had a trip at this accommodation'
@@ -106,33 +125,37 @@ export const checkTimeOnTrip = (days) => async (req, res, next) => {
   const timeMillisecs = days * 24 * 60 * 60 * 1000;
 
   // loop to find if a user have spend larger than the passed In time in atleast one of the trips
-  for (let i = 0; i < trips.length; i++) {
-    const trip = trips[i];
-
-    const departDate = new Date(trip.tripDate).getTime();
-
-    if (nowDate - departDate > timeMillisecs) {
+  for (const arrivalLocations in trips) {
+    const { tripDate } = trips[arrivalLocations];
+    const departDate = new Date(tripDate).getTime();
+    if (
+      nowDate - departDate > timeMillisecs &&
+      trips[arrivalLocations].arrivalLocations[0].accommodation_id ===
+        parseInt(accommodation_id)
+    ) {
       return next();
     }
   }
 
   return res.status(400).json({
-    message: `You should spend atleast ${days} days in this accommodation to comment on it`
+    message: `You should spend atleast ${days} ${
+      days !== 1 ? 'days' : 'day'
+    } in this accommodation to ${req.body.rate ? 'rate' : 'comment on'} it`
   });
 };
 
 export const checkDuration = async (req, res, next) => {
-  const { arrival_location } = req.body;
+  const { arrivalLocations } = req.body;
   const time = subDays(req.body.returnDate, req.body.tripDate);
 
-  const duration = arrival_location.map((data) => {
+  const duration = arrivalLocations.map((data) => {
     return data.days;
   });
 
   const sum = duration.reduce((a, b) => a + b);
 
+  /* istanbul ignore next */
   if (sum > time) {
-    /* istanbul ignore next */
     return res
       .status(400)
       .json({ message: 'days in trips exceed trip duration' });

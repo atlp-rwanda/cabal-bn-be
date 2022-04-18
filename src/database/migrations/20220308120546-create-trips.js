@@ -38,9 +38,9 @@ module.exports = {
       returnDate: {
         type: Sequelize.DATE
       },
-      arrival_location: {
-        type: Sequelize.ARRAY(Sequelize.JSON)
-      },
+      // arrival_location: {
+      //   type: Sequelize.ARRAY(Sequelize.JSON)
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

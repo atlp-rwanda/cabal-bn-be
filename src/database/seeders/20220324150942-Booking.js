@@ -63,6 +63,15 @@ module.exports = {
         room_id: 4,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        user_id: 4,
+        checkinDate: new Date('2022-03-25').toISOString(),
+        checkoutDate: new Date('2022-03-26').toISOString(),
+        status: 'PENDING',
+        room_id: 4,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]),
   down: (queryInterface) => queryInterface.bulkDelete('Bookings', null, {})

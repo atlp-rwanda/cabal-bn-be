@@ -6,6 +6,7 @@ import { checkLoggedInUser, roles } from '../../middlewares/role.middleware';
 import { validateAccommodationId } from '../../middlewares/accommodationId.middleware';
 import { validateRoomId } from '../../middlewares/roomId.middleware';
 import {
+  checkBookingTripAdmin,
   checkRegisterdUserId,
   checkRequester,
   checkRoomAvailability,
@@ -76,6 +77,7 @@ room.patch(
   bookingValidation,
   checkStatus,
   requesterUpdateBooking,
+  checkBookingTripAdmin,
   bookingController.updateBooking
 );
 

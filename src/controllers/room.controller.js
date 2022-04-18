@@ -10,7 +10,8 @@ class roomController {
       const accommodationId = req.accommodation.dataValues.id;
       const data = {
         ...req.rooms.value,
-        accommodation_id: accommodationId
+        accommodation_id: accommodationId,
+        user_id: req.user.id
       };
 
       const room = await roomService.createRoom(data);

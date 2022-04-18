@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import { Room, Accommodation } from '../database/models';
+import { Room, Accommodation, Booking } from '../database/models';
 
 class roomService {
   static async createRoom(room) {

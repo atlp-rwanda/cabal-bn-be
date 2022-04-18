@@ -247,10 +247,10 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     expect(res.status).to.be.equal(201);
   });
 
-  it('manager should update a specific room booking', async () => {
+  it('travel admin should update a booking in his accommodation', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
-      email: 'MANAGER@gmail.com',
-      password: 'MANAGER2gmail'
+      email: 'TRAVEL_ADMIN@gmail.com',
+      password: 'TRAVEL_ADMIN2gmail'
     });
     const data = {
       token: `Bearer ${logIn.body.token}`
@@ -261,6 +261,22 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       .send({ status: 'APPROVED' });
     expect(res.status).to.be.equal(200);
   });
+
+  it('should not allow travel admin to update a booking outside his accommodation', async () => {
+    const logIn = await chai.request(app).post('/api/v1/users/login').send({
+      email: 'TRAVEL_ADMIN@gmail.com',
+      password: 'TRAVEL_ADMIN2gmail'
+    });
+    const data = {
+      token: `Bearer ${logIn.body.token}`
+    };
+    const res = await request(app)
+      .patch(`/api/v1/rooms/4/booking/8`)
+      .set('Authorization', data.token)
+      .send({ status: 'APPROVED' });
+    expect(res.status).to.be.equal(401);
+  });
+
   it('super admin should update a specific room booking', async () => {
     const logIn = await chai.request(app).post('/api/v1/users/login').send({
       email: 'SUPER_ADMIN@gmail.com',

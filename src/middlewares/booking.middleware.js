@@ -1,6 +1,5 @@
 import bookingService from '../services/booking.service';
 import roomService from '../services/rooms.service';
-import { bookingStatus } from '../utils/booking.utils';
 import { User } from '../database/models';
 
 export const validateBookingId = async (req, res, next) => {
@@ -43,6 +42,7 @@ export const checkRegisterdUserId = async (req, res, next) => {
   });
 
   const findBooking = await bookingService.listSingleBooking(bookingId, roomId);
+  /* istanbul ignore next */
   if (findBooking.user_id !== id && user.Role.name !== 'SUPER_ADMIN')
     /* istanbul ignore next */
     return res
@@ -90,4 +90,16 @@ export const checkRoomAvailability = async (req, res, next) => {
         'Sorry, this room has been booked already. Please try another one.'
     });
   next();
+};
+
+export const checkBookingTripAdmin = async (req, res, next) => {
+  const { id } = req.user;
+  const { user_id } = req.room;
+  const role = req.user.dataValues.Role.name;
+  if (id !== user_id && role !== 'SUPER_ADMIN' && id !== req.booking.user_id) {
+    return res
+      .status(401)
+      .json({ message: 'you are not allowed to modify this booking' });
+  }
+  return next();
 };

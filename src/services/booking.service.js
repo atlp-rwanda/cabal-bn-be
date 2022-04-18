@@ -36,7 +36,6 @@ class bookingService {
       returning: true,
       raw: true
     });
-    console.log(booking)
     return booking;
   }
 

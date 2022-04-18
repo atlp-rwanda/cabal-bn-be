@@ -23,6 +23,7 @@ module.exports = {
       accommodation_id: {
         type: Sequelize.INTEGER
       },
+      user_id: Sequelize.INTEGER,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

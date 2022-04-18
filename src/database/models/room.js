@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false
       },
-      accommodation_id: DataTypes.INTEGER
+      accommodation_id: DataTypes.INTEGER,
+      user_id: DataTypes.INTEGER
     },
     {
       sequelize,

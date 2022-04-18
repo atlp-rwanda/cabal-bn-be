@@ -25,6 +25,7 @@ class locationService {
     );
   }
 
+  /* istanbul ignore next */
   static async findAndUpdateLocation({ where, id }, locData) {
     const updateLoc = await Location.update(locData, {
       where: id ? { id } : where

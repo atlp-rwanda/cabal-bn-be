@@ -26,6 +26,7 @@ passport.use(
       scope: 'https://www.googleapis.com/auth/user.addresses.read'
     },
     // eslint-disable-next-line no-unused-vars
+    /* istanbul ignore next */
     async (req, accessToken, refreshToken, profile, done) => done(null, profile)
   )
 );
@@ -40,6 +41,7 @@ passport.use(
       profileFields: ['id', 'emails', 'name', 'photos']
     },
     // eslint-disable-next-line no-unused-vars
+    /* istanbul ignore next */
     async (req, accessToken, refreshToken, profile, done) => done(null, profile)
   )
 );

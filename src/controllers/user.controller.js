@@ -8,8 +8,7 @@
 import bcryptjs from 'bcryptjs';
 import { config } from 'dotenv';
 import jwt from 'jsonwebtoken';
-import Profiles from 'services/profile.service';
-import { confirmEmail } from '../utils/email.utils';
+import Profiles from '../services/profile.service';
 import UserService from '../services/user.service';
 import { User } from '../database/models';
 import {
@@ -18,9 +17,11 @@ import {
   comparePassword,
   decodeToken
 } from '../helpers/user.helpers';
-import { verifyEmail } from '../helpers/user.verify';
 import cloudinary from '../config/cloudinary';
 import nodemailer from '../helpers/nodemailer.helper';
+import { message } from "../utils/notification.utils"
+import eventEmitter from "../services/event.service"
+import Notification from "../services/notification.service"
 
 config();
 
@@ -51,7 +52,26 @@ export default class UserController {
          Please copy and paste the address below into address bar to verify your account.
          ${process.env.BASE_URL}/api/v1/users/verify-email/${token}
          `;
-      const html = verifyEmail(token);
+      const code = `
+      <h1><strong>Account created require verification</strong></h1>
+      <p style="text-align: center;">Thank you for registering into Barefoot Nomad. Click the link below to verify and activate your account.</p>
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+            <tbody>
+              <tr>
+                <td align="center">
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td> <a href="${process.env.BASE_URL}/api-docs/${token}" target="_blank">Verify email</a> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      `
+      const html = message(code);
       await nodemailer(newUser.email, 'Email Verification', text, html);
       return res.status(201).json({
         message:
@@ -114,12 +134,31 @@ export default class UserController {
       const exist = await new UserService().userExist(req.body.email);
       if (exist.email) {
         const tokenid = generateToken({ id: exist.id }, '10m');
-        const confirm = confirmEmail(tokenid);
+        const code = `
+        <h1><strong>You have requested to reset your password</strong></h1>
+        <p>We cannot simply send you your old password. A unique link to reset your password has been generated for you. To reset your password, click the following link and follow the instructions.</p>
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+            <tbody>
+              <tr>
+                <td align="center">
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td> <a href="${process.env.BASE_URL}/api-docs/${tokenid}" target="_blank">Reset password</a> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        `
+        const html = message(code)
         await nodemailer(
           exist.email,
-          'reset password',
-          'request for reset password',
-          confirm
+          'Reset password',
+          'Request for reset password',
+          html
         );
         return res.status(200).json({
           status: 200,
@@ -250,11 +289,17 @@ export default class UserController {
         gender,
         date_of_birth,
         location_id,
-        profile_picture
-      } = req.profile.value;
-
+        email_notification,
+        in_app_notification
+      } = req.body;
+      let profile_picture;
+      if (req.file) {
+        /* istanbul ignore next */
+        const uploadFile = await cloudinary.uploader.upload(req.file.path);
+        profile_picture = uploadFile.url;
+      }
       const updatedUser = await this.userService.updateUser(
-        { first_name, last_name, location_id, profile_picture },
+        { first_name, last_name, location_id, profile_picture, email_notification, in_app_notification },
         user.id
       );
       const updated = await Profiles.updateProfile(
@@ -265,8 +310,9 @@ export default class UserController {
         message: 'Profile updated',
         data: [updatedUser[0] && updatedUser[1][0], updated[0] && updated[1][0]]
       });
-      /* istanbul ignore next */
+
     } catch (error) {
+      /* istanbul ignore next */
       return res.status(500).json({
         message: 'Error occured while updating your profile',
         error
@@ -282,6 +328,15 @@ export default class UserController {
         const manager = await UserService.findById(managerId);
         if (manager && manager.Role.name === 'MANAGER') {
           await UserService.update({ manager_id: managerId }, { id: userId });
+          if (userExist.in_app_notification === true) {
+            const notify = await Notification.createNotification({
+              details: `You have been assigned to Manager ${manager.first_name} ${manager.last_name}`,
+              type: "assign",
+              from_user_id: manager.id,
+              to_user_id: userExist.id
+            })
+            eventEmitter.emit("appNotification", { recipient: userExist, notify })
+          }
           return res.status(200).send({ message: 'User assigned to manager' });
         }
 

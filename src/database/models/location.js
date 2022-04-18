@@ -17,10 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Accommodations'
       });
       this.hasMany(models.Trip, {
-        foreignKey: 'arrival_location_id',
-        as: 'arrival_location'
-      });
-      this.hasMany(models.Trip, {
         foreignKey: 'depart_location_id',
         as: 'depart_location'
       });

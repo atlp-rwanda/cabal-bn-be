@@ -19,10 +19,10 @@ const app = express();
 app.use(validateAccommodationId);
 accommodations.post(
   '/',
+  upload.array('images'),
   checkLoggedInUser,
   roles('TRAVEL_ADMIN', 'SUPER_ADMIN'),
   accommodationValidation,
-  upload.array('images'),
   accommodationController.createAccommodation
 );
 

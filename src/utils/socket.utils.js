@@ -14,6 +14,7 @@ const io = new Server({
 io.use((socket, next) => {
   try {
     const { auth } = socket.handshake;
+    /* istanbul ignore next */
     if (!auth.token) {
       return next(new Error('user not logged in'));
     }
@@ -23,6 +24,7 @@ io.use((socket, next) => {
 
     return next();
   } catch (error) {
+    /* istanbul ignore next */
     return next(new Error(error.message));
   }
 });
@@ -46,6 +48,7 @@ io.on('connection', async (socket) => {
     console.log('socket open', socket.id);
     user.socketId = socket.id;
     users.push(user);
+    console.log(users)
 
     // will retrieve all messages and send them to the user connecting
     socket.emit('user:online', {
@@ -71,9 +74,8 @@ io.on('connection', async (socket) => {
     });
   } catch (err) {
     // jwt verification failed
-    console.log(err);
-    console.log('user not logged in');
-    socket.emit('authFailed'); // emits event to client to let client know authentication failed, optional.
+    /* istanbul ignore next */
+    socket.emit('authFailed', "user not logged in"); // emits event to client to let client know authentication failed, optional.
     socket.disconnect(); // disconnect client
   }
 

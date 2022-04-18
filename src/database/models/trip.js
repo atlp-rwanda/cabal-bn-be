@@ -26,10 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         as: 'manager'
       });
       this.belongsTo(Location, {
-        foreignKey: 'arrival_location_id',
-        as: 'location'
-      });
-      this.belongsTo(Location, {
         foreignKey: 'depart_location_id',
         as: 'depart_location'
       });

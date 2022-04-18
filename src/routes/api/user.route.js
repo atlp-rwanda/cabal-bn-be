@@ -55,6 +55,7 @@ routes.get(
     prompt: 'select_account'
   }),
   async (req, res) => {
+    /* istanbul ignore next */
     await new UserController().googleLogin(req, res);
   }
 );
@@ -66,6 +67,7 @@ routes.get(
     scope: ['email', 'public_profile', 'user_photos']
   }),
   async (req, res) => {
+    /* istanbul ignore next */
     await new UserController().facebookLogin(req, res);
   }
 );

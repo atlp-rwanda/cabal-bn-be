@@ -22,6 +22,14 @@ module.exports = {
         type: DataTypes.BOOLEAN,
         defaultValue: false
       },
+      email_notification: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+      },
+      in_app_notification: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
       address: DataTypes.STRING,
       profile_picture: {
         type: DataTypes.TEXT,

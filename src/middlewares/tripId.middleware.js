@@ -9,6 +9,7 @@ export const validateTripId = async (req, res, next) => {
     req.trip = trip;
     next();
   } catch (err) {
+    /* istanbul ignore next */
     return res.status(500).json({ message: 'internal server error' });
   }
 };

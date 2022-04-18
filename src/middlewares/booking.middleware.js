@@ -44,6 +44,7 @@ export const checkRegisterdUserId = async (req, res, next) => {
 
   const findBooking = await bookingService.listSingleBooking(bookingId, roomId);
   if (findBooking.user_id !== id && user.Role.name !== 'SUPER_ADMIN')
+    /* istanbul ignore next */
     return res
       .status(400)
       .json({ message: 'you are not allowed to delete this booking' });
@@ -74,15 +75,6 @@ export const requesterUpdateBooking = async (req, res, next) => {
     if (!booking) {
       return res.status(404).json({
         message: `no booking records found under your name`
-      });
-    } else {
-      const updatedBooking = await bookingService.updateBookingStatus(
-        { where: { id: booking.id, room_id: roomId } },
-        req.body
-      );
-      return res.status(200).json({
-        message: `booking info updated`,
-        updatedBooking
       });
     }
   }

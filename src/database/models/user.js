@@ -79,6 +79,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false
       },
+      email_notification: {
+        type: DataTypes.BOOLEAN,
+      },
+      in_app_notification: {
+        type: DataTypes.BOOLEAN,
+      },
       profile_picture: {
         type: DataTypes.TEXT,
         defaultValue:

@@ -5,6 +5,7 @@
 // will take n array of rates and a user id
 // return null or the rates array without that rate object if user have not rated or have rated
 export const findUserRate = (rates, user_id) => {
+  /* istanbul ignore next */
   if (!rates) return rates;
 
   const newRates = [...rates];
@@ -56,6 +57,7 @@ export const formatLikeOne = (accommodation) => {
 };
 
 export const formatLikeMany = (accommodations) => {
+  /* istanbul ignore next */
   if (!accommodations) return accommodations;
 
   const all = [...accommodations.rows];

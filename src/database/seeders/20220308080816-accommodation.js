@@ -14,7 +14,7 @@ module.exports = {
         ],
         imagesId: ['234567890ertyuio', '34567890-wertyui', '234567890wertyui'],
         services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        user_id: 1,
+        user_id: 2,
         amenities: [
           '2 star hotel with swimming pool and gym',
           'And yes we have the best cookies'
@@ -26,7 +26,7 @@ module.exports = {
         name: 'Serena Hotel',
         description:
           'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.',
-        location_id: 1,
+        location_id: 2,
         images: [
           'https://images.unsplash.com/photo-1559138803-bcdd7e9a2176?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=375&q=80',
           'https://images.unsplash.com/photo-1554995207-c18c203602cb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
@@ -53,7 +53,7 @@ module.exports = {
         ],
         imagesId: ['234567890ertyuio', '34567890-wertyui', '234567890wertyui'],
         services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        user_id: 3,
+        user_id: 9,
         amenities: [
           '5 star hotel with swimming pool and gym',
           'And yes we have the best cookies'
@@ -73,7 +73,7 @@ module.exports = {
         ],
         imagesId: ['234567890ertyuio', '34567890-wertyui', '234567890wertyui'],
         services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        user_id: 4,
+        user_id: 9,
         amenities: [
           '5 star hotel with swimming pool and gym',
           'And yes we have the best cookies'
@@ -93,7 +93,7 @@ module.exports = {
         ],
         imagesId: ['234567890ertyuio', '34567890-wertyui', '234567890wertyui'],
         services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
-        user_id: 5,
+        user_id: 9,
         amenities: [
           '5 star hotel with swimming pool and gym',
           'And yes we have the best cookies'

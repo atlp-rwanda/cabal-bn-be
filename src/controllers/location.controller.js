@@ -11,6 +11,13 @@ class locationController {
       const data = {
         ...req.body
       };
+
+      const nom = data.name.toLowerCase();
+      const county = data.country.toLowerCase();
+
+      data.name = nom;
+      data.country = county;
+
       const create = await locationService.createLocation(data);
       return res.status(201).json({ message: 'location Created', create });
     } catch (err) {

@@ -1270,16 +1270,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.23.tgz#3b41a6e643589ac6442bdbd7a4a3ded62f33f7da"
   integrity sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==
 
-"@types/node@>=10.0.0":
-  version "17.0.23"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.23.tgz#3b41a6e643589ac6442bdbd7a4a3ded62f33f7da"
-  integrity sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==
-
-"@types/node@>=10.0.0":
-  version "17.0.23"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.23.tgz#3b41a6e643589ac6442bdbd7a4a3ded62f33f7da"
-  integrity sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==
-
 "@types/superagent@^3.8.3":
   version "3.8.7"
   resolved "https://registry.yarnpkg.com/@types/superagent/-/superagent-3.8.7.tgz#1f1ed44634d5459b3a672eb7235a8e7cfd97704c"
@@ -4576,7 +4566,7 @@ moment-timezone@^0.5.34:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.29.1, moment@^2.29.2:
+"moment@>= 2.9.0", moment@^2.29.1:
   version "2.29.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
   integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
@@ -5601,7 +5591,7 @@ redis-parser@3.0.0:
   dependencies:
     redis-errors "^1.0.0"
 
-redis@^4.0.6:
+redis@^4.0.4:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/redis/-/redis-4.0.6.tgz#a2ded4d9f4f4bad148e54781051618fc684cd858"
   integrity sha512-IaPAxgF5dV0jx+A9l6yd6R9/PAChZIoAskDVRzUODeLDNhsMlq7OLLTmu0AwAr0xjrJ1bibW5xdpRwqIQ8Q0Xg==

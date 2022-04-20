@@ -1,0 +1,10 @@
+import express from 'express';
+import { checkLoggedInUser } from '../../middlewares/role.middleware';
+import NotificationController from '../../controllers/notification.controller';
+import { checkNotificationUserExist, checkNotificationUserExistone, checkallNotificationUserExist } from '../../middlewares/notification.middleware';
+const routes = express.Router();
+routes.get('/', checkLoggedInUser, checkallNotificationUserExist, NotificationController.allnotification);
+routes.patch('/', checkLoggedInUser, checkNotificationUserExist, NotificationController.markAllnotification);
+routes.patch('/:id', checkLoggedInUser, checkNotificationUserExistone, NotificationController.ReadOne);
+
+export default routes;

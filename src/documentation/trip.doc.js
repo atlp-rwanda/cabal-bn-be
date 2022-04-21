@@ -58,7 +58,7 @@ export const trip = {
               type: 'string'
             },
 
-            arrivalLocations: {
+            arrival_location: {
               type: 'array',
               items: {
                 name: 'trip',
@@ -115,7 +115,7 @@ export const trip = {
               type: 'string'
             },
 
-            arrivalLocations: {
+            arrival_location: {
               type: 'array',
               items: {
                 name: 'trip',

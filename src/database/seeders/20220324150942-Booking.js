@@ -51,16 +51,7 @@ module.exports = {
         checkinDate: new Date('2022-03-25').toISOString(),
         checkoutDate: new Date('2022-03-26').toISOString(),
         status: 'PENDING',
-        room_id: 4,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        user_id: 4,
-        checkinDate: new Date('2022-03-25').toISOString(),
-        checkoutDate: new Date('2022-03-26').toISOString(),
-        status: 'PENDING',
-        room_id: 4,
+        room_id: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       },

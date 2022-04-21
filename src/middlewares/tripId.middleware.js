@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/prefer-default-export */
 import tripService from '../services/trip.service';
 

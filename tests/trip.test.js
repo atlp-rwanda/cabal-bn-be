@@ -6,8 +6,7 @@ import tripService from '../src/services/trip.service';
 import {
   tripRequest,
   checkValidation,
-  multiCityTripRequest,
-  multiCityTripRequestAcc
+  multiCityTripRequest
 } from './dammyData';
 import 'dotenv/config';
 
@@ -200,7 +199,7 @@ describe('TRIP END-POINT TESTING', () => {
   });
 
   it('Should not retrieve all user Trips if error occured', async () => {
-    const findAllTrips = stub(tripService, 'findAllTrips').rejects(
+    const findSpecificTrip = stub(tripService, 'findSpecificTrip').rejects(
       new Error('Database failed')
     );
 
@@ -209,9 +208,9 @@ describe('TRIP END-POINT TESTING', () => {
       .get('/api/v1/trips')
       .set('Authorization', `Bearer ${reqToken}`)
       .send(tripRequest);
-    assert.calledOnce(findAllTrips);
+    assert.calledOnce(findSpecificTrip);
     expect(res).to.have.status(500);
-    findAllTrips.restore();
+    findSpecificTrip.restore();
   });
 
   it('Should not retrieve all user Trips with pending status While not logged in   ', (done) => {
@@ -244,7 +243,7 @@ describe('TRIP END-POINT TESTING', () => {
   });
 
   it(' should not retrieve all Trip requests owned while logged in as manager if the service returned an error', async () => {
-    const findAllTrips = stub(tripService, 'findAllTrips').rejects(
+    const findSpecificTrip = stub(tripService, 'findSpecificTrip').rejects(
       new Error('Database failed')
     );
 
@@ -252,9 +251,9 @@ describe('TRIP END-POINT TESTING', () => {
       .request(app)
       .get('/api/v1/trips')
       .set('Authorization', `Bearer ${manToken}`);
-    assert.calledOnce(findAllTrips);
+    assert.calledOnce(findSpecificTrip);
     expect(res).to.have.status(500);
-    findAllTrips.restore();
+    findSpecificTrip.restore();
   });
   it(' should retrieve all Trip requests owned while logged in as super_admin', async () => {
     const res = await chai
@@ -408,40 +407,22 @@ describe('TRIP END-POINT TESTING', () => {
       });
   });
 
-  it('Should  not create the a multi city trip  Request while logged as Requester and have same accommodation Id in arrival locations', async () => {
-    const res = await chai
-      .request(app)
-      .post('/api/v1/trips')
-      .set('Authorization', `Bearer ${reqToken}`)
-      .send(multiCityTripRequest);
-    expect(res).to.have.status([400]);
-  });
-
   it('Should create the a multi city trip  Request while logged as Requester', async () => {
     const res = await chai
       .request(app)
       .post('/api/v1/trips')
       .set('Authorization', `Bearer ${reqToken}`)
-      .send(multiCityTripRequestAcc);
+      .send(multiCityTripRequest);
     expect(res).to.have.status([201]);
   });
 
-  it('Should  not Update Trip request which has pending status while logged in user to multi city or vice versal with same accommodation id', async () => {
+  it('Should  Update Trip request which has pending status while logged in user to multi city or vice versal ', async () => {
     const res = await chai
       .request(app)
       .put(`/api/v1/trips/2`)
       .set('Authorization', `Bearer ${reqToken}`)
       .send(multiCityTripRequest);
 
-    expect(res).to.have.status([400]);
-  });
-
-  it('Should Update Trip request which has pending status while logged in user to multi city or vice versal ', async () => {
-    const res = await chai
-      .request(app)
-      .put(`/api/v1/trips/2`)
-      .set('Authorization', `Bearer ${reqToken}`)
-      .send(multiCityTripRequestAcc);
     expect(res).to.have.status([200]);
   });
 

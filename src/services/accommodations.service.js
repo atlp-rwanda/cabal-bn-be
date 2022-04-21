@@ -25,10 +25,7 @@ class accommodationService {
       offset,
       limit,
       order: order || [['id', 'ASC']],
-      include: [
-        { model: Room, as: 'Rooms' },
-        { model: Like, attributes: ['user_id', 'like'] }
-      ]
+      include: [{ model: Like, attributes: ['user_id', 'like'] }]
     });
     return formatLikeMany(foundAccommodations);
   }
@@ -44,11 +41,10 @@ class accommodationService {
   }
 
   static async updateSpecificAccommodation({ where, id }, dataUpdate) {
-    /* istanbul ignore next */
     const updateAccommodaton = await Accommodation.update(dataUpdate, {
       where: id ? { id } : where,
-      returning: true,
-      raw: true
+      returning: true
+      // raw: true
     });
     return updateAccommodaton;
   }
@@ -128,5 +124,4 @@ class accommodationService {
     return formatAvgRates(accommodation);
   }
 }
-
 export default accommodationService;

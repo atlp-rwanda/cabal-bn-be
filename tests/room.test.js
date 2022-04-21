@@ -44,14 +44,13 @@ describe('ROOM ENDPOINTS TEST', () => {
     const res = await request(app)
       .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
       .set('Authorization', data.token)
-      .field('price', '')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '23456',
+        details: 'breakfast and shower',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     expect(res.status).to.be.equal(403);
   });
 
@@ -68,14 +67,13 @@ describe('ROOM ENDPOINTS TEST', () => {
     const res = await request(app)
       .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
       .set('Authorization', data.token)
-      .field('price', '')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '',
+        details: 'breakfast',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     expect(res.status).to.be.equal(400);
   });
 
@@ -92,14 +90,13 @@ describe('ROOM ENDPOINTS TEST', () => {
     const res = await request(app)
       .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
       .set('Authorization', data.token)
-      .field('price', '1234')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '23456',
+        details: 'breakfast',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     expect(res.status).to.be.equal(200);
   });
 
@@ -188,14 +185,13 @@ describe('ROOM ENDPOINTS TEST', () => {
     const res = await request(app)
       .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
       .set('Authorization', data.token)
-      .field('price', '1234')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '23456',
+        details: 'breakfast',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     expect(res.status).to.be.equal(403);
   });
 
@@ -207,34 +203,18 @@ describe('ROOM ENDPOINTS TEST', () => {
     const data = {
       token: `Bearer ${logIn.body.token}`
     };
-    const res1 = await chai
-      .request(app)
-      .post('/api/v1/accommodations')
-      .set('authorization', data.token)
-      .field('name', 'Mariot Hotel')
-      .field(
-        'description',
-        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .'
-      )
-      .field('location_id', 22)
-      .field('services', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .field('amenities', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+    const accommodation = await createAccommodation(accommodatonData);
+    accommodation.save();
     const res = await request(app)
-      .post(`/api/v1/accommodations/${res1.body.data.id}/rooms`)
+      .post(`/api/v1/accommodations/${accommodation.dataValues.id}/rooms`)
       .set('Authorization', data.token)
-      .field('price', '')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '',
+        details: 'breakfast',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     expect(res.status).to.be.equal(400);
   });
 
@@ -250,43 +230,40 @@ describe('ROOM ENDPOINTS TEST', () => {
       .request(app)
       .post('/api/v1/accommodations')
       .set('authorization', data.token)
-      .field('name', 'Mariot Hotel')
-      .field(
-        'description',
-        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .'
-      )
-      .field('location_id', 21)
-      .field('services', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .field('amenities', ['restaurant', 'breakfast', 'gym', 'swimming pool'])
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        name: 'Marriot Hotel II',
+        description:
+          'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying .',
+        location_id: 15,
+        services: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
+        amenities: ['restaurant', 'breakfast', 'gym', 'swimming pool'],
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ],
+        imagesId: ['456780rty']
+      });
     const res2 = await request(app)
       .post(`/api/v1/accommodations/${res1.body.data.id}/rooms`)
       .set('Authorization', data.token)
-      .field('price', '123456')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '23456',
+        details: 'breakfast',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     const res = await request(app)
       .put(
         `/api/v1/accommodations/${res1.body.data.id}/rooms/${res2.body.room.id}`
       )
       .set('Authorization', data.token)
-      .field('price', '43212343')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '23456',
+        details: 'gym tonic',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     expect(res.status).to.be.equal(200);
   });
 
@@ -352,14 +329,13 @@ describe('ROOM ENDPOINTS TEST', () => {
     const res = await request(app)
       .post(`/api/v1/accommodations/2345/room`)
       .set('Authorization', data.token)
-      .field('price', '234433')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '23456',
+        details: 'gym tonic',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     expect(res.status).to.be.equal(404);
   });
 
@@ -374,14 +350,13 @@ describe('ROOM ENDPOINTS TEST', () => {
     const res = await request(app)
       .post(`/api/v1/accommodations/5/rooms`)
       .set('Authorization', data.token)
-      .field('price', '')
-      .field('details', 'break fast')
-      .field('accommodation_id', 1)
-      .attach(
-        'images',
-        path.join(__dirname, 'weatherApp.PNG'),
-        'weatherApp.png'
-      );
+      .send({
+        price: '',
+        details: 'gym tonic',
+        images: [
+          'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGhvdGVsfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        ]
+      });
     expect(res.status).to.be.equal(400);
   });
   it('should not find a route', async () => {

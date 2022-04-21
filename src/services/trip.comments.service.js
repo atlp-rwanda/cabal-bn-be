@@ -7,8 +7,8 @@ class tripCommentsServices {
     return await tripComments.create(data);
   }
 
-  static async findTripComments(tripId) {
-    return await tripComments.findAll({ where: { trip_id: tripId } });
+  static async findTripComments() {
+    return await tripComments.findAll();
   }
 
   static async findSpecificComment(commentId) {

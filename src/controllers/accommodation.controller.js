@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable camelcase */
 /* eslint-disable eqeqeq */
 /* eslint-disable array-callback-return */
@@ -23,19 +22,18 @@ class accommodationController {
       /* istanbul ignore next */
       const condition = name
         ? {
-            name: {
-              [Op.like]: `%${name}%`
-            }
+          name: {
+            [Op.like]: `%${name}%`
           }
+        }
         : null;
       const searchAccommodation =
         await accommodationService.findAllAccommodations({ where: condition });
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < searchAccommodation.rows.length - 1; i++) {
-        /* istanbul ignore next */
         if (
           searchAccommodation.rows[i].location_id ==
-            req.accommodations.value.location_id &&
+          req.accommodations.value.location_id &&
           searchAccommodation.rows[i].name == req.accommodations.value.name
         ) {
           return res.status(400).json({
@@ -56,7 +54,6 @@ class accommodationController {
         data: accommodationCreated
       });
     } catch (err) {
-      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error', err });
     }
   }
@@ -71,10 +68,10 @@ class accommodationController {
       /* istanbul ignore next */
       const condition = name
         ? {
-            name: {
-              [Op.like]: `%${name}%`
-            }
+          name: {
+            [Op.like]: `%${name}%`
           }
+        }
         : null;
       const foundAccommodations =
         await accommodationService.findAllAccommodations({
@@ -92,7 +89,6 @@ class accommodationController {
         data: response
       });
     } catch (err) {
-      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error', err });
     }
   }
@@ -126,7 +122,6 @@ class accommodationController {
         .status(200)
         .json({ message: 'Accommodation Updated', updatedAccommodation });
     } catch (err) {
-      /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error', err });
     }
   }
@@ -150,27 +145,18 @@ class accommodationController {
         req.user.id,
         req.params.accommodationId
       );
-      const user = await new UserService().getUserId(req.user.id);
-      const accommodation =
-        await accommodationService.findSpecificAccommodation(
-          req.params.accommodationId
-        );
-      const travel_admin = await new UserService().getUserId(
-        accommodation.user_id
-      );
+      const user = await new UserService().getUserId(req.user.id)
+      const accommodation = await accommodationService.findSpecificAccommodation(req.params.accommodationId);
+      const travel_admin = await new UserService().getUserId(accommodation.user_id)
       if (like.like == true) {
         const notify = await Notification.createNotification({
           details: `${user.first_name} ${user.last_name} has liked your accommodation`,
-          type: 'like',
+          type: "like",
           from_user_id: user.id,
           to_user_id: travel_admin.id
-        });
-        /* istanbul ignore next */
+        })
         if (travel_admin.in_app_notification == true) {
-          eventEmitter.emit('appNotification', {
-            recipient: travel_admin,
-            notify
-          });
+          eventEmitter.emit("appNotification", { recipient: travel_admin, notify })
         }
       }
       return res.status(200).json({
@@ -220,26 +206,17 @@ class accommodationController {
         user_id,
         comment
       );
-      const user = await new UserService().getUserId(req.user.id);
-      const accommodation =
-        await accommodationService.findSpecificAccommodation(
-          req.params.accommodationId
-        );
-      const travel_admin = await new UserService().getUserId(
-        accommodation.user_id
-      );
+      const user = await new UserService().getUserId(req.user.id)
+      const accommodation = await accommodationService.findSpecificAccommodation(req.params.accommodationId);
+      const travel_admin = await new UserService().getUserId(accommodation.user_id)
       const notify = await Notification.createNotification({
         details: `${user.first_name} ${user.last_name} has commented on your accommodation`,
-        type: 'like',
+        type: "like",
         from_user_id: user.id,
         to_user_id: travel_admin.id
-      });
-      /* istanbul ignore next */
+      })
       if (travel_admin.in_app_notification == true) {
-        eventEmitter.emit('appNotification', {
-          recipient: travel_admin,
-          notify
-        });
+        eventEmitter.emit("appNotification", { recipient: travel_admin, notify })
       }
 
       return res.status(201).json({
@@ -304,22 +281,16 @@ class accommodationController {
         user_id,
         rate
       );
-      const user = await new new UserService().getUserId(user_id);
-      const travel_admin = await new UserService().getUserId(
-        accommodation.user_id
-      );
+      const user = await new new UserService().getUserId(user_id)
+      const travel_admin = await new UserService().getUserId(accommodation.user_id)
       const notify = await Notification.createNotification({
         details: `${user.first_name} ${user.last_name} has rated your accommodation`,
-        type: 'rating',
+        type: "rating",
         from_user_id: user.id,
         to_user_id: travel_admin.id
-      });
-      /* istanbul ignore next */
+      })
       if (travel_admin.in_app_notification == true) {
-        eventEmitter.emit('appNotification', {
-          recipient: travel_admin,
-          notify
-        });
+        eventEmitter.emit("appNotification", { recipient: travel_admin, notify })
       }
 
       return res.status(200).json({

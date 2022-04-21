@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 export const tripRequest = {
   depart_location_id: 2,
-  arrivalLocations: [
+  arrival_location: [
     {
       accommodation_id: 1,
       days: 2
@@ -90,31 +90,13 @@ export const accommodationInternalServer = {
 };
 
 export const multiCityTripRequest = {
-  arrivalLocations: [
+  arrival_location: [
     {
       accommodation_id: 1,
       days: 3
     },
     {
       accommodation_id: 1,
-      days: 3
-    }
-  ],
-  depart_location_id: 2,
-
-  tripDate: '2022-10-12',
-  returnDate: '2023-12-10',
-  reason: 'Tourism'
-};
-
-export const multiCityTripRequestAcc = {
-  arrivalLocations: [
-    {
-      accommodation_id: 1,
-      days: 3
-    },
-    {
-      accommodation_id: 2,
       days: 3
     }
   ],

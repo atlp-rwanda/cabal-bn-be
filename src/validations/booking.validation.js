@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 import Joi from 'joi';
 
 export default async function bookingValidation(req, res, next) {

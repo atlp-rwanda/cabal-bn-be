@@ -10,8 +10,7 @@ class roomController {
       const accommodationId = req.accommodation.dataValues.id;
       const data = {
         ...req.rooms.value,
-        accommodation_id: accommodationId,
-        user_id: req.user.id
+        accommodation_id: accommodationId
       };
 
       const room = await roomService.createRoom(data);
@@ -57,7 +56,7 @@ class roomController {
     }
   }
 
-  static async updateRoom(req, res) {
+  static async updateRoom(req, res, next) {
     try {
       const accommodationExists = req.accommodation.dataValues;
       const accommodationId = accommodationExists.id;

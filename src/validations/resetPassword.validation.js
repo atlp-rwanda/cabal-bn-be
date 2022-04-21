@@ -6,8 +6,8 @@ export const EmailValidation = async (req, res, next) => {
       email: joi.string().email().required()
     })
     .validate(req.body);
-    /* istanbul ignore next */
   if (value.error) {
+    /* istanbul ignore next */
     res.json({
       error: 1,
       message: value.error.details[0].message

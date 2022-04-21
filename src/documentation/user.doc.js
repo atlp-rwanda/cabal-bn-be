@@ -1,3 +1,4 @@
+import { string } from 'joi';
 import responses from './response';
 
 export const user = {
@@ -57,22 +58,6 @@ export const user = {
       responses
     }
   },
-  '/users/google/login': {
-    get: {
-      tags: ['User'],
-      summary: 'login with google',
-      description: 'user login route',
-      responses
-    }
-  },
-  '/users/facebook/login': {
-    get: {
-      tags: ['User'],
-      summary: 'login with facebook',
-      description: 'user login route',
-      responses
-    }
-  },
   '/users/logout': {
     post: {
       tags: ['User'],
@@ -96,89 +81,89 @@ export const user = {
       description: 'user update their profile',
       parameters: [
         {
-          in: 'header',
-          name: 'Authorization',
-          required: true,
-          description: 'Authorization'
+          "in": "header",
+          "name": "Authorization",
+          "required": true,
+          "description": "Authorization"
         },
         {
           name: 'first_name',
           in: 'formData',
           description: 'first name',
-          type: 'string'
+          type: "string"
         },
         {
-          name: 'last_name',
-          in: 'formData',
-          description: 'last name',
-          type: 'string'
+          name: "last_name",
+          in: "formData",
+          description: "last name",
+          type: "string"
         },
         {
-          name: 'age',
-          in: 'formData',
-          description: 'user age',
-          type: 'integer'
+          name: "age",
+          in: "formData",
+          description: "user age",
+          type: "integer"
         },
         {
-          name: 'occupation',
-          description: 'user occupation',
-          in: 'formData',
-          type: 'string'
+          name: "occupation",
+          description: "user occupation",
+          in: "formData",
+          type: "string"
         },
         {
-          name: 'language',
-          in: 'formData',
-          description: 'user language',
-          type: 'string'
+          name: "language",
+          in: "formData",
+          description: "user language",
+          type: "string"
         },
         {
-          name: 'nationality',
-          in: 'formData',
-          description: 'user nationality',
-          type: 'string'
+          name: "nationality",
+          in: "formData",
+          description: "user nationality",
+          type: "string"
         },
         {
-          name: 'bio',
-          in: 'formData',
-          description: 'description about the user',
-          type: 'string'
+          name: "bio",
+          in: "formData",
+          description: "description about the user",
+          type: "string"
         },
         {
-          name: 'gender',
-          in: 'formData',
-          description: 'user gender',
-          type: 'string'
+          name: "gender",
+          in: "formData",
+          description: "user gender",
+          type: "string"
         },
         {
-          name: 'profile_picture',
-          in: 'formData',
-          description: 'last name',
-          type: 'file'
+          name: "profile_picture",
+          in: "formData",
+          description: "last name",
+          type: "file"
         },
         {
-          name: 'date_of_birth',
-          in: 'formData',
-          description: 'date of birth',
-          type: 'string',
-          format: 'date-time'
+          name: "date_of_birth",
+          in: "formData",
+          description: "date of birth",
+          type: "string",
+          format: "date-time"
         },
         {
-          name: 'location_id',
-          in: 'formData',
-          description: 'location_id',
-          type: 'integer'
+          name: "location_id",
+          in: "formData",
+          description: "location_id",
+          type: "integer"
         },
         {
-          name: 'in_app_notification',
-          in: 'formData',
-          description: 'in app notification',
-          type: 'boolean'
+          name: "in_app_notification",
+          in: "formData",
+          description: "in app notification",
+          type: "boolean"
         },
         {
-          name: 'email_notification',
-          in: 'formData',
-          description: 'email notification',
-          type: 'boolean'
+          name: "email_notification",
+          in: "formData",
+          description: "email notification",
+          type: "boolean"
         }
       ],
       responses
@@ -207,9 +192,10 @@ export const userDefinitions = {
         required: true
       },
       location_id: {
-        type: 'integer',
+        type: "integer",
         required: true
-      }
+      },
+
     }
   },
 
@@ -225,5 +211,5 @@ export const userDefinitions = {
         required: true
       }
     }
-  }
+  },
 };

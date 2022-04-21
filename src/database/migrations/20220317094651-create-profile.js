@@ -1,3 +1,4 @@
+'use strict';
 module.exports = {
   async up(queryInterface, DataTypes) {
     await queryInterface.createTable('Profiles', {

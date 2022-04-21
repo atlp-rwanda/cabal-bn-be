@@ -1,8 +1,10 @@
-/* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-await-in-loop */
 
 import locationService from '../services/location.service';
+import { Location, Accommodation, User } from '../database/models';
+import UserService from '../services/user.service';
+
 /* eslint-disable import/prefer-default-export */
 export const validateLocationFields = async (req, res, next) => {
   const id = req.body.depart_location_id;
@@ -19,7 +21,6 @@ export const validateLocationFields = async (req, res, next) => {
 export const validateLocationId = async (req, res, next) => {
   try {
     const { location_id } = req.body;
-    /* istanbul ignore next */
     if (location_id) {
       const location = await locationService.findLocation(location_id);
       if (!location) {
@@ -28,8 +29,6 @@ export const validateLocationId = async (req, res, next) => {
 
       return next();
     }
-    /* istanbul ignore next */
-    return next();
   } catch (error) {
     /* istanbul ignore next */
 

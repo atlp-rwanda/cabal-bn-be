@@ -1,39 +1,35 @@
 module.exports = {
-  async up(queryInterface, DataTypes) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Rooms', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER
+        type: Sequelize.INTEGER
       },
       price: {
-        type: DataTypes.STRING
+        type: Sequelize.STRING
       },
       images: {
-        type: DataTypes.ARRAY(DataTypes.STRING)
-      },
-      imagesId: {
-        type: DataTypes.ARRAY(DataTypes.STRING)
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       details: {
-        type: DataTypes.STRING
+        type: Sequelize.STRING
       },
       isBooked: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         defaultValue: false
       },
       accommodation_id: {
-        type: DataTypes.INTEGER
+        type: Sequelize.INTEGER
       },
-      user_id: DataTypes.INTEGER,
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: Sequelize.DATE
       }
     });
   },

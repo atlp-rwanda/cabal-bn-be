@@ -1,6 +1,6 @@
 /* eslint-disable no-return-await */
 /* eslint-disable require-jsdoc */
-import { Location, Accommodation } from '../database/models';
+import { Location, Accommodation, User } from '../database/models';
 
 class locationService {
   static async createLocation(location) {
@@ -27,11 +27,9 @@ class locationService {
 
   /* istanbul ignore next */
   static async findAndUpdateLocation({ where, id }, locData) {
-    /* istanbul ignore next */
     const updateLoc = await Location.update(locData, {
       where: id ? { id } : where
     });
-    /* istanbul ignore next */
     return updateLoc;
   }
 

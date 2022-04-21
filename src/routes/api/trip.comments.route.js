@@ -12,9 +12,7 @@ tripCommentRoute.post(
   tripCommentValidation,
   tripCommentController.createComment
 );
-
 tripCommentRoute.get('/', tripCommentController.findAllComments);
-
 tripCommentRoute.patch(
   '/:commentId',
   checkLoggedInUser,
@@ -22,12 +20,10 @@ tripCommentRoute.patch(
   tripCommentValidation,
   tripCommentController.editedComment
 );
-
 tripCommentRoute.delete(
   '/:commentId',
   checkLoggedInUser,
   validateCommentId,
   tripCommentController.removeComment
 );
-
 export default tripCommentRoute;

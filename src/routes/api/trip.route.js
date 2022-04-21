@@ -11,7 +11,8 @@ import {
   checkTripIdExist,
   checkManagerId,
   checkDuration,
-  checkManager
+  checkManager,
+  updateTripLocation
 } from '../../middlewares/trip.middleware';
 import { validateLocationFields } from '../../middlewares/location.middleware';
 
@@ -45,15 +46,16 @@ tripRoutes.post(
   checkDuration,
   tripContoller.createTrip
 );
-
 tripRoutes.put(
   '/:id',
   checkLoggedInUser,
   roles('REQUESTER', 'SUPER_ADMIN'),
   tripValidation,
   checkTripDates,
+
   checkTripExistStatus('PENDING'),
   validateLocationFields,
+
   checkLocationAccommodation,
   checkDuration,
   tripContoller.userUpdateTrip

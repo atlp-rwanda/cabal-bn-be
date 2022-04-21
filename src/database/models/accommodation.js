@@ -22,17 +22,15 @@ module.exports = (sequelize, DataTypes) => {
       Accommodation.hasMany(models.Room, {
         foreignKey: 'accommodation_id',
         as: 'Rooms',
-        onDelete: 'CASCADE'
+        onDelete: 'cascade'
       });
       this.hasMany(models.Trip, {
-        foreignKey: 'accommodation_id',
-        onDelete:'CASCADE'
+        foreignKey: 'accommodation_id'
       });
       this.hasMany(models.Like, { foreignKey: 'accommodation_id' });
       this.hasMany(models.AccommodationComment, {
         foreignKey: 'accommodation_id'
       });
-      this.hasMany(models.arrivalLocation,{foreignKey:'accommodation_id'})
     }
   }
   Accommodation.init(

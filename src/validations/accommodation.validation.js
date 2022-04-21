@@ -1,13 +1,12 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-await-in-loop */
 /* eslint-disable curly */
 import Joi from 'joi';
-import cloudinary from '../config/cloudinary';
 
 const accommodationValidation = async (req, res, next) => {
   try {
     const services = [];
     const amenities = [];
-    const urls = [];
-    const imageId = [];
     if (!Array.isArray(req.body.services)) {
       services.push(req.body.services);
       req.body.services = services;
@@ -16,24 +15,10 @@ const accommodationValidation = async (req, res, next) => {
       amenities.push(req.body.amenities);
       req.body.amenities = amenities;
     }
-    /* istanbul ignore next */
-    if (Array.isArray(req.files)) {
-      let file
-      for (let i = 0; i < req.files.length; i++) {
-        file = await cloudinary.uploader.upload(req.files[i].path)
-        urls.push(file.url);
-        imageId.push(file.public_id);
-      }
-      /* istanbul ignore next */
-      if (!file) return res.status(400).json({ message: 'not able to upload' });
-
-      req.body.images = urls;
-      req.body.imagesId = imageId;
-    }
     const accommodationValidationSchema = Joi.object({
       name: Joi.string().required().min(3),
       description: Joi.string().required().min(5),
-      images: Joi.array(),
+      images: Joi.array().items(Joi.string()).required(),
       imagesId: Joi.array(),
       location_id: Joi.number().required().min(1),
       services: Joi.array().items(Joi.string()).min(0).required(),
@@ -41,6 +26,7 @@ const accommodationValidation = async (req, res, next) => {
       user_id: Joi.number()
     });
     const results = accommodationValidationSchema.validate(req.body);
+    /* istanbul ignore next */
     if (results.error)
       return res.status(400).json({
         message: results.error.details[0].message.replace(/["'`]+/g, '')

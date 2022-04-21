@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-plusplus */
 import express from 'express';
 import passport from '../../middlewares/passport.middleware';
@@ -22,7 +23,6 @@ import {
 import upload from '../../helpers/multer';
 import profileValidation from '../../validations/profile.validation';
 import { validateLocationId } from '../../middlewares/location.middleware';
-// import locationValidation from '../../validations/location.validation';
 import registerValidation from '../../validations/register.validation';
 import { updateProfilePicture } from '../../middlewares/imageUpload.middleware';
 
@@ -92,11 +92,13 @@ routes.get(
     await new RoleController().getRoles(req, res);
   }
 );
+
 routes.patch(
   '/reset-password/:token',
   PasswordValidation,
   UserController.reset
 );
+
 routes.post('/forgot-password', EmailValidation, UserController.forgot);
 
 routes.post('/logout', checkLoggedInUser, async (req, res) => {
@@ -120,4 +122,5 @@ routes.put(
   roles('SUPER_ADMIN'),
   UserController.assignUserToManager
 );
+
 export default routes;

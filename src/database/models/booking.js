@@ -1,17 +1,11 @@
-/* eslint-disable import/newline-after-import */
-/* eslint-disable valid-jsdoc */
 /* eslint-disable require-jsdoc */
-'use strict';
+
 const { Model } = require('sequelize');
 const { bookingStatus } = require('../../utils/booking.utils');
+
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate({ User, Room, Accommodation }) {
+    static associate({ User, Room }) {
       this.belongsTo(User, {
         foreignKey: 'user_id',
         as: 'user'
@@ -19,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Room, { foreignKey: 'room_id', as: 'Rooms' });
     }
   }
+
   Booking.init(
     {
       checkinDate: DataTypes.DATE,
@@ -31,8 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Booking'
+      modelName: 'Booking',
+      tableName: 'Bookings'
     }
   );
+
   return Booking;
 };

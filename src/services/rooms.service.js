@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import { Room, Accommodation } from '../database/models';
+import { Room, Booking, Accommodation } from '../database/models';
 
 class roomService {
   static async createRoom(room) {
@@ -12,19 +12,57 @@ class roomService {
       where,
       offset,
       limit,
-      order: order || [['createdAt', 'DESC']]
+      order: order || [['createdAt', 'DESC']],
+      include: [
+        {
+          model: Booking,
+          as: 'Bookings',
+          attributes: [
+            'id',
+            'user_id',
+            'status',
+            'checkinDate',
+            'checkoutDate',
+            'room_id'
+          ]
+        },
+        {
+          model: Accommodation,
+          as: 'Accommodations',
+          attributes: ['id', 'name', 'user_id']
+        }
+      ]
     });
     return rooms;
   }
 
   static async findARoom(id) {
     const findRoom = await Room.findByPk(id, {
-      include: [{ model: Accommodation, as: 'Accommodations' }]
+      include: [
+        {
+          model: Booking,
+          as: 'Bookings',
+          attributes: [
+            'id',
+            'user_id',
+            'status',
+            'checkinDate',
+            'checkoutDate',
+            'room_id'
+          ]
+        },
+        {
+          model: Accommodation,
+          as: 'Accommodations',
+          attributes: ['id', 'name', 'user_id']
+        }
+      ]
     });
     return findRoom;
   }
 
   static async findAndUpdateRoom({ where, id }, roomUpdate) {
+    /* istanbul ignore next */
     const updateRoom = await Room.update(roomUpdate, {
       where: id ? { id } : where,
       returning: true,

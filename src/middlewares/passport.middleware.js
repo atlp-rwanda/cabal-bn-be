@@ -25,6 +25,7 @@ passport.use(
       passReqToCallback: true,
       scope: 'https://www.googleapis.com/auth/user.addresses.read'
     },
+    /* istanbul ignore next */
     // eslint-disable-next-line no-unused-vars
     /* istanbul ignore next */
     async (req, accessToken, refreshToken, profile, done) => done(null, profile)
@@ -40,6 +41,7 @@ passport.use(
       passReqToCallback: true,
       profileFields: ['id', 'emails', 'name', 'photos']
     },
+    /* istanbul ignore next */
     // eslint-disable-next-line no-unused-vars
     /* istanbul ignore next */
     async (req, accessToken, refreshToken, profile, done) => done(null, profile)

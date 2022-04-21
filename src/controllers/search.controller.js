@@ -1,24 +1,27 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-plusplus */
+/* eslint-disable guard-for-in */
+/* eslint-disable curly */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable no-shadow */
-/* eslint-disable guard-for-in */
-/* eslint-disable class-methods-use-this */
+/* eslint-disable max-classes-per-file */
 /* eslint-disable require-jsdoc */
+import { Op, Sequelize } from 'sequelize';
 import searchServices from '../services/search.service';
 import { Trip, User, Location } from '../database/models';
-import { Op, Sequelize } from 'sequelize';
 
 class searchController {
   async singleSearch(req, res) {
     try {
       const trips = [];
-      function TripObj(id, acc) {
+      /* istanbul ignore next */
+      class TripObj {
         /* istanbul ignore next */
-
-        this.id = id;
-        this.accommodation = acc;
+        constructor(id, acc) {
+          this.id = id;
+          this.accommodation = acc;
+        }
       }
-      // ///// finding trips and looping into them to get accommodations
 
       const dat = await Trip.findAll({
         where: {
@@ -33,7 +36,7 @@ class searchController {
       let data;
 
       const keys = Object.keys(req.query);
-
+      /* istanbul ignore next */
       if (keys.length === 0) {
         data = await searchServices.noQuery(req.user);
         if (data.length < 1)

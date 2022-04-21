@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-return-assign */
+/* eslint-disable curly */
 /* eslint-disable import/order */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-return-await */
@@ -5,106 +8,35 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable object-shorthand */
 /* eslint-disable require-jsdoc */
-import { Op } from 'sequelize';
-import { Trip, User, Location, Role, Accommodation } from '../database/models';
+import { Trip, Accommodation, arrivalLocation } from '../database/models';
 
 class tripService {
-  // static async findSpecificTrip(userId, limit, offset) {
-  //   let foundOneTrip;
-
-  //   const userRole = await Role.findOne({ where: { id: userId } });
-  //   const includes = [
-  //     {
-  //       model: User,
-  //       as: 'user',
-  //       attributes: [
-  //         'id',
-  //         'first_name',
-  //         'last_name',
-  //         'email',
-  //         'provider',
-  //         'manager_id'
-  //       ]
-  //     },
-  //     {
-  //       model: Location,
-  //       as: 'location',
-  //       attributes: ['id', 'name', 'latitude', 'longitude', 'country']
-  //     },
-  //     {
-  //       model: Location,
-  //       as: 'depart_location',
-  //       attributes: ['id', 'name', 'latitude', 'longitude', 'country']
-  //     },
-  //     {
-  //       model: Accommodation,
-  //       attributes: ['id', 'name', 'services', 'amenities', 'imagesId']
-  //     }
-  //   ];
-
-  //   if (userRole.name === 'SUPER_ADMIN') {
-  //     foundOneTrip = await Trip.findAndCountAll({
-  //       limit,
-  //       offset,
-  //       include: includes
-  //     });
-  //   } else {
-  //     foundOneTrip = await Trip.findAndCountAll({
-  //       where: { user_id: userId },
-  //       limit,
-  //       offset,
-  //       include: includes
-  //     });
-  //   }
-
-  //   return foundOneTrip;
-  // }
-  static async findSpecificTrip(userId, limit, offset, roleName) {
-    let foundOneTrip;
-    const includes = [{
-      model: User,
-      as: roleName === 'MANAGER' ? 'manager' : 'user',
-      attributes: [
-        'id',
-        'first_name',
-        'last_name',
-        'email',
-        'provider',
-        'manager_id'
-      ]
-    },
-    {
-      model: Location,
-      as: 'depart_location',
-      attributes: ['id', 'name', 'latitude', 'longitude', 'country']
-    },
-    {
-      model: Accommodation,
-      attributes: ['id', 'name', 'services', 'amenities', 'imagesId']
-    }
+  static async findAllTrips(user, limit, offset) {
+    const includes = [
+      {
+        model: arrivalLocation,
+        attributes: ['id', 'accommodation_id', 'days'],
+        include: [
+          {
+            model: Accommodation,
+            attributes: ['id', 'name', 'services', 'amenities', 'imagesId'],
+            as: 'Accommodation'
+          }
+        ]
+      }
     ];
-    if (roleName === 'MANAGER') {
-      foundOneTrip = await Trip.findAndCountAll({
-        where: { manager_id: userId },
+    if (user.Role.name === 'SUPER_ADMIN')
+      return await Trip.findAndCountAll({
         limit,
         offset,
         include: includes
       });
-    } else if (roleName === 'REQUESTER') {
-      foundOneTrip = await Trip.findAndCountAll({
-        where: { user_id: userId },
-        limit,
-        offset,
-        include: includes
-      });
-    } else {
-      foundOneTrip = await Trip.findAndCountAll({
-        limit,
-        offset,
-        include: includes
-      });
-    }
-    return foundOneTrip;
+    return await Trip.findAndCountAll({
+      where: { user_id: user.id },
+      limit,
+      offset,
+      include: includes
+    });
   }
 
   static async deleteTrip(id) {
@@ -118,40 +50,62 @@ class tripService {
   }
 
   static async findSpecificTripById(tripId) {
-    return await Trip.findByPk(tripId);
+    return await Trip.findByPk(tripId, {
+      include: [
+        {
+          model: arrivalLocation,
+          include: [
+            {
+              model: Accommodation,
+              attributes: ['name', 'services', 'amenities', 'imagesId'],
+              as: 'Accommodation'
+            }
+          ]
+        }
+      ]
+    });
   }
 
   static async updateStatus(id, status) {
-    const updateStatus = await Trip.update({ status }, { where: { id }, returning: true, raw: true });
-    return updateStatus;
+    await Trip.update(
+      { status },
+      { where: { id }, returning: true, raw: true }
+    );
+    const tripStatus = await this.findSpecificTripById(id);
+    return tripStatus; 
   }
 
   static async multiCityCreate(userId, managerId, data) {
     data.user_id = userId;
     data.manager_id = managerId;
-    const request = await Trip.create(data);
+    const request = await Trip.create(data, {
+      include: [arrivalLocation]
+    });
     return request;
   }
 
-  static async updateMultiCity(id, data) {
-    const exist = await Trip.findOne({
-      where: { id }
-    });
-    exist.depart_location_id =
-      data.depart_location_id || exist.depart_location_id;
+  static async updateMultiCity(id, data, arrivalLocationdata) {
+    try {
+      await this.findSpecificTripById(id);
+      const updated = await Trip.update(data, {
+        where: { id },
+        returning: true,
+        raw: true
+      });
 
-    exist.arrival_location = data.arrival_location || exist.arrival_location;
-
-    exist.reason = data.reason || exist.reason;
-    exist.returnDate = data.returnDate || exist.returnDate;
-    exist.tripDate = data.tripDate || exist.tripDate;
-
-    const updated = await Trip.update(data, {
-      where: { id },
-      returning: true,
-      raw: true
-    });
-    return updated;
+      await arrivalLocation.destroy({ where: { TripId: id } });
+      const updateArrivalLocation = await arrivalLocation.bulkCreate(
+        arrivalLocationdata.arrivalLocations.map((results) => {
+          results.TripId = id;
+          return results;
+        })
+      );
+      const results = { updated, updateArrivalLocation };
+      return results;
+    } catch (err) {
+      /* istanbul ignore next */
+      console.log(err);
+    }
   }
 }
 export default tripService;

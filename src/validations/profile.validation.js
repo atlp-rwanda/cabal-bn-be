@@ -4,6 +4,7 @@ const profileValidation = (req, res, next) => {
   const profileSchema = Joi.object({
     first_name: Joi.string().empty(),
     last_name: Joi.string().empty(),
+    profile_picture: Joi.string(),
     date_of_birth: Joi.date().iso().empty(),
     occupation: Joi.string().empty(),
     nationality: Joi.string().empty(),
@@ -12,11 +13,11 @@ const profileValidation = (req, res, next) => {
     age: Joi.number().empty(),
     language: Joi.string().empty(),
     location_id: Joi.number().empty(),
-    profile_picture: Joi.string(),
     in_app_notification: Joi.bool(),
     email_notification: Joi.bool()
   });
   const validating = profileSchema.validate(req.body);
+  /* istanbul ignore next */
   if (validating.error) {
     /* istanbul ignore next */
     res.status(400).json({

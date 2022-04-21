@@ -1,3 +1,4 @@
+/* eslint-disable import/newline-after-import */
 /* eslint-disable no-unused-vars */
 /* eslint-disable lines-between-class-members */
 /* eslint-disable class-methods-use-this */
@@ -8,20 +9,32 @@ import NotificationService from '../services/notification.service';
 config();
 
 export default class NotificationController {
-    static async allnotification(req, res) {
-        const Allnotification = await NotificationService.Allnotification(req.user.id);
-        return res.status(200).json({ data: Allnotification });
-    }
+  static async allnotification(req, res) {
+    const Allnotification = await NotificationService.Allnotification(
+      req.user.id
+    );
+    return res.status(200).json({ data: Allnotification });
+  }
 
-    static async markAllnotification(req, res) {
-        const markall = await NotificationService.updateStatus(req.user.id);
-        return res.status(200).json({ message: 'mark all notification  successfully', data: markall });
-    }
+  static async markAllnotification(req, res) {
+    const markall = await NotificationService.updateStatus(req.user.id);
+    /* istanbul ignore next */
+    return res
+      .status(200)
+      .json({ message: 'mark all notification  successfully', data: markall });
+  }
 
-    static async ReadOne(req, res) {
-        const updateStatus = await NotificationService.ReadOne(req.params.id, req.user.id);
-        if (updateStatus) {
-            return res.status(200).json({ message: 'Read one notification  successfully', data: { updateStatus } });
-        }
+  static async ReadOne(req, res) {
+    const updateStatus = await NotificationService.ReadOne(
+      req.params.id,
+      req.user.id
+    );
+    /* istanbul ignore next */
+    if (updateStatus) {
+      return res.status(200).json({
+        message: 'Read one notification  successfully',
+        data: { updateStatus }
+      });
     }
+  }
 }

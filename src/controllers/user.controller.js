@@ -205,17 +205,29 @@ export default class UserController {
             profile.name &&
             [profile.name.middleName, profile.name.givenName].join(' '),
           profile_picture: profile.photos && profile.photos[0].value,
-          provider: 'GOOGLE'
+          provider: 'GOOGLE',
+          isVerified: true,
+          location_id: 1
         });
+
+        await Profiles.createProfile({ user_id: user.id });
       }
 
       const token = generateToken({ email: user.email, userId: user.id }, '1d');
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Logged in successfully',
-        token
-      });
+      const params = new URLSearchParams();
+      params.set('email', user.email);
+      params.set('first_name', user.first_name);
+      params.set('last_name', user.last_name);
+      params.set('profile_picture', user.profile_picture);
+      params.set('role_id', user.role_id);
+      params.set('token', token);
+
+      return res
+        .status(200)
+        .send(
+          `<script> window.location = "${process.env.FE_REDIRECT_URL}/?${params}"</script>`
+        );
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while logging in',
@@ -240,17 +252,29 @@ export default class UserController {
             profile.name &&
             [profile.name.middleName, profile.name.givenName].join(' '),
           profile_picture: profile.photos && profile.photos[0].value,
-          provider: 'FACEBOOK'
+          provider: 'FACEBOOK',
+          isVerified: true,
+          location_id: 1
         });
+
+        await Profiles.createProfile({ user_id: user.id });
       }
 
       const token = generateToken({ email: user.email, userId: user.id }, '1d');
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Logged in successfully',
-        token
-      });
+      const params = new URLSearchParams();
+      params.set('email', user.email);
+      params.set('first_name', user.first_name);
+      params.set('last_name', user.last_name);
+      params.set('profile_picture', user.profile_picture);
+      params.set('role_id', user.role_id);
+      params.set('token', token);
+
+      return res
+        .status(200)
+        .send(
+          `<script> window.location = "${process.env.FE_REDIRECT_URL}/?${params}"</script>`
+        );
     } catch (error) {
       return res.status(500).json({
         message: 'Error occured while logging in',

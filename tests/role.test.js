@@ -90,7 +90,7 @@ describe('ROLE END-POINT TEST', () => {
         role: 'REQUESTER'
       });
       expect(res.status).to.equal(403);
-      expect(res.body.message).to.equal('user not logged in');
+      expect(res.body.message).to.equal('User not logged in');
     });
 
     it('should not assign a role a user if service returned an error', async () => {

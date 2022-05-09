@@ -6,7 +6,7 @@ export const validateTripId = async (req, res, next) => {
   try {
     const { tripId } = req.params;
     const trip = await tripService.findSpecificTripById(tripId);
-    if (!trip) return res.status(404).json({ message: 'trip does not exist' });
+    if (!trip) return res.status(404).json({ message: 'Trip does not exist' });
     req.trip = trip;
     next();
   } catch (err) {

@@ -27,9 +27,10 @@ export const checkVerifiedUser = async (req, res, next) => {
     }
   });
   if (!user || !user.isVerified)
-    return res
-      .status(400)
-      .json({ message: 'Please verify your email to login!' });
+    return res.status(400).json({
+      message:
+        'Email not verified! Please check your inbox for verification link or contact the system administrator.'
+    });
 
   return next();
 };

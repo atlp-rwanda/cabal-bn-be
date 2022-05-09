@@ -62,7 +62,7 @@ export default class UserController {
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td> <a href="${process.env.RESET_LINK}/api-docs/${token}" target="_blank">Verify email</a> </td>
+                        <td> <a href="${process.env.BASE_URL}/api/v1/users/verify-email/${token}" target="_blank">Verify email</a> </td>
                       </tr>
                     </tbody>
                   </table>
@@ -74,6 +74,7 @@ export default class UserController {
       const html = message(code);
       await nodemailer(newUser.email, 'Email Verification', text, html);
       return res.status(201).json({
+        status: 201,
         message:
           'User registered successfully! Please check your email for verification.',
         token
@@ -104,6 +105,7 @@ export default class UserController {
       return res.status(500).send({ message: error.message });
     }
   }
+
   async userLogin(req, res) {
     try {
       const user = await this.userService.userLogin(req.body.email, res);
@@ -129,6 +131,7 @@ export default class UserController {
       });
     }
   }
+
   static async forgot(req, res) {
     try {
       const exist = await new UserService().userExist(req.body.email);
@@ -165,7 +168,7 @@ export default class UserController {
           message: 'Password reset link has been sent to your email'
         });
       } else {
-        res.status(404).json({ status: 404, message: 'Email has not found' });
+        res.status(404).json({ status: 404, message: 'Email not found' });
       }
     } catch (error) {
       /* istanbul ignore next */
@@ -183,7 +186,7 @@ export default class UserController {
       User.update({ password: newPassword }, { where: { id: userId } });
       return res
         .status(200)
-        .send({ message: 'Your new password has been set Return to Login' });
+        .send({ message: 'Your new password has been set return to Login' });
     } catch (error) {
       return res.status(500).send({ message: error.message });
     }
@@ -301,6 +304,7 @@ export default class UserController {
       });
     }
   }
+
   async profileUpdate(req, res) {
     try {
       const { user } = req;
@@ -345,6 +349,7 @@ export default class UserController {
       });
     }
   }
+  
   static async assignUserToManager(req, res) {
     try {
       const { userId, managerId } = req.body;

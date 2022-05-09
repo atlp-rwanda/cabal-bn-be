@@ -11,11 +11,11 @@ export const checkLoggedInUser = async (req, res, next) => {
   try {
     const token =
       req.headers.authorization && req.headers.authorization.split(' ')[1];
-    if (!token) return res.status(403).json({ message: 'user not logged in' });
+    if (!token) return res.status(403).json({ message: 'User not logged in' });
     const blackListed = await Blacklist.findOne({ where: { token } });
     /* istanbul ignore next */
     if (blackListed)
-      return res.status(401).json({ message: 'please login first' });
+      return res.status(401).json({ message: 'Please login first' });
 
     const decoded = decodeToken(token);
     const freshUser = await User.findByPk(decoded.userId, {
@@ -24,7 +24,7 @@ export const checkLoggedInUser = async (req, res, next) => {
     req.user = freshUser;
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'access denied' });
+    return res.status(401).json({ message: 'Access denied' });
   }
 };
 
@@ -34,7 +34,7 @@ export const roles = (...roles) => {
       return next(
         res
           .status(403)
-          .json({ message: 'you are not allowed to perform this action' })
+          .json({ message: 'You are not allowed to perform this action' })
       );
     }
     next();
@@ -68,6 +68,6 @@ export const checkEmailNotExist = async (req, res, next) => {
   } else {
     return res
       .status(404)
-      .json({ message: `User with email ${email} doesn't exist` });
+      .json({ message: `User with email ${email} does not exist` });
   }
 };

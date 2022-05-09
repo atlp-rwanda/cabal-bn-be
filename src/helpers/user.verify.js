@@ -44,9 +44,9 @@ export const verifyEmail = (emailData) => {
                                             <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Account created require verification.</h1>
                                             <span style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #CECECE; width:100px;"></span>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                                Thank you for registering into Barefoot Nomad. Click the link below to verify and activate your account.
+                                                Thank you for registering on Barefoot Nomad. Click the link below to verify and activate your account.
                                             </p>
-                                            <a href="${process.env.RESET_LINK}/api/v1/users/verify-email/${emailData}" style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Verify Email</a>
+                                            <a href="${process.env.BASE_URL}/api/v1/users/verify-email/${emailData}" style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Verify Email</a>
                                         </td>
                                     </tr>
                                     <tr>

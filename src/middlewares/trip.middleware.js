@@ -29,7 +29,7 @@ export const checkTripExistStatus = (status) => (req, res, next) => {
         }
       }
 
-      return res.status(404).json({ message: 'No trip with that Id found' });
+      return res.status(404).json({ message: 'No trip with that ID found' });
     });
 };
 

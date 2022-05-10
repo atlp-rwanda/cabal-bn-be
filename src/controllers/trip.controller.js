@@ -227,7 +227,7 @@ class tripController {
     try {
       const trip = await tripService.findSpecificTripById(req.params.id);
       if (!trip)
-        return res.status(401).json({ message: 'this trip dont exist' });
+        return res.status(400).json({ message: 'This trip dont exist' });
       return res.status(200).json({ trip });
     } catch (error) {
       /* istanbul ignore next */

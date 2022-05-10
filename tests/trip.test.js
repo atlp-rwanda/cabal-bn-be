@@ -497,6 +497,6 @@ describe('TRIP END-POINT TESTING', () => {
       .set('Authorization', `Bearer ${reqToken}`)
       .send();
 
-    expect(res).to.have.status([401]);
+    expect(res).to.have.status([400]);
   });
 });

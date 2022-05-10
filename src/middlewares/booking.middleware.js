@@ -99,7 +99,7 @@ export const checkBookingTripAdmin = async (req, res, next) => {
   const role = req.user.dataValues.Role.name;
   if (id !== user_id && role !== 'SUPER_ADMIN' && id !== req.booking.user_id) {
     return res
-      .status(401)
+      .status(403)
       .json({ message: 'you are not allowed to modify this booking' });
   }
   return next();

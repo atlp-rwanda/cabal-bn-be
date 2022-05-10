@@ -281,7 +281,7 @@ describe('BOOKING ENDPOINTS TESTS', () => {
       .patch(`/api/v1/rooms/4/booking/8`)
       .set('Authorization', data.token)
       .send({ status: 'APPROVED' });
-    expect(res.status).to.be.equal(401);
+    expect(res.status).to.be.equal(403);
   });
 
   it('super admin should update a specific room booking', async () => {

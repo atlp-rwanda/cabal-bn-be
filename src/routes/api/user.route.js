@@ -25,6 +25,7 @@ import profileValidation from '../../validations/profile.validation';
 import { validateLocationId } from '../../middlewares/location.middleware';
 import registerValidation from '../../validations/register.validation';
 import { updateProfilePicture } from '../../middlewares/imageUpload.middleware';
+import path from 'path';
 
 const routes = express.Router();
 
@@ -41,6 +42,10 @@ routes.post(
 
 routes.get('/verify-email/:token', async (req, res) => {
   await new UserController().verifyNewUser(req, res);
+});
+
+routes.get('/verified', async (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public/verified.html'));
 });
 
 routes.post('/login', userValidation, checkVerifiedUser, async (req, res) => {

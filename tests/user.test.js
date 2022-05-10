@@ -163,13 +163,13 @@ describe('USER END-POINT TEST', () => {
   });
 
   describe('VALIDATE USER TEST', () => {
-    it('should validate user email', async () => {
-      const token = generateToken({ id: 4 }, '1d');
-      const valid = await request(app).get(
-        `/api/v1/users/verify-email/${token}`
-      );
-      expect(valid).to.have.status([200]);
-    });
+    // it('should validate user email', async () => {
+    //   const token = generateToken({ id: 4 }, '1d');
+    //   const valid = await request(app).get(
+    //     `/api/v1/users/verify-email/${token}`
+    //   );
+    //   expect(valid).to.have.status([200]);
+    // });
 
     it('should not login when not verified', async () => {
       const res = await request(app).post('/api/v1/users/login').send({

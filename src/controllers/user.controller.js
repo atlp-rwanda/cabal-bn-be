@@ -98,9 +98,8 @@ export default class UserController {
       const user = await this.userService.getUserId(userId);
 
       await user.update({ isVerified: true }, { where: { id: userId } });
-      return res
-        .status(200)
-        .send({ message: 'Account verified! You can proceed to log in.' });
+
+      return res.redirect(`${process.env.BASE_URL}/api/v1/users/verified`);
     } catch (error) {
       return res.status(500).send({ message: error.message });
     }
@@ -349,7 +348,7 @@ export default class UserController {
       });
     }
   }
-  
+
   static async assignUserToManager(req, res) {
     try {
       const { userId, managerId } = req.body;

@@ -62,7 +62,7 @@ export default class UserController {
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td> <a href="${process.env.BASE_URL}/api/v1/users/verify-email/${token}" target="_blank">Verify email</a> </td>
+                        <td> <a href="${process.env.FRONT_END_URL}/verify?token=${token}" target="_blank">Verify email</a> </td>
                       </tr>
                     </tbody>
                   </table>
@@ -98,8 +98,12 @@ export default class UserController {
       const user = await this.userService.getUserId(userId);
 
       await user.update({ isVerified: true }, { where: { id: userId } });
+      return res.status(200).json({
+        status: 200,
+        message: 'Your email has been verified successfully'
+      });
 
-      return res.redirect(`${process.env.BASE_URL}/api/v1/users/verified`);
+      // return res.redirect(`${process.env.BASE_URL}/api/v1/users/verified`);
     } catch (error) {
       return res.status(500).send({ message: error.message });
     }
@@ -146,7 +150,7 @@ export default class UserController {
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td> <a href="${process.env.BASE_URL}/api-docs/${tokenid}" target="_blank">Reset password</a> </td>
+                        <td> <a href="${process.env.FRONT_END_URL}/resetPassword?token=${tokenid}" target="_blank">Reset password</a> </td>
                       </tr>
                     </tbody>
                   </table>

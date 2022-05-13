@@ -121,10 +121,11 @@ export default class UserController {
           { email: user.email, userId: user.id },
           '1d'
         );
-        return res
-          .status(201)
-          .header('authenticate', token)
-          .json({ message: 'Logged in successfully', token });
+        return res.status(201).header('authenticate', token).json({
+          message: 'Logged in successfully',
+          token,
+          role_id: user.role_id
+        });
       }
       return res.status(400).json({ message: 'Invalid password' });
     } catch (error) {

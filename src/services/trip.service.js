@@ -31,6 +31,16 @@ class tripService {
         offset,
         include: includes
       });
+
+    if (user.Role.name === 'MANAGER') {
+      return await Trip.findAndCountAll({
+        where: { manager_id: user.id },
+        limit,
+        offset,
+        include: includes
+      });
+    }
+
     return await Trip.findAndCountAll({
       where: { user_id: user.id },
       limit,
@@ -72,7 +82,7 @@ class tripService {
       { where: { id }, returning: true, raw: true }
     );
     const tripStatus = await this.findSpecificTripById(id);
-    return tripStatus; 
+    return tripStatus;
   }
 
   static async multiCityCreate(userId, managerId, data) {

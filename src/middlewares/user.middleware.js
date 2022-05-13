@@ -1,6 +1,7 @@
 /* eslint-disable curly */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable require-jsdoc */
+import fs from 'fs';
 import { User } from '../database/models';
 import 'dotenv';
 
@@ -30,12 +31,20 @@ export const checkVerifiedUser = async (req, res, next) => {
     return res.status(400).json({ message: 'Incorrect email or password' });
   }
   if (!user.isVerified) {
-    return res
-      .status(400)
-      .json({
-        message:
-          'Please verify your email'
-      });
+    return res.status(400).json({
+      message: 'Please verify your email'
+    });
+  }
+
+  return next();
+};
+
+export const retrieveFEBaseUrl = async (req, res, next) => {
+  const { BASE_URL } = req.query;
+
+  if (BASE_URL) {
+    console.log(BASE_URL);
+    fs.writeFileSync('FE_BASE_URL', BASE_URL);
   }
 
   return next();

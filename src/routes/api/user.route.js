@@ -6,7 +6,8 @@ import UserController from '../../controllers/user.controller';
 import userValidation from '../../validations/user.validation';
 import {
   checkEmailExist,
-  checkVerifiedUser
+  checkVerifiedUser,
+  retrieveFEBaseUrl
 } from '../../middlewares/user.middleware';
 import {
   checkLoggedInUser,
@@ -54,6 +55,7 @@ routes.post('/login', userValidation, checkVerifiedUser, async (req, res) => {
 
 routes.get(
   '/google/login',
+  retrieveFEBaseUrl,
   passport.authenticate('google', {
     session: false,
     scope: ['profile', 'email'],
@@ -67,6 +69,7 @@ routes.get(
 
 routes.get(
   '/facebook/login',
+  retrieveFEBaseUrl,
   passport.authenticate('facebook', {
     session: false,
     scope: ['email', 'public_profile', 'user_photos']

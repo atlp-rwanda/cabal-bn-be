@@ -6,6 +6,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable require-jsdoc */
+import fs from 'fs';
 import bcryptjs from 'bcryptjs';
 import { config } from 'dotenv';
 import jwt from 'jsonwebtoken';
@@ -124,7 +125,9 @@ export default class UserController {
         return res.status(201).header('authenticate', token).json({
           message: 'Logged in successfully',
           token,
-          role_id: user.role_id
+          role_id: user.role_id,
+          firstName: user.first_name,
+          lastName: user.last_name
         });
       }
       return res.status(400).json({ message: 'Invalid password' });
@@ -233,7 +236,9 @@ export default class UserController {
       return res
         .status(200)
         .send(
-          `<script> window.location = "${process.env.FE_REDIRECT_URL}/?${params}"</script>`
+          `<script> window.location = "${fs.readFileSync(
+            'FE_BASE_URL'
+          )}/?${params}"</script>`
         );
     } catch (error) {
       return res.status(500).json({
@@ -280,7 +285,9 @@ export default class UserController {
       return res
         .status(200)
         .send(
-          `<script> window.location = "${process.env.FE_REDIRECT_URL}/?${params}"</script>`
+          `<script> window.location = "${fs.readFileSync(
+            'FE_BASE_URL'
+          )}/?${params}"</script>`
         );
     } catch (error) {
       return res.status(500).json({

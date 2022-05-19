@@ -2,17 +2,18 @@ import Joi from 'joi';
 
 const profileValidation = (req, res, next) => {
   const profileSchema = Joi.object({
-    first_name: Joi.string().empty(),
-    last_name: Joi.string().empty(),
-    profile_picture: Joi.string(),
-    date_of_birth: Joi.date().iso().empty(),
-    occupation: Joi.string().empty(),
-    nationality: Joi.string().empty(),
-    bio: Joi.string().empty(),
-    gender: Joi.string().empty(),
-    age: Joi.number().empty(),
-    language: Joi.string().empty(),
-    location_id: Joi.number().empty(),
+    first_name: Joi.string(),
+    last_name: Joi.string(),
+    profile_picture: Joi.string().empty(''),
+    date_of_birth: Joi.date().iso().empty(''),
+    occupation: Joi.string().empty(''),
+    nationality: Joi.string().empty(''),
+    bio: Joi.string().empty(''),
+    gender: Joi.string().empty(''),
+    age: Joi.number().empty(''),
+    language: Joi.string().empty(''),
+    location_id: Joi.number().empty(''),
+    country: Joi.string().empty(''),
     in_app_notification: Joi.bool(),
     email_notification: Joi.bool()
   });

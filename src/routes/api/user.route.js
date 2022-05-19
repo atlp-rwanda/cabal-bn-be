@@ -30,6 +30,7 @@ import path from 'path';
 
 const routes = express.Router();
 
+routes.get('/', checkLoggedInUser, UserController.getOneUser);
 routes.post(
   '/register',
   registerValidation,

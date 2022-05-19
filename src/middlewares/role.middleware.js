@@ -3,7 +3,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
-import { User, Blacklist } from '../database/models';
+import { User, Blacklist, Role, Profile } from '../database/models';
 import { decodeToken } from '../helpers/user.helpers';
 import RoleService from '../services/role.service';
 
@@ -19,7 +19,16 @@ export const checkLoggedInUser = async (req, res, next) => {
 
     const decoded = decodeToken(token);
     const freshUser = await User.findByPk(decoded.userId, {
-      include: 'Role'
+      include: [
+        {
+          model: Role,
+          as: 'Role'
+        },
+        {
+          model: Profile,
+          as: 'profile'
+        }
+      ]
     });
     req.user = freshUser;
     next();

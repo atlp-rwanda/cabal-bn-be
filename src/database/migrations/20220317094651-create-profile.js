@@ -34,6 +34,9 @@ module.exports = {
       location_id: {
         type: DataTypes.INTEGER
       },
+      country: {
+        type: DataTypes.STRING
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

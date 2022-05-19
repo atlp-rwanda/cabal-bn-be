@@ -199,6 +199,7 @@ export default class UserController {
     }
   }
 
+  /* istanbul ignore next */
   async googleLogin(req, res) {
     try {
       const profile = req.user;
@@ -247,13 +248,12 @@ export default class UserController {
       });
     }
   }
-
+  /* istanbul ignore next */
   async facebookLogin(req, res) {
     try {
       const profile = req.user;
 
       let user = await new UserService().getUser(profile.emails[0].value);
-
       if (!user) {
         user = await new UserService().createUser({
           email: profile.emails && profile.emails[0].value,
@@ -330,8 +330,10 @@ export default class UserController {
         gender,
         date_of_birth,
         location_id,
+        country,
         profile_picture,
-        email_notification
+        email_notification,
+        in_app_notification
       } = req.profile.value;
       const updatedUser = await this.userService.updateUserProfile(
         {
@@ -339,9 +341,19 @@ export default class UserController {
           last_name,
           location_id,
           email_notification,
+          in_app_notification,
           profile_picture
         },
-        { occupation, language, nationality, bio, age, gender, date_of_birth },
+        {
+          occupation,
+          language,
+          nationality,
+          country,
+          bio,
+          age,
+          gender,
+          date_of_birth
+        },
         user.id
       );
       return res.status(200).json({
@@ -391,6 +403,15 @@ export default class UserController {
       return res.status(400).send({ message: 'No user with such Id' });
     } catch (error) {
       res.status(500).send({ message: error.message });
+    }
+  }
+  /* istanbul ignore next */
+  static async getOneUser(req, res) {
+    try {
+      const { user } = req;
+      return res.status(200).json({ user });
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
     }
   }
 }

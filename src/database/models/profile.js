@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
       nationality: {
         type: DataTypes.STRING
       },
+      country: {
+        type: DataTypes.STRING
+      },
       bio: {
         type: DataTypes.STRING
       },

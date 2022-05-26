@@ -8,7 +8,8 @@ module.exports = {
         type: DataTypes.INTEGER
       },
       age: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
       },
       occupation: {
         type: DataTypes.STRING

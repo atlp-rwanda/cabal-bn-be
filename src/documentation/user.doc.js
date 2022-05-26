@@ -15,6 +15,34 @@ export const user = {
       responses
     }
   },
+  '/users/getOne': {
+    get: {
+      tags: ['User'],
+      summary: 'Get one users',
+      description: 'Get one users',
+      operationId: 'getOneUsers',
+      security: [
+        {
+          JWT: []
+        }
+      ],
+      responses
+    }
+  },
+  '/users/:id': {
+    get: {
+      tags: ['User'],
+      summary: 'Get All users',
+      description: 'Get All users',
+      operationId: 'getAllUsers',
+      security: [
+        {
+          JWT: []
+        }
+      ],
+      responses
+    }
+  },
   '/users/register': {
     post: {
       tags: ['User'],

@@ -31,6 +31,15 @@ export default class UserController {
     this.userService = new UserService();
   }
 
+  static async getOneUser(req, res) {
+    try {
+      const { user } = req;
+      return res.status(200).json({ user });
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
+  }
+
   static async getAllUsers(req, res) {
     try {
       const users = await new UserService().getAllUsers();

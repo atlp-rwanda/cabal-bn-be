@@ -34,6 +34,8 @@ routes.get('/', checkLoggedInUser, roles('SUPER_ADMIN'), async (req, res) => {
   await UserController.getAllUsers(req, res);
 });
 
+routes.get('/getOne', checkLoggedInUser, UserController.getOneUser);
+
 routes.post(
   '/register',
   registerValidation,

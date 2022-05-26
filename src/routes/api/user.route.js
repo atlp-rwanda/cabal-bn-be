@@ -30,6 +30,10 @@ import path from 'path';
 
 const routes = express.Router();
 
+routes.get('/', checkLoggedInUser, roles('SUPER_ADMIN'), async (req, res) => {
+  await UserController.getAllUsers(req, res);
+});
+
 routes.post(
   '/register',
   registerValidation,
@@ -71,6 +75,19 @@ routes.get(
   '/facebook/login',
   retrieveFEBaseUrl,
   passport.authenticate('facebook', {
+    session: false
+    // scope: ['email', 'public_profile', 'user_photos']
+  }),
+  async (req, res) => {
+    /* istanbul ignore next */
+    await new UserController().githubLogin(req, res);
+  }
+);
+
+routes.get(
+  '/github/login',
+  retrieveFEBaseUrl,
+  passport.authenticate('github', {
     session: false,
     scope: ['email', 'public_profile', 'user_photos']
   }),
@@ -124,6 +141,7 @@ routes.patch(
     await new UserController().profileUpdate(req, res);
   }
 );
+
 routes.put(
   '/assign-to-manager',
   checkLoggedInUser,

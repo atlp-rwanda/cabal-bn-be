@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { Strategy as GithubStrategy } from 'passport-github';
 import 'dotenv';
 
 passport.use(
@@ -45,6 +46,25 @@ passport.use(
     // eslint-disable-next-line no-unused-vars
     /* istanbul ignore next */
     async (req, accessToken, refreshToken, profile, done) => done(null, profile)
+  )
+);
+
+passport.use(
+  new GithubStrategy(
+    {
+      clientID: process.env.Github_CLIENT_ID,
+      clientSecret: process.env.Github_CLIENT_SECRETE,
+      callbackURL: process.env.Github_CALLBACK_URL,
+      passReqToCallback: true,
+      profileFields: ['id', 'emails', 'name', 'photos']
+    },
+    /* istanbul ignore next */
+    // eslint-disable-next-line no-unused-vars
+    /* istanbul ignore next */
+    async (req, accessToken, refreshToken, profile, done) => {
+      console.log(profile, 'in the middleware');
+      return done(null, profile);
+    }
   )
 );
 

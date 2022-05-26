@@ -11,6 +11,11 @@ import { decodeToken } from '../helpers/user.helpers';
 import { Blacklist, sequelize } from '../database/models';
 
 export default class UserService {
+  async getAllUsers() {
+    const users = await User.findAll({});
+    return users;
+  }
+
   async createUser(data) {
     const newUser = await User.create(data);
     return newUser;

@@ -31,6 +31,22 @@ export default class UserController {
     this.userService = new UserService();
   }
 
+  static async getAllUsers(req, res) {
+    try {
+      const users = await new UserService().getAllUsers();
+      return res.status(200).json({
+        message: 'Retrieved all users successfully',
+        data: users
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: 'Error occured while creating a user',
+        error: error.message
+      });
+    }
+  }
+
   async createUser(req, res) {
     try {
       const { first_name, last_name, email, password, role_id, location_id } =
@@ -252,6 +268,57 @@ export default class UserController {
   async facebookLogin(req, res) {
     try {
       const profile = req.user;
+
+      let user = await new UserService().getUser(profile.emails[0].value);
+
+      if (!user) {
+        user = await new UserService().createUser({
+          email: profile.emails && profile.emails[0].value,
+          password: null,
+          role_id: 4,
+          first_name: profile.name && profile.name.familyName,
+          last_name:
+            profile.name &&
+            [profile.name.middleName, profile.name.givenName].join(' '),
+          profile_picture: profile.photos && profile.photos[0].value,
+          provider: 'FACEBOOK',
+          isVerified: true,
+          location_id: 1
+        });
+
+        await Profiles.createProfile({ user_id: user.id });
+      }
+
+      const token = generateToken({ email: user.email, userId: user.id }, '1d');
+
+      const params = new URLSearchParams();
+      params.set('email', user.email);
+      params.set('first_name', user.first_name);
+      params.set('last_name', user.last_name);
+      params.set('profile_picture', user.profile_picture);
+      params.set('role_id', user.role_id);
+      params.set('token', token);
+
+      return res
+        .status(200)
+        .send(
+          `<script> window.location = "${fs.readFileSync(
+            'FE_BASE_URL'
+          )}/?${params}"</script>`
+        );
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error occured while logging in',
+        data: error.message
+      });
+    }
+  }
+
+  async githubLogin(req, res) {
+    try {
+      const profile = req.user;
+
+      console.log(profile, 'user data in the controller of github');
 
       let user = await new UserService().getUser(profile.emails[0].value);
 

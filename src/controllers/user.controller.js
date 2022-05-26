@@ -408,7 +408,9 @@ export default class UserController {
         date_of_birth,
         location_id,
         profile_picture,
-        email_notification
+        email_notification,
+        in_app_notification,
+        country,
       } = req.profile.value;
       const updatedUser = await this.userService.updateUserProfile(
         {
@@ -416,9 +418,10 @@ export default class UserController {
           last_name,
           location_id,
           email_notification,
+          in_app_notification,
           profile_picture
         },
-        { occupation, language, nationality, bio, age, gender, date_of_birth },
+        { occupation, language, nationality, bio, age, gender, date_of_birth, country },
         user.id
       );
       return res.status(200).json({

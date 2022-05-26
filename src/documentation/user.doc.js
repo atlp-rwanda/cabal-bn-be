@@ -1,6 +1,20 @@
 import responses from './response';
 
 export const user = {
+  '/users/': {
+    get: {
+      tags: ['User'],
+      summary: 'Get All users',
+      description: 'Get All users',
+      operationId: 'getAllUsers',
+      security: [
+        {
+          JWT: []
+        }
+      ],
+      responses
+    }
+  },
   '/users/register': {
     post: {
       tags: ['User'],

@@ -43,7 +43,6 @@ export const retrieveFEBaseUrl = async (req, res, next) => {
   const { BASE_URL } = req.query;
 
   if (BASE_URL) {
-    console.log(BASE_URL);
     fs.writeFileSync('FE_BASE_URL', BASE_URL);
   }
 

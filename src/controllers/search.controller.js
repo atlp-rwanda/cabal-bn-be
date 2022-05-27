@@ -9,10 +9,13 @@
 import { Op, Sequelize } from 'sequelize';
 import searchServices from '../services/search.service';
 import { Trip, User, Location } from '../database/models';
+import { getPaginatedData, getPagination } from '../utils/pagination.utils';
 
 class searchController {
   async singleSearch(req, res) {
     try {
+      const { offset, limit } = getPagination(req.query.page, req.query.limit);
+
       const trips = [];
       /* istanbul ignore next */
       class TripObj {
@@ -23,13 +26,15 @@ class searchController {
         }
       }
 
-      const dat = await Trip.findAll({
+      const dat = await Trip.findAndCountAll({
         where: {
           [Op.or]: {
             user_id: req.user.id,
             manager_id: req.user.id
           }
-        }
+        },
+        offset,
+        limit
       });
 
       const arr = [];
@@ -38,8 +43,8 @@ class searchController {
       const keys = Object.keys(req.query);
       /* istanbul ignore next */
       if (keys.length === 0) {
-        data = await searchServices.noQuery(req.user);
-        if (data.length < 1)
+        data = await searchServices.noQuery(req.user, offset, limit);
+        if (data.rows.length < 1)
           return res
             .status(400)
             .json({ message: 'oops! seems like there are no trips yet' });
@@ -58,7 +63,9 @@ class searchController {
               [Op.like]: `%${req.query.owner}%`
             }
           }
-        }
+        },
+        offset,
+        limit
       });
       const ownerId = owners.map((owner) => owner.id);
 
@@ -125,27 +132,35 @@ class searchController {
       const userId = req.user.id;
 
       if (req.user.Role.id === 3 || req.user.Role.id === 4) {
-        data = await Trip.findAll({
+        data = await Trip.findAndCountAll({
           where: {
             [Op.and]: queries,
             [Op.or]: [{ user_id: userId }, { manager_id: userId }]
-          }
+          },
+          offset,
+          limit
         });
-        if (data.length < 1)
+        if (data.rows.length < 1)
           return res.status(400).json({ message: 'no data found' });
-        return res.status(200).json(data);
+        return res
+          .status(200)
+          .json(getPaginatedData(data, req.query.page, limit));
       }
 
-      data = await Trip.findAll({
+      data = await Trip.findAndCountAll({
         where: {
           [Op.and]: queries
-        }
+        },
+        offset,
+        limit
       });
 
-      if (data.length < 1)
+      if (data.rows.length < 1)
         return res.status(400).json({ message: 'no data found' });
 
-      return res.status(200).json(data);
+      return res
+        .status(200)
+        .json(getPaginatedData(data, req.query.page, limit));
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

@@ -48,7 +48,6 @@ export default class UserController {
         data: users
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: 'Error occured while creating a user',
         error: error.message
@@ -327,8 +326,6 @@ export default class UserController {
     try {
       const profile = req.user;
 
-      console.log(profile, 'user data in the controller of github');
-
       let user = await new UserService().getUser(profile.emails[0].value);
 
       if (!user) {
@@ -410,7 +407,7 @@ export default class UserController {
         profile_picture,
         email_notification,
         in_app_notification,
-        country,
+        country
       } = req.profile.value;
       const updatedUser = await this.userService.updateUserProfile(
         {
@@ -421,7 +418,16 @@ export default class UserController {
           in_app_notification,
           profile_picture
         },
-        { occupation, language, nationality, bio, age, gender, date_of_birth, country },
+        {
+          occupation,
+          language,
+          nationality,
+          bio,
+          age,
+          gender,
+          date_of_birth,
+          country
+        },
         user.id
       );
       return res.status(200).json({

@@ -62,7 +62,6 @@ passport.use(
     // eslint-disable-next-line no-unused-vars
     /* istanbul ignore next */
     async (req, accessToken, refreshToken, profile, done) => {
-      console.log(profile, 'in the middleware');
       return done(null, profile);
     }
   )

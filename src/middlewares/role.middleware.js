@@ -33,7 +33,6 @@ export const checkLoggedInUser = async (req, res, next) => {
     req.user = freshUser;
     next();
   } catch (error) {
-    console.log(error);
     return res.status(401).json({ message: 'Access denied' });
   }
 };

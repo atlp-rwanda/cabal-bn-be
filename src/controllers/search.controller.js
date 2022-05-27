@@ -14,7 +14,18 @@ import { getPaginatedData, getPagination } from '../utils/pagination.utils';
 class searchController {
   async singleSearch(req, res) {
     try {
-      const { offset, limit } = getPagination(req.query.page, req.query.limit);
+      const incomingPage = req.query['page'];
+      const incomingLimit = req.query['limit'];
+      const { offset, newLimit } = getPagination(incomingPage, incomingLimit);
+
+      // delete the offset and limit entries after extracting them to
+      // make the app still work as original
+      if (req.query.page) {
+        delete req.query.page;
+      }
+      if (req.query.limit) {
+        delete req.query.limit;
+      }
 
       const trips = [];
       /* istanbul ignore next */
@@ -34,7 +45,7 @@ class searchController {
           }
         },
         offset,
-        limit
+        newLimit
       });
 
       const arr = [];
@@ -43,7 +54,7 @@ class searchController {
       const keys = Object.keys(req.query);
       /* istanbul ignore next */
       if (keys.length === 0) {
-        data = await searchServices.noQuery(req.user, offset, limit);
+        data = await searchServices.noQuery(req.user, offset, newLimit);
         if (data.rows.length < 1)
           return res
             .status(400)
@@ -65,7 +76,7 @@ class searchController {
           }
         },
         offset,
-        limit
+        newLimit
       });
       const ownerId = owners.map((owner) => owner.id);
 
@@ -138,13 +149,14 @@ class searchController {
             [Op.or]: [{ user_id: userId }, { manager_id: userId }]
           },
           offset,
-          limit
+          newLimit
         });
         if (data.rows.length < 1)
           return res.status(400).json({ message: 'no data found' });
-        return res
-          .status(200)
-          .json(getPaginatedData(data, req.query.page, limit));
+        return res.status(200).json({
+          messsage: 'Search result retrieved successfully',
+          data: getPaginatedData(data, incomingPage, newLimit)
+        });
       }
 
       data = await Trip.findAndCountAll({
@@ -152,15 +164,16 @@ class searchController {
           [Op.and]: queries
         },
         offset,
-        limit
+        newLimit
       });
 
       if (data.rows.length < 1)
         return res.status(400).json({ message: 'no data found' });
 
-      return res
-        .status(200)
-        .json(getPaginatedData(data, req.query.page, limit));
+      return res.status(200).json({
+        message: 'Retrieved result successfully',
+        data: getPaginatedData(data, incomingPage, newLimit)
+      });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

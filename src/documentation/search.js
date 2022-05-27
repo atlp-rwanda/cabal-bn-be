@@ -5,9 +5,18 @@ const search = {
     get: {
       tags: ['search'],
       summary: 'search for trips',
-
       operationId: 'searchTrips',
       parameters: [
+        {
+          name: 'page',
+          in: 'query',
+          type: 'integer'
+        },
+        {
+          name: 'limit',
+          in: 'query',
+          type: 'integer'
+        },
         {
           name: 'owner',
           description: 'enter name',

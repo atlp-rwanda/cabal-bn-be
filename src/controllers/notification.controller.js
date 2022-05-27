@@ -6,14 +6,39 @@
 /* eslint-disable require-jsdoc */
 import { config } from 'dotenv';
 import NotificationService from '../services/notification.service';
+import { getPaginatedData, getPagination } from '../utils/pagination.utils';
 config();
 
 export default class NotificationController {
-  static async allnotification(req, res) {
-    const Allnotification = await NotificationService.Allnotification(
-      req.user.id
+  static async oneNotification(req, res) {
+    const oneNotification = await NotificationService.oneNotification(
+      req.user.id,
+      req.params.id
     );
-    return res.status(200).json({ data: Allnotification });
+    return res.status(200).json({
+      message: 'retrieved one notification successfully',
+      data: oneNotification
+    });
+  }
+
+  static async allnotification(req, res) {
+    const { page, limit } = req.query;
+    const { offset, newLimit } = getPagination(page, limit);
+    const Allnotification = await NotificationService.Allnotification(
+      req.user.id,
+      offset,
+      newLimit
+    );
+
+    Allnotification.getnotification = getPaginatedData(
+      Allnotification.getnotification,
+      page,
+      newLimit
+    );
+    return res.status(200).json({
+      message: 'retrieved one notification successfully',
+      data: Allnotification
+    });
   }
 
   static async markAllnotification(req, res) {

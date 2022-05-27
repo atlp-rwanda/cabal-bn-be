@@ -11,12 +11,27 @@ export default class Notification {
     return await notification.create(data);
   }
 
-  static async Allnotification(to_user_id, unreadNotifications = 0) {
-    const getnotification = await notification.findAll({
+  static async oneNotification(to_user_id, id) {
+    const getnotification = await notification.findOne({
+      where: { to_user_id, id }
+    });
+    return getnotification;
+  }
+
+  static async Allnotification(
+    to_user_id,
+    offset,
+    limit,
+    unreadNotifications = 0
+  ) {
+    const getnotification = await notification.findAndCountAll({
       where: { to_user_id },
+      offset,
+      limit,
       order: [['isRead', 'ASC']]
     });
-    getnotification.map((notifications) => {
+    console.log(getnotification);
+    getnotification.rows.map((notifications) => {
       /* istanbul ignore next */
       if (notifications.isRead === false) {
         unreadNotifications++;

@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-plusplus */
 /* eslint-disable guard-for-in */

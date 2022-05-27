@@ -80,7 +80,7 @@ class accommodationController {
         await accommodationService.findAllAccommodations({
           where: condition,
           offset,
-          newLimit
+          limit: newLimit
         });
       const response = getPaginatedData(
         foundAccommodations,

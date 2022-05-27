@@ -12,7 +12,10 @@ import accommodationValidation, {
   rateValidation
 } from '../../validations/accommodation.validation';
 import { checkTimeOnTrip } from '../../middlewares/trip.middleware';
-import { checkAccommodationExist } from '../../middlewares/accommodation.middleware';
+import {
+  checkAccommodationExist,
+  checkImageSent
+} from '../../middlewares/accommodation.middleware';
 import { imageUpload } from '../../middlewares/imageUpload.middleware';
 
 const accommodations = express.Router();
@@ -25,6 +28,7 @@ accommodations.post(
   checkLoggedInUser,
   roles('TRAVEL_ADMIN', 'SUPER_ADMIN'),
   checkAccommodationExist,
+  checkImageSent('images'),
   imageUpload,
   accommodationValidation,
   upload.array('images'),

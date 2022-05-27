@@ -30,3 +30,18 @@ export const checkAccommodationExist = async (req, res, next) => {
   }
   return next();
 };
+
+export const checkImageSent = (imageFieldName) => async (req, res, next) => {
+  console.log(req.body[imageFieldName]);
+  const images = req.body[imageFieldName];
+
+  if (!images) {
+    if (Array.isArray(images) && images.length < 1) {
+      return res.status(400).json({
+        message: 'No Image sent! Image is required'
+      });
+    }
+  }
+
+  return next();
+};

@@ -31,7 +31,9 @@ export const tripComments = {
           JWT: []
         }
       ]
-    },
+    }
+  },
+  '/trips/{tripId}/comment?page={page}&limit={limit}': {
     get: {
       tags: ['tripComment'],
       summary: 'listing all comments on a trip',
@@ -39,6 +41,18 @@ export const tripComments = {
       operationId: 'comments listing',
       produces: ['application/json'],
       parameters: [
+        {
+          name: 'page',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
+        {
+          name: 'limit',
+          in: 'path',
+          required: true,
+          type: 'integer'
+        },
         {
           name: 'tripId',
           in: 'path',

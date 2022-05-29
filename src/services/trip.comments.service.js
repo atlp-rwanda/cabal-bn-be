@@ -1,14 +1,23 @@
 /* eslint-disable no-return-await */
 /* eslint-disable require-jsdoc */
-import { tripComments } from '../database/models';
+import { tripComments, User } from '../database/models';
 
 class tripCommentsServices {
   static async createComment(data) {
     return await tripComments.create(data);
   }
 
-  static async findTripComments(tripId) {
-    return await tripComments.findAll({ where: { trip_id: tripId } });
+  static async findTripComments(tripId, offset, limit) {
+    return await tripComments.findAndCountAll({
+      where: { trip_id: tripId },
+      offset,
+      limit,
+      include: {
+        model: User,
+        as: 'user',
+        attributes: ['first_name', 'last_name', 'profile_picture']
+      }
+    });
   }
 
   static async findSpecificComment(commentId) {

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(User, {
         foreignKey: 'user_id',
-        as: 'Users'
+        as: 'user'
       });
     }
   }

@@ -30,7 +30,6 @@ export default class Notification {
       limit,
       order: [['isRead', 'ASC']]
     });
-    console.log(getnotification);
     getnotification.rows.map((notifications) => {
       /* istanbul ignore next */
       if (notifications.isRead === false) {

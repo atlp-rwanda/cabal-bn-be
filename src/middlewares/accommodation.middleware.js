@@ -32,7 +32,6 @@ export const checkAccommodationExist = async (req, res, next) => {
 };
 
 export const checkImageSent = (imageFieldName) => async (req, res, next) => {
-  console.log(req.body[imageFieldName]);
   const images = req.body[imageFieldName];
 
   if (!images) {

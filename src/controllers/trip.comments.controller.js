@@ -5,6 +5,7 @@ import tripCommentsServices from '../services/trip.comments.service';
 import UserService from '../services/user.service';
 import Notification from '../services/notification.service';
 import eventEmitter from '../services/event.service';
+import { getPaginatedData, getPagination } from '../utils/pagination.utils';
 
 class tripCommentController {
   static async createComment(req, res) {
@@ -67,9 +68,19 @@ class tripCommentController {
 
   static async findAllComments(req, res) {
     try {
+      const { page, limit } = req.query;
+      const { newLimit, offset } = getPagination(page, limit);
+
       const { id } = req.trip;
-      const found = await tripCommentsServices.findTripComments(id);
-      return res.status(200).json({ message: 'comments retrieved', found });
+      const found = await tripCommentsServices.findTripComments(
+        id,
+        offset,
+        newLimit
+      );
+      return res.status(200).json({
+        message: 'comments retrieved',
+        data: getPaginatedData(found, page, newLimit)
+      });
     } catch (err) {
       /* istanbul ignore next */
       return res.status(500).json({ message: 'internal server error', err });

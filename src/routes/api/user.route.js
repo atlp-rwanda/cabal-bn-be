@@ -1,6 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-plusplus */
 import express from 'express';
+import path from 'path';
 import passport from '../../middlewares/passport.middleware';
 import UserController from '../../controllers/user.controller';
 import userValidation from '../../validations/user.validation';
@@ -26,11 +27,10 @@ import profileValidation from '../../validations/profile.validation';
 import { validateLocationId } from '../../middlewares/location.middleware';
 import registerValidation from '../../validations/register.validation';
 import { updateProfilePicture } from '../../middlewares/imageUpload.middleware';
-import path from 'path';
 
 const routes = express.Router();
 
-routes.get('/', checkLoggedInUser, roles('SUPER_ADMIN'), async (req, res) => {
+routes.get('/', checkLoggedInUser, roles('SUPER_ADMIN','MANAGER'), async (req, res) => {
   await UserController.getAllUsers(req, res);
 });
 

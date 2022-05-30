@@ -42,7 +42,7 @@ export default class UserController {
 
   static async getAllUsers(req, res) {
     try {
-      const users = await new UserService().getAllUsers();
+      const users = await new UserService().getAllUsers(req.user.role_id);
       return res.status(200).json({
         message: 'Retrieved all users successfully',
         data: users

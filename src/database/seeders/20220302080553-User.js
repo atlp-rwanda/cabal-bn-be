@@ -68,7 +68,7 @@ module.exports = {
                 {
                     first_name: 'MANAGER1',
                     last_name: 'MANAGER1',
-                    password: hashPassword('MANAGER2gmail'),
+                    password: hashPassword('MANAGER1gmail'),
                     email: 'MANAGER1@gmail.com',
                     location_id: '4',
                     profile_picture: 'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',

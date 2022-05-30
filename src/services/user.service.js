@@ -11,9 +11,23 @@ import { decodeToken } from '../helpers/user.helpers';
 import { Blacklist, sequelize } from '../database/models';
 
 export default class UserService {
-  async getAllUsers() {
-    const users = await User.findAll({});
-    return users;
+  async getAllUsers(id) {
+    let users;
+    if(id===3){
+      users = await User.findAll({where:{
+        manager_id:id
+      },
+      attributes:['first_name','last_name','id','role_id','email']
+    });
+    }
+    else{
+      users = await User.findAll({
+        attributes:['first_name','last_name','id','role_id','email']
+      });
+    }
+    
+    const use=users.map(user=>user.dataValues)
+    return use;
   }
 
   async createUser(data) {

@@ -11,13 +11,20 @@ class tripCommentController {
   static async createComment(req, res) {
     try {
       const { user } = req;
-      if (
-        user.dataValues.id !== req.trip.dataValues.user_id &&
-        user.dataValues.manager_id !== req.trip.dataValues.manager_id
-      )
-        return res.status(400).json({
-          message: 'trip does not belong to you.'
-        });
+      if (user.dataValues.role_id === 4) {
+        if (user.dataValues.id !== req.trip.dataValues.user_id) {
+          return res.status(400).json({
+            message: 'trip does not belong to you.'
+          });
+        }
+      } else if (user.dataValues.role_id === 3) {
+        if (user.dataValues.id !== req.trip.dataValues.manager_id) {
+          return res.status(400).json({
+            message: 'trip does not belong to you.'
+          });
+        }
+      }
+
       const data = {
         ...req.body,
         user_id: user.dataValues.id,
@@ -26,7 +33,7 @@ class tripCommentController {
 
       const sendComment = await tripCommentsServices.createComment(data);
       /* istanbul ignore next */
-      if (user.role_id != 3) {
+      if (user.role_id != 3 && user.role_id != 1) {
         const manager = await new UserService().getUserId(user.manager_id);
         if (manager.in_app_notification == true) {
           const notify = await Notification.createNotification({
@@ -42,7 +49,7 @@ class tripCommentController {
         }
       }
       /* istanbul ignore next */
-      if (user.role_id == 3) {
+      if (user.role_id == 3 && user.role_id != 1) {
         const recieveUser = await new UserService().getUserId(req.trip.user_id);
         if (recieveUser.in_app_notification == true) {
           const notify = await Notification.createNotification({
@@ -62,6 +69,7 @@ class tripCommentController {
         .status(201)
         .json({ message: 'comment sent successfully', sendComment });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ message: 'internal server error', err });
     }
   }

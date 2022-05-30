@@ -10,7 +10,8 @@ import {
   Accommodation,
   Room,
   Like,
-  AccommodationComment
+  AccommodationComment,
+  Location
 } from '../database/models';
 
 class accommodationService {
@@ -27,7 +28,8 @@ class accommodationService {
       order: order || [['id', 'ASC']],
       include: [
         { model: Room, as: 'Rooms' },
-        { model: Like, attributes: ['user_id', 'like'] }
+        { model: Like, attributes: ['user_id', 'like'] },
+        { model: Location, as: 'Locations' }
       ]
     });
     return formatLikeMany(foundAccommodations);

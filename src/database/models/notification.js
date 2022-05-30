@@ -9,8 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate() {
-      // define association here
+    static associate({ User }) {
+      this.belongsTo(User, { foreignKey: 'from_user_id', as: 'sender' });
+      this.belongsTo(User, { foreignKey: 'to_user_id', as: 'receiver' });
     }
   }
   notification.init(
@@ -19,12 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING
       },
       type: DataTypes.STRING,
-      from_user_id: {
-        type: DataTypes.INTEGER
-      },
-      to_user_id: {
-        type: DataTypes.INTEGER
-      },
       isRead: {
         type: DataTypes.BOOLEAN,
         defaultValue: false

@@ -4,7 +4,15 @@
 /* eslint-disable camelcase */
 /* eslint-disable require-jsdoc */
 import { Op } from 'sequelize';
-import { notification } from '../database/models';
+import { notification, User } from '../database/models';
+
+const userAttributes = [
+  'id',
+  'first_name',
+  'last_name',
+  'email',
+  'profile_picture'
+];
 
 export default class Notification {
   static async createNotification(data) {
@@ -13,7 +21,11 @@ export default class Notification {
 
   static async oneNotification(to_user_id, id) {
     const getnotification = await notification.findOne({
-      where: { to_user_id, id }
+      where: { to_user_id, id },
+      include: [
+        { model: User, as: 'receiver', attributes: userAttributes },
+        { model: User, as: 'sender', attributes: userAttributes }
+      ]
     });
     return getnotification;
   }
@@ -28,7 +40,11 @@ export default class Notification {
       where: { to_user_id },
       offset,
       limit,
-      order: [['isRead', 'ASC']]
+      order: [['isRead', 'ASC']],
+      include: [
+        { model: User, as: 'receiver', attributes: userAttributes },
+        { model: User, as: 'sender', attributes: userAttributes }
+      ]
     });
     getnotification.rows.map((notifications) => {
       /* istanbul ignore next */
@@ -53,14 +69,24 @@ export default class Notification {
         id: {
           [Op.in]: updatedRows
         }
-      }
+      },
+      include: [
+        { model: User, as: 'receiver', attributes: userAttributes },
+        { model: User, as: 'sender', attributes: userAttributes }
+      ]
     });
     return result;
   }
 
   static async ReadOne(id, to_user_id, unreadNotifications = 0) {
     await notification.update({ isRead: true }, { where: { id } });
-    const readOne = await notification.findOne({ where: { id } });
+    const readOne = await notification.findOne({
+      where: { id },
+      include: [
+        { model: User, as: 'receiver', attributes: userAttributes },
+        { model: User, as: 'sender', attributes: userAttributes }
+      ]
+    });
     const count = await notification.findAll({
       where: { isRead: false, to_user_id }
     });

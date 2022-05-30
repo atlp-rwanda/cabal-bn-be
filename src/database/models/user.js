@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       Profile,
       Location,
       tripComments,
-      Message
+      Message,
+      notification
     }) {
       // define association here
       this.belongsTo(Role, { foreignKey: 'role_id' });
@@ -47,6 +48,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'location_id'
       });
       this.hasMany(Message, { foreignKey: 'user_id' });
+      this.hasMany(notification, { foreignKey: 'from_user_id', as: 'sender' });
+      this.hasMany(notification, { foreignKey: 'to_user_id', as: 'receiver' });
     }
 
     toJSON() {
@@ -80,10 +83,10 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false
       },
       email_notification: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.BOOLEAN
       },
       in_app_notification: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.BOOLEAN
       },
       profile_picture: {
         type: DataTypes.TEXT,

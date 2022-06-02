@@ -58,6 +58,14 @@ class tripCommentController {
         }
       }
 
+      // adds on the comment object the user association manually
+      /* istanbul ignore next */
+      sendComment.dataValues.user = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        profile_picture: user.profile_picture
+      };
+
       return res
         .status(201)
         .json({ message: 'comment sent successfully', sendComment });

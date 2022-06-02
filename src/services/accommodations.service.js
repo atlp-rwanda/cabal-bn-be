@@ -11,7 +11,8 @@ import {
   Room,
   Like,
   AccommodationComment,
-  Location
+  Location,
+  User
 } from '../database/models';
 
 class accommodationService {
@@ -84,7 +85,12 @@ class accommodationService {
       where: { accommodation_id },
       offset,
       limit,
-      order: [['id', 'DESC']]
+      order: [['id', 'DESC']],
+      include: {
+        model: User,
+        as: 'user',
+        attributes: ['first_name', 'last_name', 'profile_picture']
+      }
     });
 
     return comments;

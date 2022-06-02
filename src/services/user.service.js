@@ -13,20 +13,20 @@ import { Blacklist, sequelize } from '../database/models';
 export default class UserService {
   async getAllUsers(id) {
     let users;
-    if(id===3){
-      users = await User.findAll({where:{
-        manager_id:id
-      },
-      attributes:['first_name','last_name','id','role_id','email']
-    });
-    }
-    else{
+    if (id === 3) {
       users = await User.findAll({
-        attributes:['first_name','last_name','id','role_id','email']
+        where: {
+          manager_id: id
+        },
+        attributes: ['first_name', 'last_name', 'id', 'role_id', 'email']
+      });
+    } else {
+      users = await User.findAll({
+        attributes: ['first_name', 'last_name', 'id', 'role_id', 'email']
       });
     }
-    
-    const use=users.map(user=>user.dataValues)
+
+    const use = users.map((user) => user.dataValues);
     return use;
   }
 

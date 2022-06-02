@@ -1,6 +1,6 @@
 /* eslint-disable no-return-await */
 /* eslint-disable require-jsdoc */
-import { Booking, Room } from '../database/models';
+import { Booking, Room, User } from '../database/models';
 
 class bookingService {
   static async createBooking(booking) {
@@ -9,6 +9,18 @@ class bookingService {
 
   static async listAllRoomBookings({ where, id }) {
     /* istanbul ignore next */
+    const bookings = await Booking.findAndCountAll({
+      where: id ? { id } : where,
+      include: {
+        model: User,
+        as: 'user',
+        attributes: ['first_name', 'last_name']
+      }
+    });
+    return bookings;
+  }
+
+  static async listAllBookings({ where, id }) {
     const bookings = await Booking.findAndCountAll({
       where: id ? { id } : where
     });

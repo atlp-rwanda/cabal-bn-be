@@ -85,6 +85,22 @@ class bookingController {
     }
   }
 
+  static async listAllBookings(req, res) {
+    const { user } = req;
+    const bookings = await bookingService.listAllBookings({
+      where: { user_id: user.id }
+    });
+    /* istanbul ignore next */
+    if (!bookings || bookings.count === 0)
+      return res
+        .status(404)
+        .json({ message: 'you do not have any booking please book a room!' });
+
+    return res
+      .status(200)
+      .json({ message: 'list of all your bookings', bookings });
+  }
+
   static async listSingleBooking(req, res) {
     try {
       const { booking } = req;

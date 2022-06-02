@@ -1,3 +1,5 @@
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable no-shadow */
 /* eslint-disable no-plusplus */
 /* eslint-disable camelcase */
 import { Server } from 'socket.io';
@@ -14,6 +16,7 @@ const io = new Server({
 io.use((socket, next) => {
   try {
     const { auth } = socket.handshake;
+    console.log(auth);
     /* istanbul ignore next */
     if (!auth.token) {
       return next(new Error('user not logged in'));
@@ -25,14 +28,17 @@ io.use((socket, next) => {
     return next();
   } catch (error) {
     /* istanbul ignore next */
+    console.log(error);
     return next(new Error(error.message));
   }
 });
 
-const users = [];
+let users = [];
 let onlineUsers = 0;
 io.on('connection', async (socket) => {
+  console.log('Client connected', socket.id);
   onlineUsers++;
+  console.log(onlineUsers);
   const { auth } = socket.handshake;
   const messageIncludes = [
     {
@@ -45,18 +51,25 @@ io.on('connection', async (socket) => {
   // authenticate
   try {
     const user = decodeToken(auth.token);
+    console.log(user.email);
     user.socketId = socket.id;
     users.push(user);
 
-    socket.emit('user:joined', users);
+    // socket.emit('user:joined', users)
+    // io.emit("user:joined", user)
+    socket.on('user:joining', (data) => {
+      io.emit('user:joined', { data, users: onlineUsers, socketId: socket.id });
+    });
 
     // will retrieve all messages and send them to the user connecting
-    socket.emit('user:online', {
-      total: onlineUsers,
-      messages: await Message.findAll({
-        attributes: messageAttr,
-        include: messageIncludes
-      })
+    socket.on('online', async () => {
+      socket.emit('user:online', {
+        total: onlineUsers,
+        messages: await Message.findAll({
+          attributes: messageAttr,
+          include: messageIncludes
+        })
+      });
     });
 
     // will receive a message post and broadcast them to all the others online
@@ -70,6 +83,23 @@ io.on('connection', async (socket) => {
 
       io.sockets.emit('message:recieve', { message });
     });
+
+    socket.on('user:leaving', (data) => {
+      onlineUsers--;
+      console.log(onlineUsers);
+      console.log(data);
+      const client = decodeToken(data.token);
+      const userDisconnected = users.filter(
+        (user) => user.email === client.email
+      );
+      users = users.filter((user) => user.email !== client.email);
+      console.log(userDisconnected, 'user disconnected');
+      io.emit('user:disconnected', {
+        usersLeft: onlineUsers,
+        user: userDisconnected
+      });
+      socket.disconnect();
+    });
   } catch (err) {
     // jwt verification failed
     /* istanbul ignore next */
@@ -79,8 +109,12 @@ io.on('connection', async (socket) => {
   }
 
   socket.on('disconnect', () => {
-    onlineUsers--;
-    console.log('A client disconnected');
+    console.log('socket id disconnected', socket.id);
+    console.log(users, 'before disconnect');
+    users = users.filter((user) => user.socketId !== socket.id);
+    onlineUsers = users.length;
+    console.log(onlineUsers, 'disconnecting');
+    console.log(users, 'after disconnect');
   });
 });
 

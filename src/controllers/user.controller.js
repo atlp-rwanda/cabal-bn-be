@@ -143,7 +143,12 @@ export default class UserController {
       );
       if (validation) {
         const token = await generateToken(
-          { email: user.email, userId: user.id },
+          {
+            email: user.email,
+            userId: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name
+          },
           '1d'
         );
         return res.status(201).header('authenticate', token).json({
@@ -248,7 +253,15 @@ export default class UserController {
         await Profiles.createProfile({ user_id: user.id });
       }
 
-      const token = generateToken({ email: user.email, userId: user.id }, '1d');
+      const token = generateToken(
+        {
+          email: user.email,
+          userId: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name
+        },
+        '1d'
+      );
 
       const params = new URLSearchParams();
       params.set('email', user.email);
@@ -297,7 +310,15 @@ export default class UserController {
         await Profiles.createProfile({ user_id: user.id });
       }
 
-      const token = generateToken({ email: user.email, userId: user.id }, '1d');
+      const token = generateToken(
+        {
+          email: user.email,
+          userId: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name
+        },
+        '1d'
+      );
 
       const params = new URLSearchParams();
       params.set('email', user.email);
@@ -346,7 +367,15 @@ export default class UserController {
         await Profiles.createProfile({ user_id: user.id });
       }
 
-      const token = generateToken({ email: user.email, userId: user.id }, '1d');
+      const token = generateToken(
+        {
+          email: user.email,
+          userId: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name
+        },
+        '1d'
+      );
 
       const params = new URLSearchParams();
       params.set('email', user.email);

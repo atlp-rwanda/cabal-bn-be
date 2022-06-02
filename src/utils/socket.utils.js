@@ -48,6 +48,8 @@ io.on('connection', async (socket) => {
     user.socketId = socket.id;
     users.push(user);
 
+    socket.emit('user:joined', users);
+
     // will retrieve all messages and send them to the user connecting
     socket.emit('user:online', {
       total: onlineUsers,

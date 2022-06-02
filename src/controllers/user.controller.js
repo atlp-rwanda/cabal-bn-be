@@ -408,10 +408,11 @@ export default class UserController {
       /* istanbul ignore next */
       if (user.first_name) {
         return res.status(200).json({
-          message: `You have been logged out ${user.first_name}`
+          message: `You have been logged out ${user.first_name} ${user.last_name}`
         });
       }
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         error: error.message,
         message: 'error occured while logging you out'

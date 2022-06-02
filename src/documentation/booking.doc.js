@@ -57,6 +57,21 @@ export const booking = {
       ]
     }
   },
+  '/rooms/booking': {
+    get: {
+      tags: ['Booking'],
+      summary: 'get all booking information of a user',
+      description: 'get all user bookings',
+      operationId: 'get user booking info',
+      produces: ['application/json'],
+      responses,
+      security: [
+        {
+          JWT: []
+        }
+      ]
+    }
+  },
   '/rooms/{roomId}/booking/{bookingId}': {
     get: {
       tags: ['Booking'],

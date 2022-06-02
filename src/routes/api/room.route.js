@@ -64,6 +64,12 @@ room.get(
   checkRequester,
   bookingController.listAllRoomBookings
 );
+room.get(
+  '/rooms/booking',
+  checkLoggedInUser,
+  roles('REQUESTER', 'SUPER_ADMIN'),
+  bookingController.listAllBookings
+);
 
 // Get single booking
 room.get(

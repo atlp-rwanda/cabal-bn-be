@@ -128,7 +128,8 @@ export const user = {
           description: 'user logout',
           required: true
         }
-      ]
+      ],
+      responses
     }
   },
   '/users/profile': {

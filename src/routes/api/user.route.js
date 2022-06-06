@@ -30,9 +30,14 @@ import { updateProfilePicture } from '../../middlewares/imageUpload.middleware';
 
 const routes = express.Router();
 
-routes.get('/', checkLoggedInUser, roles('SUPER_ADMIN','MANAGER'), async (req, res) => {
-  await UserController.getAllUsers(req, res);
-});
+routes.get(
+  '/',
+  checkLoggedInUser,
+  roles('SUPER_ADMIN', 'MANAGER'),
+  async (req, res) => {
+    await UserController.getAllUsers(req, res);
+  }
+);
 
 routes.get('/getOne', checkLoggedInUser, UserController.getOneUser);
 

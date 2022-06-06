@@ -12,6 +12,7 @@ class tripCommentsServices {
       where: { trip_id: tripId },
       offset,
       limit,
+      order: [['createdAt', 'DESC']],
       include: {
         model: User,
         as: 'user',

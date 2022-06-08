@@ -8,7 +8,7 @@ import { bookingData, badBookingData } from './mock/booking.mock';
 
 chai.use(chaiHttp);
 const { createRoom } = roomService;
-describe('BOOKING ENDPOINTS TESTS', () => {
+describe.only('BOOKING ENDPOINTS TESTS', () => {
   it('should not book a room if a user is not loggedIn', async () => {
     const room = await createRoom(roomData);
     room.save();
@@ -91,6 +91,19 @@ describe('BOOKING ENDPOINTS TESTS', () => {
     };
     const res = await request(app)
       .get(`/api/v1/rooms/1/booking`)
+      .set('Authorization', data.token);
+    expect(res.status).to.be.equal(200);
+  });
+  it('should list all bookings of a user', async () => {
+    const logIn = await chai.request(app).post('/api/v1/users/login').send({
+      email: 'REQUESTER@gmail.com',
+      password: 'REQUESTER2gmail'
+    });
+    const data = {
+      token: `Bearer ${logIn.body.token}`
+    };
+    const res = await request(app)
+      .get(`/api/v1/rooms/booking`)
       .set('Authorization', data.token);
     expect(res.status).to.be.equal(200);
   });

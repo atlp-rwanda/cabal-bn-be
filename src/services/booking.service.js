@@ -15,6 +15,13 @@ class bookingService {
     return bookings;
   }
 
+  static async listAllBookings({ where, id }) {
+    const bookings = await Booking.findAndCountAll({
+      where: id ? { id } : where
+    });
+    return bookings;
+  }
+
   static async listSingleBooking(id, roomId) {
     const booking = await Booking.findOne({
       where: { id, room_id: roomId },

@@ -209,6 +209,7 @@ export default class UserController {
       }
     } catch (error) {
       /* istanbul ignore next */
+      console.log(error);
       return res.status(500).json({ error: error.message });
     }
   }

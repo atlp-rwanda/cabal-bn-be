@@ -5,7 +5,6 @@ import express from 'express';
 import 'dotenv';
 import { serve, setup } from 'swagger-ui-express';
 import morgan from 'morgan';
-import sgMail from '@sendgrid/mail';
 import cors from 'cors';
 import formData from 'express-form-data';
 // eslint-disable-next-line import/no-named-as-default-member
@@ -39,8 +38,6 @@ app.get('*', (req, res) => {
 });
 /* istanbul ignore next */
 const port = process.env.PORT || 5000;
-const KEY = process.env.API_KEY;
-sgMail.setApiKey(KEY);
 server.listen(port, () => {
   console.log('server up running on port ', port);
 });

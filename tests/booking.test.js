@@ -8,7 +8,7 @@ import { bookingData, badBookingData } from './mock/booking.mock';
 
 chai.use(chaiHttp);
 const { createRoom } = roomService;
-describe.only('BOOKING ENDPOINTS TESTS', () => {
+describe('BOOKING ENDPOINTS TESTS', () => {
   it('should not book a room if a user is not loggedIn', async () => {
     const room = await createRoom(roomData);
     room.save();

@@ -49,7 +49,7 @@ export default class UserController {
       });
     } catch (error) {
       return res.status(500).json({
-        message: 'Error occured while creating a user',
+        message: 'Error retrieving users',
         error: error.message
       });
     }

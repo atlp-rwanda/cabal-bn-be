@@ -49,22 +49,22 @@ passport.use(
   )
 );
 
-passport.use(
-  new GithubStrategy(
-    {
-      clientID: process.env.Github_CLIENT_ID,
-      clientSecret: process.env.Github_CLIENT_SECRETE,
-      callbackURL: process.env.Github_CALLBACK_URL,
-      passReqToCallback: true,
-      profileFields: ['id', 'emails', 'name', 'photos']
-    },
-    /* istanbul ignore next */
-    // eslint-disable-next-line no-unused-vars
-    /* istanbul ignore next */
-    async (req, accessToken, refreshToken, profile, done) => {
-      return done(null, profile);
-    }
-  )
-);
+// passport.use(
+//   new GithubStrategy(
+//     {
+//       clientID: process.env.Github_CLIENT_ID,
+//       clientSecret: process.env.Github_CLIENT_SECRETE,
+//       callbackURL: process.env.Github_CALLBACK_URL,
+//       passReqToCallback: true,
+//       profileFields: ['id', 'emails', 'name', 'photos']
+//     },
+//     /* istanbul ignore next */
+//     // eslint-disable-next-line no-unused-vars
+//     /* istanbul ignore next */
+//     async (req, accessToken, refreshToken, profile, done) => {
+//       return done(null, profile);
+//     }
+//   )
+// );
 
 export default passport;
